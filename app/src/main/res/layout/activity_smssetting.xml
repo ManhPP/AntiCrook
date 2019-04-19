@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:weightSum="100"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:background="@drawable/border_bottom"
+        >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:src="@drawable/next"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:rotation="180"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="90"
+            android:layout_height="match_parent"
+            android:text="THIẾT LẬP SMS"
+            android:textColor="#ffff"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+       android:background="@drawable/border_bottom"
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:weightSum="100"
+       android:layout_weight="10">
+
+       <ImageView
+           android:layout_width="0dp"
+           android:layout_weight="10"
+           android:layout_height="wrap_content"
+           android:scaleX="0.8"
+           android:scaleY="0.8"
+           android:src="@drawable/wifi"
+           android:layout_gravity="center"
+           />
+
+       <TextView
+           android:layout_width="0dp"
+           android:layout_weight="28"
+           android:layout_height="match_parent"
+           android:text="Bật wifi:"
+           android:gravity="center_vertical"
+           android:textSize="18sp"
+           android:textColor="#9a9a9a"
+           />
+       <TextView
+           android:layout_width="0dp"
+           android:layout_weight="62"
+           android:layout_height="match_parent"
+           android:text="WIFI_ON"
+           android:gravity="center_vertical"
+           android:textColor="#ffff"
+           android:textSize="22sp"
+
+           />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="100"
+        android:layout_weight="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/sms"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="28"
+            android:layout_height="match_parent"
+            android:text="Đọc SMS:"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#9a9a9a"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="62"
+            android:layout_height="match_parent"
+            android:text="READ_SMS"
+            android:gravity="center_vertical"
+            android:textColor="#ffff"
+            android:textSize="22sp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="100"
+        android:layout_weight="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/wifi"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="28"
+            android:layout_height="match_parent"
+            android:text="Đọc DB:"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#9a9a9a"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="62"
+            android:layout_height="match_parent"
+            android:text="READ_CONTACT"
+            android:gravity="center_vertical"
+            android:textColor="#ffff"
+            android:textSize="22sp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="100"
+        android:layout_weight="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/record"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="28"
+            android:layout_height="match_parent"
+            android:text="Ghi âm:"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#9a9a9a"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="62"
+            android:layout_height="match_parent"
+            android:text="RECORD"
+            android:gravity="center_vertical"
+            android:textColor="#ffff"
+            android:textSize="22sp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="100"
+        android:layout_weight="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/selfie"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="28"
+            android:layout_height="match_parent"
+            android:text="Cam trước:"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#9a9a9a"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="62"
+            android:layout_height="match_parent"
+            android:text="FRONT_CAM"
+            android:gravity="center_vertical"
+            android:textColor="#ffff"
+            android:textSize="22sp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="100"
+        android:layout_weight="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/back_cam"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="28"
+            android:layout_height="match_parent"
+            android:text="Cam sau:"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#9a9a9a"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="62"
+            android:layout_height="match_parent"
+            android:text="BACK_CAM"
+            android:gravity="center_vertical"
+            android:textColor="#ffff"
+            android:textSize="22sp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="100"
+        android:layout_weight="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/location"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="28"
+            android:layout_height="match_parent"
+            android:text="Vị trí:"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#9a9a9a"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="62"
+            android:layout_height="match_parent"
+            android:text="LOCATE"
+            android:gravity="center_vertical"
+            android:textColor="#ffff"
+            android:textSize="22sp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="100"
+        android:layout_weight="10">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:src="@drawable/speaker"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="28"
+            android:layout_height="match_parent"
+            android:text="Báo động:"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#9a9a9a"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="62"
+            android:layout_height="match_parent"
+            android:text="ALARM"
+            android:gravity="center_vertical"
+            android:textColor="#ffff"
+            android:textSize="22sp"
+
+            />
+    </LinearLayout>
+
+</LinearLayout>
