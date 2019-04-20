@@ -2,26 +2,29 @@ package com.android.findmyandroid;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.HeterogeneousExpandableList;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
-public class MainSetting extends Activity {
+public class MainSetting extends AppCompatActivity {
     private static final String TAG = "MainSetting";
     private ExpandableListView features = null;
     private CustomExpandableListAdapter adapter = null;
-    private List<String> listHeader;
-    private HashMap<String, List<String>> mData;
+    private Switch switchButton = null;
+    private List<String> listHeader = null;
+    private HashMap<String, List<String>> mData = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,10 @@ public class MainSetting extends Activity {
         List<String> emailMenu = new ArrayList<>();
         List<String> simMenu = new ArrayList<>();
 
+        mData.put(listHeader.get(0), smsMenu);
+        mData.put(listHeader.get(1), emailMenu);
+        mData.put(listHeader.get(2), simMenu);
+
         smsMenu.add("Thiết lập lệnh SMS");
         emailMenu.add("Thay đổi email gửi thông báo");
         emailMenu.add("Thêm email nhận thông báo");
@@ -46,10 +53,6 @@ public class MainSetting extends Activity {
         simMenu.add("Lấy tọa độ");
         simMenu.add("Đọc danh bạ");
         simMenu.add("Đọc tin nhắn");
-
-        mData.put(listHeader.get(0), smsMenu);
-        mData.put(listHeader.get(1), emailMenu);
-        mData.put(listHeader.get(2), simMenu);
 
         features = (ExpandableListView) findViewById(R.id.features);
         adapter = new CustomExpandableListAdapter(this, listHeader, mData);
@@ -81,10 +84,25 @@ public class MainSetting extends Activity {
                 Log.e(TAG, "onGroupExpand: " + groupPosition);
             }
         });
+        features.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Log.e(TAG, "onChildClick: " + childPosition + " in group: " + groupPosition);
+                return true;
+            }
+        });
+
+//        switchButton = findViewById(R.id.switchbutton);
+//        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                Log.e(TAG, "onChangeSwitch: ");
+//            }
+//        });
     }
 
-    public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
-        private static final String TAG = "CustomExpandableListAdapter";
+    public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
+        private static final String TAG = "ExpandableListAdapter";
         private Context mContext;
         private List<String> mHeaderGroup;
         private HashMap<String, List<String>> mDataChild;
@@ -135,10 +153,10 @@ public class MainSetting extends Activity {
             return groupPosition;
         }
         public long getChildId(int groupPosition, int childPosition){
-            return childPosition;
+            return childPosition * groupPosition;
         }
         public boolean hasStableIds(){
-            return false;
+            return true;
         }
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent){
             if (convertView == null){
@@ -149,17 +167,67 @@ public class MainSetting extends Activity {
             listTitle.setText(this.mHeaderGroup.get(groupPosition));
             return convertView;
         }
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent){
+        public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent){
+            int itemType = getChildType(groupPosition,childPosition);
             if (convertView == null){
-                LayoutInflater inflater = LayoutInflater.from(this.mContext);
-                convertView = inflater.inflate(R.layout.list_item, parent, false);
+                LayoutInflater inflater = LayoutInflater.from(mContext);
+                switch (itemType){
+                    case 0:
+                        convertView = inflater.inflate(R.layout.list_item_select, parent, false);
+                        break;
+                    case 1:
+                        convertView = inflater.inflate(R.layout.list_item_switch, parent, false);
+                        break;
+                }
+
             }
-            TextView listItem = (TextView) convertView.findViewById(R.id.expandedListItem);
+            TextView listItem = null;
+            switch (itemType){
+                case 0:
+                    listItem = (TextView) convertView.findViewById(R.id.expandedListItemSelect);
+                    break;
+                case 1:
+                    listItem = (TextView) convertView.findViewById(R.id.expandedListItemSwitch);
+                    switchButton = convertView.findViewById(R.id.switchbutton);
+                    switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            Log.e(TAG, "onChangeSwitch: " + childPosition + " in group: " + groupPosition);
+                        }
+                    });
+                    break;
+            }
             listItem.setText((String) this.getChild(groupPosition, childPosition));
+
             return convertView;
         }
         public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return false;
+            return true;
+        }
+
+        @Override
+        public int getChildType(int groupPosition, int childPosition) {
+            if (groupPosition == 2){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+
+        @Override
+        public int getChildTypeCount() {
+            return 2;
+        }
+
+        @Override
+        public int getGroupType(int groupPosition) {
+            return 0;
+        }
+
+        @Override
+        public int getGroupTypeCount() {
+            return 1;
         }
     }
 }
