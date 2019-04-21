@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="100"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:background="@drawable/border_bottom"
+        >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:src="@drawable/next"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:rotation="180"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="90"
+            android:layout_height="match_parent"
+            android:text="EMAIL GỬI"
+            android:textColor="#ffff"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="46"
+        android:weightSum="100"
+        android:background="#424141"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="70"
+            android:gravity="bottom|center_horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/user"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="30"
+            android:weightSum="100"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="90"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:text="Trần Văn Vĩnh"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="46"
+        android:background="#020202"
+        android:weightSum="100"
+        android:orientation="vertical"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="67"
+            android:weightSum="100"
+            android:orientation="vertical"
+            >
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:weightSum="100"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="50"
+                    android:weightSum="100"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="90"
+                        android:text="Email"
+                        android:textColor="#fff"
+                        android:gravity="bottom"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="50"
+                    android:weightSum="100"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:background="@drawable/border_bottom"
+                        android:layout_weight="90"
+                        android:layout_height="match_parent"
+                        android:textColor="#fff"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:weightSum="100"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="50"
+                    android:weightSum="100"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="90"
+                        android:text="Password"
+                        android:textColor="#fff"
+                        android:gravity="bottom"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="50"
+                    android:weightSum="100"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:background="@drawable/border_bottom"
+                        android:layout_weight="90"
+                        android:layout_height="match_parent"
+                        android:textColor="#fff"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="33"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            >
+
+            <Button
+                android:background="@drawable/border_button"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:text="Update"
+                android:textColor="#fff"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
