@@ -18,7 +18,8 @@
         </activity>
         <activity
             android:name=".MainSetting"
-            android:label="@string/title_activity_main_setting"></activity>
+            android:label="@string/title_activity_main_setting" />
+        <activity android:name=".AddReceivedEmail"></activity>
     </application>
 
 </manifest>
