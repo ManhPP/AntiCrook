@@ -16,12 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SMSSettingActivity" />
-        <activity android:name=".EmailSendActivity"></activity>
+<<<<<<< HEAD
+        <activity android:name=".SMSSettingActivity"></activity>
+=======
         <activity
             android:name=".MainSetting"
             android:label="@string/title_activity_main_setting" />
         <activity android:name=".AddReceivedEmail"></activity>
+>>>>>>> origin/master
     </application>
 
 </manifest>
