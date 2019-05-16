@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:orientation="vertical"
     android:weightSum="100"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -29,8 +28,8 @@
             android:layout_weight="90"
             android:layout_height="match_parent"
             android:text="THIẾT LẬP SMS"
-            android:textColor="#ffff"
-            android:textSize="30sp"
+            android:textColor="#000"
+            android:textSize="20sp"
             android:textAlignment="center"
             android:gravity="center"
             />
@@ -71,8 +70,8 @@
            android:layout_height="match_parent"
            android:text="WIFI_ON"
            android:gravity="center_vertical"
-           android:textColor="#ffff"
-           android:textSize="22sp"
+           android:textColor="#000"
+           android:textSize="18sp"
 
            />
     </LinearLayout>
@@ -110,8 +109,8 @@
             android:layout_height="match_parent"
             android:text="READ_SMS"
             android:gravity="center_vertical"
-            android:textColor="#ffff"
-            android:textSize="22sp"
+            android:textColor="#000"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -149,8 +148,8 @@
             android:layout_height="match_parent"
             android:text="READ_CONTACT"
             android:gravity="center_vertical"
-            android:textColor="#ffff"
-            android:textSize="22sp"
+            android:textColor="#000"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -188,8 +187,8 @@
             android:layout_height="match_parent"
             android:text="RECORD"
             android:gravity="center_vertical"
-            android:textColor="#ffff"
-            android:textSize="22sp"
+            android:textColor="#000"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -227,8 +226,8 @@
             android:layout_height="match_parent"
             android:text="FRONT_CAM"
             android:gravity="center_vertical"
-            android:textColor="#ffff"
-            android:textSize="22sp"
+            android:textColor="#000"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -266,8 +265,8 @@
             android:layout_height="match_parent"
             android:text="BACK_CAM"
             android:gravity="center_vertical"
-            android:textColor="#ffff"
-            android:textSize="22sp"
+            android:textColor="#000"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -305,8 +304,8 @@
             android:layout_height="match_parent"
             android:text="LOCATE"
             android:gravity="center_vertical"
-            android:textColor="#ffff"
-            android:textSize="22sp"
+            android:textColor="#000"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -344,8 +343,8 @@
             android:layout_height="match_parent"
             android:text="ALARM"
             android:gravity="center_vertical"
-            android:textColor="#ffff"
-            android:textSize="22sp"
+            android:textColor="#000"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
