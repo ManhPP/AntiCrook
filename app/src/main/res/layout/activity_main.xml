@@ -1,18 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.android.findmyandroid.MainActivity">
+    android:orientation="vertical"
+    android:weightSum="100"
+    android:background="#000"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="45"
+        android:src="@drawable/cover"
+        android:scaleType="centerCrop"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="75"
+            android:weightSum="100"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:weightSum="100"
+                android:layout_weight="50">
 
-</android.support.constraint.ConstraintLayout>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/power"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:textColor="#fff"
+                    android:layout_height="match_parent"
+                    android:layout_weight="90"
+                    android:text="Activated"
+                    android:gravity="bottom"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    />
+
+            </LinearLayout>
+            <TextView
+                android:textColor="#b4b3b3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:text="Find my android V1.0"
+                android:gravity="center_vertical"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="match_parent">
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingRight="20sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="100"
+            android:weightSum="100"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:weightSum="100"
+                android:layout_weight="50">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/uninstall"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:textColor="#fff"
+                    android:layout_height="match_parent"
+                    android:layout_weight="90"
+                    android:text="Uninstall"
+                    android:gravity="bottom"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    />
+
+            </LinearLayout>
+            <TextView
+                android:textColor="#b4b3b3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:text="Uninstall your app"
+                android:gravity="center_vertical"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="31"
+        android:orientation="vertical"
+        android:weightSum="100"
+        android:padding="40sp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="70"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:background="#202020"
+            >
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="20"
+                android:layout_height="match_parent"
+                android:src="@drawable/info"
+                android:scaleX="0.3"
+                android:scaleY="0.3"
+                />
+            <TextView
+                android:textColor="#fff"
+                android:layout_width="0dp"
+                android:layout_weight="80"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="About us"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
