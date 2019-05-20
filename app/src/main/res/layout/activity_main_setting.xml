@@ -25,7 +25,8 @@
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="0.5dp"
-        android:padding="1dp"/>
+        android:padding="1dp"
+        android:groupIndicator="@drawable/group_indicator"/>
 
 
 </LinearLayout>

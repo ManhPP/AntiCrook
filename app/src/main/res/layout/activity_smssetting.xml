@@ -6,37 +6,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:orientation="horizontal"
-        android:weightSum="100"
-        android:background="@drawable/border_bottom"
-        >
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="10"
-            android:src="@drawable/next"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:rotation="180"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="90"
-            android:layout_height="match_parent"
-            android:text="THIẾT LẬP SMS"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:gravity="center"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
        android:background="@drawable/border_bottom"
        android:orientation="horizontal"
        android:layout_width="match_parent"

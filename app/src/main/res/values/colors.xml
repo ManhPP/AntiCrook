@@ -7,5 +7,8 @@
     <color name="red">#ef1212</color>
     <color name="background">#020202</color>
     <color name="actionBarColor">#0e9853</color>
-    <color name="backgroundview">#1c1b1b</color>
+    <color name="backgroundview">#364446</color>
+    <color name="popupcolor">#3e494d</color>
+    <color name="buttonbackground">#05593a</color>
+    <color name="user">#364440</color>
 </resources>

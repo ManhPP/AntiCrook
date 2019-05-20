@@ -12,6 +12,6 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:textSize="20sp"
-        android:textStyle="bold|italic"/>
+        android:textStyle="bold"/>
 
 </LinearLayout>

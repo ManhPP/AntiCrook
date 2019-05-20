@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:weightSum="100"
-    android:background="#000"
+    android:background="@color/backgroundview"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView
         android:layout_width="match_parent"
@@ -62,16 +62,12 @@
                 android:gravity="center_vertical"
                 />
         </LinearLayout>
-        <LinearLayout
+        <Switch android:id="@+id/switchbutton"
             android:layout_width="0dp"
             android:layout_weight="25"
-            android:layout_height="match_parent">
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingRight="20sp"
-                />
-        </LinearLayout>
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/SwitchTheme"/>
     </LinearLayout>
 
     <LinearLayout

@@ -5,29 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.findmyandroid.AddReceivedEmail"
-    android:id="@+id/addReceivedEmail">
+    android:id="@+id/addReceivedEmail"
+    android:background="@color/backgroundview">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thêm Email nhận thông báo"
-            android:gravity="center"
-            android:layout_margin="20dp"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Thêm Email nhận thông báo"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_margin="20dp"-->
+            <!--android:textStyle="bold"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@android:color/white"/>-->
         <TextView android:id="@+id/note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Danh sách email được nhận thông báo: "
-            android:layout_margin="15dp"/>
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"/>
         <ListView android:id="@+id/lstReceivedEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:textColor="@android:color/white">
         </ListView>
     </LinearLayout>
 
@@ -37,5 +42,6 @@
         android:id="@+id/addEmailFAB"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/plus"/>
+        android:src="@drawable/plus"
+        app:backgroundTint="@color/actionBarColor"/>
 </android.support.design.widget.CoordinatorLayout>

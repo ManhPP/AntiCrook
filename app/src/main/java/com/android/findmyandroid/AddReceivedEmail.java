@@ -1,14 +1,18 @@
 package com.android.findmyandroid;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,6 +47,13 @@ public class AddReceivedEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_received_email);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Thêm Email nhận thông báo");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
+        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
+        int actionBarSize = (int) styledAttributes.getDimension(0,0);
+        styledAttributes.recycle();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         lstEmails = new ArrayList<>();
         lstEmailView = findViewById(R.id.lstReceivedEmail);
         addEmailFAB = findViewById(R.id.addEmailFAB);
@@ -153,5 +164,20 @@ public class AddReceivedEmail extends AppCompatActivity {
                 popupWindow.showAtLocation(addReceivedEmailView, Gravity.CENTER, 0, 0);
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
+                onBackPressed();
+
+                return true;
+
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

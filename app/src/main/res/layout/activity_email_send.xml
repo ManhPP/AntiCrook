@@ -3,44 +3,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="100"
+    android:background="@color/backgroundview"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:orientation="horizontal"
-        android:weightSum="100"
-        android:background="@drawable/border_bottom"
-        >
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_weight="10"
-            android:src="@drawable/next"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:rotation="180"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="90"
-            android:layout_height="match_parent"
-            android:text="EMAIL GỬI"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:gravity="center"
-            />
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="46"
         android:weightSum="100"
-        android:background="#e8e4e4"
+        android:background="@color/user"
         >
 
         <LinearLayout
@@ -64,6 +36,7 @@
             android:layout_weight="30"
             android:weightSum="100"
             android:orientation="horizontal"
+            android:padding="2dp"
             android:gravity="center_horizontal"
             >
             <TextView
@@ -72,8 +45,9 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:text="Trần Văn Vĩnh"
-                android:textColor="#000"
+                android:textColor="@android:color/white"
                 android:textSize="20sp"
+                android:paddingTop="10dp"
                 />
 
             <ImageView
@@ -125,11 +99,12 @@
                         android:layout_width="0dp"
                         android:layout_weight="90"
                         android:text="Email"
-                        android:textColor="#000"
+                        android:textColor="@android:color/white"
                         android:gravity="bottom"
                         android:textStyle="bold"
                         android:textSize="18sp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:paddingBottom="3dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -170,11 +145,12 @@
                         android:layout_width="0dp"
                         android:layout_weight="90"
                         android:text="Password"
-                        android:textColor="#000"
+                        android:textColor="@android:color/white"
                         android:gravity="bottom"
                         android:textStyle="bold"
                         android:textSize="18sp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:paddingBottom="3dp"/>
                 </LinearLayout>
 
                 <LinearLayout

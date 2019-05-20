@@ -3,23 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/silverviolet">
+    android:background="@color/popupcolor">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nhập email bạn muốn thêm: "
+        android:text="Nhập email bạn muốn thêm "
         android:layout_marginRight="55dp"
         android:layout_marginLeft="55dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:textColor="@android:color/white"/>
     <EditText android:id="@+id/filledEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:inputType="textEmailAddress"
+        android:textColor="@android:color/white"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

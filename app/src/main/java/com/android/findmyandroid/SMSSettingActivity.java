@@ -1,9 +1,13 @@
 package com.android.findmyandroid;
 
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,11 +23,32 @@ public class SMSSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_smssetting);
         initView();
 
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Cài đặt tin nhắn");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
+        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
+        int actionBarSize = (int) styledAttributes.getDimension(0,0);
+        styledAttributes.recycle();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
+                onBackPressed();
+
+                return true;
+
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     public void initView(){
         tvWifi = findViewById(R.id.tvWifi);
         tvReadSMS = findViewById(R.id.tvReadSMS);
