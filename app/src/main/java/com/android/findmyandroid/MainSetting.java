@@ -1,10 +1,17 @@
 package com.android.findmyandroid;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -13,6 +20,7 @@ import android.widget.ExpandableListView;
 import android.widget.HeterogeneousExpandableList;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +99,23 @@ public class MainSetting extends AppCompatActivity {
                 return true;
             }
         });
+        features.expandGroup(0);
+        features.expandGroup(1);
+        features.expandGroup(2);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Cài đặt chính");
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
+        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
+        int actionBarSize = (int) styledAttributes.getDimension(0,0);
+        styledAttributes.recycle();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        Drawable drawable = getResources().getDrawable(R.drawable.back);
+//        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//        Drawable newDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, actionBarSize, actionBarSize, true));
+//        actionBar.setDisplayShowHomeEnabled(true);
+//        actionBar.setLogo(R.drawable.back);
+//        actionBar.setDisplayUseLogoEnabled(true);
 //        switchButton = findViewById(R.id.switchbutton);
 //        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -100,7 +124,21 @@ public class MainSetting extends AppCompatActivity {
 //            }
 //        });
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
+                onBackPressed();
 
+                return true;
+
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         private static final String TAG = "ExpandableListAdapter";
         private Context mContext;

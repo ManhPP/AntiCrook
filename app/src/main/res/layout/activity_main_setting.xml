@@ -5,17 +5,18 @@
     android:layout_height="match_parent"
     android:weightSum="100"
     android:orientation="vertical"
-    tools:context="com.android.findmyandroid.MainSetting">
+    tools:context="com.android.findmyandroid.MainSetting"
+    android:background="@color/backgroundview">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_margin="5dp"
-        android:text="Cài đặt chính"/>
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="10"-->
+        <!--android:gravity="center"-->
+        <!--android:textSize="30sp"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:text="Cài đặt chính"/>-->
 
     <ExpandableListView android:id="@+id/features"
         android:layout_width="match_parent"
@@ -23,7 +24,8 @@
         android:layout_weight="90"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp" />
+        android:dividerHeight="0.5dp"
+        android:padding="1dp"/>
 
 
 </LinearLayout>

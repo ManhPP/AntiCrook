@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/silverviolet"
+    android:background="@color/backgroundview"
     android:weightSum="100">
 
     <TextView
@@ -16,7 +16,8 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textSize="15sp"
-        android:textStyle="italic"/>
+        android:textStyle="italic"
+        android:textColor="@android:color/white"/>
 
     <ImageView android:id="@+id/img"
         android:layout_width="wrap_content"

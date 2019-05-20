@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/silverviolet"
+    android:background="@color/backgroundview"
     android:weightSum="100">
 
     <TextView
@@ -16,11 +16,13 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textSize="15sp"
-        android:textStyle="italic"/>
+        android:textStyle="italic"
+        android:textColor="@android:color/white"/>
 
     <Switch android:id="@+id/switchbutton"
         android:layout_width="0dp"
         android:layout_weight="25"
         android:layout_marginRight="10dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:theme="@style/SwitchTheme"/>
 </LinearLayout>
