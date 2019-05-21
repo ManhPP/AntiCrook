@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Chống trộm");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
-        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
-        int actionBarSize = (int) styledAttributes.getDimension(0,0);
-        styledAttributes.recycle();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
+//        int actionBarSize = (int) styledAttributes.getDimension(0,0);
+//        styledAttributes.recycle();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         init();
 
