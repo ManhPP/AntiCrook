@@ -42,21 +42,6 @@ public class MainActivity extends AppCompatActivity {
         tvSetting = findViewById(R.id.tvSetting);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
-                onBackPressed();
-
-                return true;
-
-            default:break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private View.OnClickListener settingClick = new View.OnClickListener(){
         @Override

@@ -14,10 +14,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -36,11 +39,12 @@ public class AddReceivedEmail extends AppCompatActivity {
     private Button addFilledEmailButton = null;
     private Button dismissPopupButton = null;
     private EditText filledEmail = null;
-    private ArrayAdapter adapter = null;
+    private EmailAdapter adapter = null;
     private TextView confirmDeletingEmail = null;
     private Button deleteEmail = null;
     private Button cancelDeletingEmail = null;
     private TextView note = null;
+    String currrent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +66,14 @@ public class AddReceivedEmail extends AppCompatActivity {
         if (lstEmails.size() == 0){
             note.setText("Chưa có email nào trong danh sách!");
         }
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lstEmails);
+        adapter = new EmailAdapter();
         lstEmailView.setAdapter(adapter);
 
         lstEmailView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Toast.makeText(AddReceivedEmail.this, "hehehe", Toast.LENGTH_SHORT).show();
+                currrent = lstEmails.get(position);
                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View deleteEmailView = inflater.inflate(R.layout.delete_email, null);
                 popupWindow = new PopupWindow(deleteEmailView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -179,5 +185,39 @@ public class AddReceivedEmail extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public class EmailAdapter extends ArrayAdapter<String>{
+        EmailAdapter(){
+            super(AddReceivedEmail.this, R.layout.email_row, lstEmails);
+        }
+        public View getView(int position, View convertView, ViewGroup parent){
+            View row = convertView;
+            EmailHolder holder = null;
+            if (row == null) {
+                LayoutInflater inflater = getLayoutInflater();
+                row = inflater.inflate(R.layout.email_row, null);
+                holder = new EmailHolder(row);
+                row.setTag(holder);
+            } else {
+                holder = (EmailHolder) row.getTag();
+            }
+
+            holder.populateFrom(lstEmails.get(position), position);
+            return row;
+        }
+    }
+    static class EmailHolder {
+        private TextView email = null;
+        //private ImageView icon = null;
+
+        EmailHolder(View row) {
+            email = (TextView) row.findViewById(R.id.emailrow);
+            //icon = (ImageView) row.findViewById(R.id.deleteemailrow);
+        }
+
+        void populateFrom(String r, int no) {
+            email.setText(no+1 + ". " + r);
+            //icon.setImageResource(R.drawable.uninstall);
+        }
     }
 }
