@@ -50,7 +50,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="90"
                     android:gravity="bottom"
-                    android:text="Activated"
+                    android:text="Kích hoạt"
                     android:textColor="#fff"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -62,7 +62,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="50"
                 android:gravity="center_vertical"
-                android:text="Find my android V1.0"
+                android:text="Bật tắt hoạt động ứng dụng"
                 android:textColor="@color/detailColor" />
         </LinearLayout>
 
@@ -119,7 +119,7 @@
                     android:textColor="#fff"
                     android:layout_height="match_parent"
                     android:layout_weight="92.5"
-                    android:text="Setting"
+                    android:text="Cài đặt"
                     android:gravity="bottom"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="50"
-                android:text="Setting your app"
+                android:text="Tùy chỉnh cài đặt ứng dụng"
                 android:gravity="center_vertical"
                 />
         </LinearLayout>
@@ -172,7 +172,7 @@
                     android:textColor="#fff"
                     android:layout_height="match_parent"
                     android:layout_weight="92.5"
-                    android:text="Uninstall"
+                    android:text="Gỡ bỏ"
                     android:gravity="bottom"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -184,7 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="50"
-                android:text="Uninstall your app"
+                android:text="Gỡ bỏ ứng dụng"
                 android:gravity="center_vertical"
                 />
         </LinearLayout>
@@ -224,7 +224,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textSize="20sp"
-                android:text="About us"
+                android:text="Thông tin ứng dụng"
                 android:textStyle="bold"
                 />
         </LinearLayout>
