@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="100"
+    android:background="@color/backgroundview"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -30,7 +31,7 @@
            android:text="Bật wifi:"
            android:gravity="center_vertical"
            android:textSize="18sp"
-           android:textColor="#9a9a9a"
+           android:textColor="@color/detailColor"
            />
        <TextView
            android:id="@+id/tvWifi"
@@ -39,7 +40,7 @@
            android:layout_height="match_parent"
            android:text="WIFI_ON"
            android:gravity="center_vertical"
-           android:textColor="#000"
+           android:textColor="@android:color/white"
            android:textSize="18sp"
 
            />
@@ -69,7 +70,7 @@
             android:text="Đọc SMS:"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:textColor="#9a9a9a"
+            android:textColor="@color/detailColor"
             />
         <TextView
             android:id="@+id/tvReadSMS"
@@ -78,7 +79,7 @@
             android:layout_height="match_parent"
             android:text="READ_SMS"
             android:gravity="center_vertical"
-            android:textColor="#000"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />
@@ -108,7 +109,7 @@
             android:text="Đọc DB:"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:textColor="#9a9a9a"
+            android:textColor="@color/detailColor"
             />
         <TextView
             android:id="@+id/tvContact"
@@ -117,7 +118,7 @@
             android:layout_height="match_parent"
             android:text="READ_CONTACT"
             android:gravity="center_vertical"
-            android:textColor="#000"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />
@@ -147,7 +148,7 @@
             android:text="Ghi âm:"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:textColor="#9a9a9a"
+            android:textColor="@color/detailColor"
             />
         <TextView
             android:id="@+id/tvRecord"
@@ -156,7 +157,7 @@
             android:layout_height="match_parent"
             android:text="RECORD"
             android:gravity="center_vertical"
-            android:textColor="#000"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />
@@ -186,7 +187,7 @@
             android:text="Cam trước:"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:textColor="#9a9a9a"
+            android:textColor="@color/detailColor"
             />
         <TextView
             android:id="@+id/tvFrontCam"
@@ -195,7 +196,7 @@
             android:layout_height="match_parent"
             android:text="FRONT_CAM"
             android:gravity="center_vertical"
-            android:textColor="#000"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />
@@ -225,7 +226,7 @@
             android:text="Cam sau:"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:textColor="#9a9a9a"
+            android:textColor="@color/detailColor"
             />
         <TextView
             android:id="@+id/tvBackCam"
@@ -234,7 +235,7 @@
             android:layout_height="match_parent"
             android:text="BACK_CAM"
             android:gravity="center_vertical"
-            android:textColor="#000"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />
@@ -264,7 +265,7 @@
             android:text="Vị trí:"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:textColor="#9a9a9a"
+            android:textColor="@color/detailColor"
             />
         <TextView
             android:id="@+id/tvLocate"
@@ -273,7 +274,7 @@
             android:layout_height="match_parent"
             android:text="LOCATE"
             android:gravity="center_vertical"
-            android:textColor="#000"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />
@@ -292,7 +293,7 @@
             android:layout_height="wrap_content"
             android:scaleX="0.8"
             android:scaleY="0.8"
-            android:src="@drawable/speaker"
+            android:src="@drawable/alarm"
             android:layout_gravity="center"
             />
 
@@ -303,7 +304,7 @@
             android:text="Báo động:"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:textColor="#9a9a9a"
+            android:textColor="@color/detailColor"
             />
         <TextView
             android:id="@+id/tvAlarm"
@@ -312,7 +313,7 @@
             android:layout_height="match_parent"
             android:text="ALARM"
             android:gravity="center_vertical"
-            android:textColor="#000"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />

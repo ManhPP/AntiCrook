@@ -12,7 +12,7 @@
         <shape
             android:shape="rectangle"
             >
-            <solid android:color="#fff"/>
+            <solid android:color="@color/backgroundview"/>
         </shape>
     </item>
 </layer-list>

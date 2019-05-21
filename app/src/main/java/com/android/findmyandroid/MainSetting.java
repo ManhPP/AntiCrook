@@ -2,6 +2,7 @@ package com.android.findmyandroid;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -35,6 +36,9 @@ public class MainSetting extends AppCompatActivity {
     private Switch switchButton = null;
     private List<String> listHeader = null;
     private HashMap<String, List<String>> mData = null;
+
+    //===
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +102,15 @@ public class MainSetting extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Log.e(TAG, "onChildClick: " + childPosition + " in group: " + groupPosition);
+                if(groupPosition == 0 ){
+                    startActivity(new Intent(MainSetting.this, SMSSettingActivity.class));
+                }else if(groupPosition == 1){
+                    if(childPosition == 0){
+                        startActivity(new Intent(MainSetting.this, EmailSendActivity.class));
+                    }else{
+                        startActivity(new Intent(MainSetting.this, AddReceivedEmail.class));
+                    }
+                }
                 return true;
             }
         });

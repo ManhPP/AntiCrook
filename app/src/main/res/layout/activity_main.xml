@@ -12,6 +12,76 @@
         android:src="@drawable/cover"
         android:scaleType="centerCrop"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="75"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:weightSum="100">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="12.5"
+                    android:src="@drawable/power"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
+                    android:layout_marginTop="6sp"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="87.5"
+                    android:gravity="bottom"
+                    android:text="Activated"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:gravity="center_vertical"
+                android:text="Find my android V1.0"
+                android:textColor="@color/detailColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:orientation="vertical"
+            android:weightSum="100"
+            android:layout_height="match_parent"
+            android:paddingRight="10sp">
+            <Switch
+                android:id="@+id/switchbutton"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:theme="@style/SwitchTheme" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -22,7 +92,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="75"
+            android:layout_weight="100"
             android:weightSum="100"
             android:orientation="vertical"
             android:layout_height="match_parent"
@@ -37,16 +107,18 @@
                     android:layout_width="0dp"
                     android:layout_weight="10"
                     android:layout_height="match_parent"
-                    android:src="@drawable/power"
+                    android:src="@drawable/settings"
                     android:scaleX="0.6"
                     android:scaleY="0.6"
+                    android:layout_marginTop="6sp"
                     />
                 <TextView
+                    android:id="@+id/tvSetting"
                     android:layout_width="0dp"
                     android:textColor="#fff"
                     android:layout_height="match_parent"
                     android:layout_weight="90"
-                    android:text="Activated"
+                    android:text="Setting"
                     android:gravity="bottom"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -54,20 +126,14 @@
 
             </LinearLayout>
             <TextView
-                android:textColor="#b4b3b3"
+                android:textColor="@color/detailColor"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="50"
-                android:text="Find my android V1.0"
+                android:text="Setting your app"
                 android:gravity="center_vertical"
                 />
         </LinearLayout>
-        <Switch android:id="@+id/switchbutton"
-            android:layout_width="0dp"
-            android:layout_weight="25"
-            android:layout_marginRight="10dp"
-            android:layout_height="wrap_content"
-            android:theme="@style/SwitchTheme"/>
     </LinearLayout>
 
     <LinearLayout
@@ -98,6 +164,7 @@
                     android:src="@drawable/uninstall"
                     android:scaleX="0.6"
                     android:scaleY="0.6"
+                    android:layout_marginTop="6sp"
                     />
                 <TextView
                     android:layout_width="0dp"
@@ -112,7 +179,7 @@
 
             </LinearLayout>
             <TextView
-                android:textColor="#b4b3b3"
+                android:textColor="@color/detailColor"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="50"
@@ -121,13 +188,16 @@
                 />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="31"
+        android:layout_weight="19"
         android:orientation="vertical"
         android:weightSum="100"
-        android:padding="40sp"
+        android:paddingTop="20sp"
+        android:paddingLeft="15sp"
+        android:paddingRight="15sp"
         >
 
         <LinearLayout
@@ -136,7 +206,7 @@
             android:layout_weight="70"
             android:orientation="horizontal"
             android:weightSum="100"
-            android:background="#202020"
+            android:background="#2c393c"
             >
             <ImageView
                 android:layout_width="0dp"

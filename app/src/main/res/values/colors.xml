@@ -11,4 +11,5 @@
     <color name="popupcolor">#3e494d</color>
     <color name="buttonbackground">#05593a</color>
     <color name="user">#364440</color>
+    <color name="detailColor">#b4b3b3</color>
 </resources>

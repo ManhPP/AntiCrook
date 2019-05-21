@@ -7,9 +7,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView tvSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +28,20 @@ public class MainActivity extends AppCompatActivity {
         styledAttributes.recycle();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        startActivity(new Intent(this, EmailSendActivity.class));
+        init();
+
+        tvSetting.setOnClickListener(settingClick);
+//        startActivity(new Intent(this, EmailSendActivity.class));
 
 //        startActivity(new Intent(this, AddReceivedEmail.class));
 //        startActivity(new Intent(this, MainSetting.class));
 //        startActivity(new Intent(this, SMSSettingActivity.class));
     }
+
+    public void init(){
+        tvSetting = findViewById(R.id.tvSetting);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
@@ -45,4 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private View.OnClickListener settingClick = new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            startActivity(new Intent(MainActivity.this, MainSetting.class));
+        }
+    };
 }
