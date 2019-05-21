@@ -14,6 +14,7 @@
         />
 
     <LinearLayout
+        android:layout_marginTop="10sp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="12"
@@ -37,17 +38,17 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="12.5"
+                    android:layout_weight="10"
                     android:src="@drawable/power"
-                    android:scaleX="0.6"
-                    android:scaleY="0.6"
+                    android:scaleX="0.45"
+                    android:scaleY="0.45"
                     android:layout_marginTop="6sp"
                     />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="87.5"
+                    android:layout_weight="90"
                     android:gravity="bottom"
                     android:text="Activated"
                     android:textColor="#fff"
@@ -105,11 +106,11 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_weight="10"
+                    android:layout_weight="7.5"
                     android:layout_height="match_parent"
                     android:src="@drawable/settings"
-                    android:scaleX="0.6"
-                    android:scaleY="0.6"
+                    android:scaleX="0.45"
+                    android:scaleY="0.45"
                     android:layout_marginTop="6sp"
                     />
                 <TextView
@@ -117,7 +118,7 @@
                     android:layout_width="0dp"
                     android:textColor="#fff"
                     android:layout_height="match_parent"
-                    android:layout_weight="90"
+                    android:layout_weight="92.5"
                     android:text="Setting"
                     android:gravity="bottom"
                     android:textStyle="bold"
@@ -159,18 +160,18 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_weight="10"
+                    android:layout_weight="7.5"
                     android:layout_height="match_parent"
                     android:src="@drawable/uninstall"
-                    android:scaleX="0.6"
-                    android:scaleY="0.6"
+                    android:scaleX="0.45"
+                    android:scaleY="0.45"
                     android:layout_marginTop="6sp"
                     />
                 <TextView
                     android:layout_width="0dp"
                     android:textColor="#fff"
                     android:layout_height="match_parent"
-                    android:layout_weight="90"
+                    android:layout_weight="92.5"
                     android:text="Uninstall"
                     android:gravity="bottom"
                     android:textStyle="bold"
