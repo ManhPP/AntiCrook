@@ -40,8 +40,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="10"
                     android:src="@drawable/power"
-                    android:scaleX="0.45"
-                    android:scaleY="0.45"
+                    android:scaleX="0.55"
+                    android:scaleY="0.55"
                     android:layout_marginTop="6sp"
                     />
 
@@ -50,6 +50,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="90"
                     android:gravity="bottom"
+                    android:paddingLeft="5dp"
                     android:text="Kích hoạt"
                     android:textColor="#fff"
                     android:textSize="20sp"
@@ -62,6 +63,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="50"
                 android:gravity="center_vertical"
+                android:layout_marginLeft="35dp"
                 android:text="Bật tắt hoạt động ứng dụng"
                 android:textColor="@color/detailColor" />
         </LinearLayout>
@@ -78,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="50"
+                android:paddingTop="15dp"
                 android:theme="@style/SwitchTheme" />
         </LinearLayout>
 
@@ -109,8 +112,8 @@
                     android:layout_weight="7.5"
                     android:layout_height="match_parent"
                     android:src="@drawable/settings"
-                    android:scaleX="0.45"
-                    android:scaleY="0.45"
+                    android:scaleX="0.55"
+                    android:scaleY="0.55"
                     android:layout_marginTop="6sp"
                     />
                 <TextView
@@ -119,6 +122,7 @@
                     android:textColor="#fff"
                     android:layout_height="match_parent"
                     android:layout_weight="92.5"
+                    android:paddingLeft="5dp"
                     android:text="Cài đặt"
                     android:gravity="bottom"
                     android:textStyle="bold"
@@ -131,6 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="50"
+                android:paddingLeft="35dp"
                 android:text="Tùy chỉnh cài đặt ứng dụng"
                 android:gravity="center_vertical"
                 />
@@ -163,8 +168,8 @@
                     android:layout_weight="7.5"
                     android:layout_height="match_parent"
                     android:src="@drawable/uninstall"
-                    android:scaleX="0.45"
-                    android:scaleY="0.45"
+                    android:scaleX="0.55"
+                    android:scaleY="0.55"
                     android:layout_marginTop="6sp"
                     />
                 <TextView
@@ -172,6 +177,7 @@
                     android:textColor="#fff"
                     android:layout_height="match_parent"
                     android:layout_weight="92.5"
+                    android:paddingLeft="5dp"
                     android:text="Gỡ bỏ"
                     android:gravity="bottom"
                     android:textStyle="bold"
@@ -184,6 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="50"
+                android:paddingLeft="35dp"
                 android:text="Gỡ bỏ ứng dụng"
                 android:gravity="center_vertical"
                 />
