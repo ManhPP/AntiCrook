@@ -8,12 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tvSetting;
+    private LinearLayout settingGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +31,19 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-        tvSetting.setOnClickListener(settingClick);
+
 //        startActivity(new Intent(this, EmailSendActivity.class));
 
 //        startActivity(new Intent(this, AddReceivedEmail.class));
 //        startActivity(new Intent(this, MainSetting.class));
 //        startActivity(new Intent(this, SMSSettingActivity.class));
+
+        settingGroup.setOnClickListener(settingClick);
     }
 
     public void init(){
-        tvSetting = findViewById(R.id.tvSetting);
+//        tvSetting = findViewById(R.id.tvSetting);
+        settingGroup = findViewById(R.id.settingGroup);
     }
 
 
