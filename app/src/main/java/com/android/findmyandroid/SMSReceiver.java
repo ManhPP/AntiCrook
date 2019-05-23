@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.findmyandroid.model.Location;
+import com.android.findmyandroid.model.Record;
 import com.android.findmyandroid.model.SMS;
 import com.android.findmyandroid.utils.LocationHandler;
 import com.android.findmyandroid.utils.SMSHandler;
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by tranv on 4/14/2019.
  */
 
-public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener{
+public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener, OnReceiveRecordListener{
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("smsreceive", "onReceive: aaaaaaa");
@@ -74,7 +75,11 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
 
     @Override
     public void onReceiveLocation(Location location) {
-        Log.i("abcdef", "onReceiveLocation: "+location.getLatitude()+"-"+location.getLongitude());
+        Log.i("onReceived", "Location: "+location.getLatitude()+"-"+location.getLongitude());
     }
 
+    @Override
+    public void onReceive(Record record) {
+        Log.i("onReceived","Record: "+record.getUrl());
+    }
 }
