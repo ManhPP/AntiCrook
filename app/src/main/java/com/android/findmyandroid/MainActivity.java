@@ -1,11 +1,15 @@
 package com.android.findmyandroid;
 
+import android.Manifest;
 import android.app.admin.DevicePolicyManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvSetting;
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Switch activate = null;
     private LinearLayout settingGroup;
     private LinearLayout uninstallApp;
+    final int REQUEST_MULTIPLE_PERMISSIONS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,4 +132,25 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, MainSetting.class));
         }
     };
+
+    public boolean checkAndRequestPermission(){
+        List<String> listPermissionDenied = new ArrayList<>();
+
+        String[] permissions = {
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        for (String per: permissions) {
+            if (ContextCompat.checkSelfPermission(this, per) != PackageManager.PERMISSION_GRANTED){
+                listPermissionDenied.add(per);
+            }
+        }
+
+        if(!listPermissionDenied.isEmpty()){
+            ActivityCompat.requestPermissions(this, listPermissionDenied.toArray(new String[listPermissionDenied.size()]), REQUEST_MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
 }
