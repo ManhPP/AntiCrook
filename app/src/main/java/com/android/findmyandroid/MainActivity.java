@@ -2,6 +2,7 @@ package com.android.findmyandroid;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.android.findmyandroid.utils.CheckPermission;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         settingGroup.setOnClickListener(settingClick);
         checkPermission.checkAndRequestPermission(null);
+
     }
 
     public void init(){
