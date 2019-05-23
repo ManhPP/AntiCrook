@@ -10,6 +10,7 @@ import com.android.findmyandroid.model.EmailReceive;
 import com.android.findmyandroid.model.Image;
 import com.android.findmyandroid.model.Location;
 import com.android.findmyandroid.model.Record;
+import com.android.findmyandroid.model.SMS;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_IMAGE = "Image";
     private static final String TABLE_RECORD = "Record";
     private static final String TABLE_EMAIL_RECEIVE = "EmailReceive";
+    private static final String TABLE_SMS = "SMS";
 
     public MyDatabaseHelper(Context context)  {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,6 +44,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         sql=" CREATE TABLE "+TABLE_RECORD +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, time TEXT);";
         db.execSQL(sql);
         sql=" CREATE TABLE "+TABLE_EMAIL_RECEIVE +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT);";
+        db.execSQL(sql);
+        sql=" CREATE TABLE "+TABLE_SMS +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, phone TEXT, body TEXT, time TEXT);";
         db.execSQL(sql);
     }
 
@@ -84,19 +88,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void deleteLocate(int[] id){
-        String[] args = new String[id.length];
-        String numPlaceHolder = "";
-        for(int i=0; i<id.length; i++){
-            if(i==0){
-                numPlaceHolder = "?";
-            }else{
-                numPlaceHolder+= ", ?";
-            }
-            args[i] = id[i]+"";
-        }
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM "+TABLE_LOCATE +" WHERE id IN  ("+numPlaceHolder+")";
-        db.execSQL(query, args);
+        String query = "DELETE FROM "+TABLE_LOCATE;
+        db.execSQL(query, null);
         db.close();
     }
     // image
@@ -125,19 +119,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void deleteImage(int[] id){
-        String[] args = new String[id.length];
-        String numPlaceHolder = "";
-        for(int i=0; i<id.length; i++){
-            if(i==0){
-                numPlaceHolder = "?";
-            }else{
-                numPlaceHolder+= ", ?";
-            }
-            args[i] = id[i]+"";
-        }
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM "+TABLE_IMAGE+" WHERE id IN  ("+numPlaceHolder+")";
-        db.execSQL(query, args);
+        String query = "DELETE FROM "+TABLE_IMAGE;
+        db.execSQL(query, null);
         db.close();
     }
 
@@ -166,20 +150,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public void deleteRecord(int[] id){
-        String[] args = new String[id.length];
-        String numPlaceHolder = "";
-        for(int i=0; i<id.length; i++){
-            if(i==0){
-                numPlaceHolder = "?";
-            }else{
-                numPlaceHolder+= ", ?";
-            }
-            args[i] = id[i]+"";
-        }
+    public void deleteRecord(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM "+TABLE_RECORD+" WHERE id IN  ("+numPlaceHolder+")";
-        db.execSQL(query, args);
+        String query = "DELETE FROM "+TABLE_RECORD;
+        db.execSQL(query, null);
         db.close();
     }
 
@@ -224,5 +198,36 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    //sms
+    public void addSMS(SMS sms){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("phone", sms.getPhoneNumber());
+        contentValues.put("body", sms.getBody());
+        contentValues.put("time", sms.getTimeReceive());
+        db.insert(TABLE_SMS, null, contentValues);
+        db.close();
+    }
+
+    public List<SMS> getListSMS(){
+        List<SMS> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM "+TABLE_SMS;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(c.moveToNext()){
+            SMS sms = new SMS(c.getString(1), c.getString(2),c.getString(3));
+            sms.setId(c.getInt(0));
+            list.add(sms);
+        }
+        return list;
+    }
+
+    public void deleteSMS(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+TABLE_EMAIL_RECEIVE;
+        db.execSQL(query, null);
+        db.close();
+    }
 
 }

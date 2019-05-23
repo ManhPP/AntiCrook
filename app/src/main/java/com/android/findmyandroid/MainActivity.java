@@ -59,21 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         settingGroup.setOnClickListener(settingClick);
 
-        //khoi tao share preferences cho lenh sms neu chua ton tai
-        SharedPreferences sharedPreferences = getSharedPreferences("appSetting", MODE_PRIVATE);
-        if(sharedPreferences==null) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(getResources().getString(R.string.WIFI), "WIFI_ON");
-            editor.putString(getResources().getString(R.string.SMS), "READ_SMS");
-            editor.putString(getResources().getString(R.string.CONTACT), "READ_CONTACT");
-            editor.putString(getResources().getString(R.string.RECORD), "RECORD");
-            editor.putString(getResources().getString(R.string.FRONT), "FRONT_CAM");
-            editor.putString(getResources().getString(R.string.BACK), "BACK_CAM");
-            editor.putString(getResources().getString(R.string.LOCATE), "LOCATE");
-            editor.putString(getResources().getString(R.string.ALARM), "ALARM");
-            editor.apply();
-        }
-
     }
 
     public void init(){
