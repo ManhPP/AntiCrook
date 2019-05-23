@@ -90,7 +90,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void deleteLocate(int[] id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_LOCATE;
-        db.execSQL(query, null);
+        db.execSQL(query);
         db.close();
     }
     // image
@@ -121,7 +121,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void deleteImage(int[] id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_IMAGE;
-        db.execSQL(query, null);
+        db.execSQL(query);
         db.close();
     }
 
@@ -153,7 +153,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void deleteRecord(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_RECORD;
-        db.execSQL(query, null);
+        db.execSQL(query);
         db.close();
     }
 
@@ -226,7 +226,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void deleteSMS(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_EMAIL_RECEIVE;
-        db.execSQL(query, null);
+        db.execSQL(query);
         db.close();
     }
 
