@@ -31,9 +31,8 @@ public class SMSRecieveReceiver extends BroadcastReceiver {
             MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
             switch (smsHandler.getCommand()) {
                 case -1:
-//                    break;
+                    break;
                 case 0: //bat wifi
-
                     wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     wifiManager.setWifiEnabled(true);
                     break;

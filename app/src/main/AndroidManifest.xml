@@ -16,6 +16,8 @@
 
     <!-- nhan tin nhan -->
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <!-- de theo doi sim thay doi -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>

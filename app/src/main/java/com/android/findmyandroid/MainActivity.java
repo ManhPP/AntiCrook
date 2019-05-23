@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         policyManager = new PolicyManager(this);
         sharedPreferences = MainActivity.this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("isActivated",false).apply();
         checkPermission = new CheckPermission(MainActivity.this, this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -56,12 +57,14 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
 
         activate = findViewById(R.id.activate_button);
+        if (policyManager.isAdminActive()){
+            activate.setChecked(true);
+            sharedPreferences.edit().putBoolean("isActivated",true).apply();
+        }
         activate.setOnCheckedChangeListener(onActivate);
         uninstallApp = findViewById(R.id.uninstall_app);
         uninstallApp.setOnClickListener(onUninstall);
         init();
-
-        sharedPreferences.edit().putBoolean("isActivated",false).apply();
 
         settingGroup.setOnClickListener(settingClick);
 
