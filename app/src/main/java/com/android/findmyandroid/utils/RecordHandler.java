@@ -10,7 +10,43 @@ import android.os.Handler;
 public class RecordHandler {
     MediaRecorder mediaRecorder = null;
     String fileName = null;
-    int isRecording = 0;
-    Handler handle;
-    int timeRecord;
+    Handler handler;
+    int recordTime = 0;
+
+    public void startRecording(){
+        if(isRecording == 0){
+            mediaRecorder = new MediaRecorder();
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setOutputFile(fileName);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+            recordTime = 0;
+            try {
+                mediaRecorder.prepare();
+                mediaRecorder.start();
+                isRecording = 1;
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void stopRecording(){
+        if(isRecording == 1){
+            mediaRecorder.stop();
+            mediaRecorder.release();
+            mediaRecorder = null;
+        }
+    }
+    Runnable stopRecord = new Runnable() {
+        @Override
+        public void run() {
+            if(isRecording == 1){
+                recordTime += 1;
+                handler.postDelayed(this, 1000);
+            }
+        }
+    };
 }

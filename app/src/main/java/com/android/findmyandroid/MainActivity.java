@@ -88,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
                                         "Sau khi kích hoạt quyền admin cho ứng dụng, bạn sẽ có thể chặn việc gỡ ứng dụng.");
                         startActivityForResult(activateDeviceAdmin,
                                 PolicyManager.DPM_ACTIVATION_REQUEST_CODE);
-
-                        sharedPreferences.edit().putBoolean("isActivated",true).apply();
-                        Log.i("activated", "da activate");
                     }
                 }
                 else{
@@ -107,7 +104,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == Activity.RESULT_OK && requestCode == PolicyManager.DPM_ACTIVATION_REQUEST_CODE){
+            sharedPreferences.edit().putBoolean("isActivated",true).apply();
+            Log.i("activated", "da activate");
+        }
+        else if(resultCode == Activity.RESULT_CANCELED && requestCode == PolicyManager.DPM_ACTIVATION_REQUEST_CODE){
+            activate.setChecked(false);
+            sharedPreferences.edit().putBoolean("isActivated",false).apply();
+            Log.i("activated", "khong activate");
+        }
+    }
     public void initDialogUninstall(){
         final View view = getLayoutInflater().inflate(R.layout.alert_dialog_uninstall, null);
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
