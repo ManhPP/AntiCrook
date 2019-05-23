@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import com.android.findmyandroid.model.SMS;
 
@@ -39,6 +40,9 @@ public class SMSHandler {
             list.add(sharedPreferences.getString("BACK", "BACK_CAM"));
             list.add(sharedPreferences.getString("LOCATE", "LOCATE"));
             list.add(sharedPreferences.getString("ALARM", "ALARM"));
+            Log.d("smsreceive", "getListCommndSetting: not null");
+        }else{
+            Log.d("smsreceive", "getListCommndSetting: null");
         }
 
         return list;

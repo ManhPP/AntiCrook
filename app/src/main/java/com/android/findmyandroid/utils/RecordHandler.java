@@ -12,7 +12,7 @@ public class RecordHandler {
     String fileName = null;
     Handler handler;
     int recordTime = 0;
-
+    int isRecording = 0;
     public void startRecording(){
         if(isRecording == 0){
             mediaRecorder = new MediaRecorder();

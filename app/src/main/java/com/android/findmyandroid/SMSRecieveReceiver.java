@@ -22,15 +22,18 @@ import java.util.List;
 public class SMSRecieveReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("smsreceive", "onReceive: aaaaaaa");
         SharedPreferences sharedPreferences= context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
-        if(sharedPreferences.getBoolean("isActived", false)) {
+        if(sharedPreferences.getBoolean("isActivated", false)) {
+            Log.i("smsreceive", "onReceive: asdasdas");
             SMSHandler smsHandler = new SMSHandler(context);
             WifiManager wifiManager;
             MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
             switch (smsHandler.getCommand()) {
                 case -1:
-                    break;
+//                    break;
                 case 0: //bat wifi
+
                     wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     wifiManager.setWifiEnabled(true);
                     break;
