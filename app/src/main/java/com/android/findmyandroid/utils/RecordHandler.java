@@ -1,18 +1,20 @@
 package com.android.findmyandroid.utils;
 
+import android.app.Activity;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.util.Log;
 
 /**
  * Created by manhpp on 5/23/2019.
  */
 
-public class RecordHandler {
+public class RecordHandler extends Activity {
     MediaRecorder mediaRecorder = null;
-    String fileName = Environment.getExternalStorageDirectory() + "/myRecord"+System.currentTimeMillis()+".3gp";
+    String fileName = getApplicationContext().getExternalFilesDir("Record")+ "/record"+System.currentTimeMillis()+".3gp";
     int isRecording = 0;
-    Handler handler;
     int recordTime = 15;
 
     public void startRecording(){
@@ -28,7 +30,7 @@ public class RecordHandler {
                 mediaRecorder.prepare();
                 mediaRecorder.start();
                 isRecording = 1;
-                handler.post(stopRecording);
+                new Thread(stopRecording).start();
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -39,13 +41,16 @@ public class RecordHandler {
     Runnable stopRecording = new Runnable() {
         @Override
         public void run() {
-            if(isRecording == 1){
-                handler.postDelayed(this, recordTime * 1000);
-                mediaRecorder.stop();
-                mediaRecorder.release();
-                mediaRecorder = null;
-                isRecording = 0;
-            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(recordTime);
+                    mediaRecorder.stop();
+                    mediaRecorder.release();
+                    mediaRecorder = null;
+                    isRecording = 0;
+                }
+            });
         }
     };
 }
