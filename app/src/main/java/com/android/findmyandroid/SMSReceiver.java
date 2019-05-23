@@ -14,6 +14,7 @@ import com.android.findmyandroid.model.SMS;
 import com.android.findmyandroid.utils.LocationHandler;
 import com.android.findmyandroid.utils.SMSHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by tranv on 4/14/2019.
  */
 
-public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener{
+public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener, Serializable,OnTakePictureListener{
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("smsreceive", "onReceive: aaaaaaa");
@@ -31,13 +32,11 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
             WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
             MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
             switch (smsHandler.getCommand()) {
-                case -11:
-                    break;
                 case 0: //bat wifi
 //                    wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     wifiManager.setWifiEnabled(true);
                     break;
-                case -1: //doc tin nhan
+                case 1: //doc tin nhan
 //                    wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
                     List<SMS> list = smsHandler.getAllSMS();
                     if(wifiManager.isWifiEnabled()){
@@ -55,8 +54,12 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                 case 2: //doc danh ba
                     break;
                 case 3: //ghi am
+
                     break;
                 case 4: //chup cam truoc
+                    Intent i = new Intent(context, CamService.class);
+                    i.putExtra("onTakeePickture", this);
+                    context.startService(i);
                     break;
                 case 5: //chup cam sau
                     break;
@@ -77,4 +80,8 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
         Log.i("abcdef", "onReceiveLocation: "+location.getLatitude()+"-"+location.getLongitude());
     }
 
+    @Override
+    public void onTakePicture(String path) {
+        Log.i("picture", "onTakePicture: "+path);
+    }
 }
