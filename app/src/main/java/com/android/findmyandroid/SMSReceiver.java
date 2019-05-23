@@ -11,9 +11,11 @@ import android.widget.Toast;
 
 import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.Location;
+import com.android.findmyandroid.model.Record;
 import com.android.findmyandroid.model.SMS;
 import com.android.findmyandroid.utils.ContactHandler;
 import com.android.findmyandroid.utils.LocationHandler;
+import com.android.findmyandroid.utils.RecordHandler;
 import com.android.findmyandroid.utils.SMSHandler;
 
 import java.io.Serializable;
@@ -24,7 +26,7 @@ import java.util.List;
  * Created by tranv on 4/14/2019.
  */
 
-public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener, Serializable,OnTakePictureListener{
+public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener, OnReceiveRecordListener, Serializable,OnTakePictureListener{
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("smsreceive", "onReceive: aaaaaaa");
@@ -58,7 +60,8 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     Log.i("contact", "onReceive: num contact"+listContacts.size());
                     break;
                 case 3: //ghi am
-
+                    RecordHandler recordHandler = new RecordHandler();
+                    recordHandler.setOnReceiveRecordListener(this);
                     break;
                 case 4: //chup cam truoc
                     Intent i = new Intent(context, CamService.class);
@@ -81,11 +84,16 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
 
     @Override
     public void onReceiveLocation(Location location) {
-        Log.i("abcdef", "onReceiveLocation: "+location.getLatitude()+"-"+location.getLongitude());
+        Log.i("onReceived", "Location: "+location.getLatitude()+"-"+location.getLongitude());
+    }
+
+    @Override
+    public void onReceiveRecord(Record record) {
+        Log.i("onReceived", "Record: " + record.getUrl());
     }
 
     @Override
     public void onTakePicture(String path) {
-        Log.i("picture", "onTakePicture: "+path);
+        Log.i("picture", "onTakePicture: "+ path);
     }
 }

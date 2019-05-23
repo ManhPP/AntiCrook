@@ -7,18 +7,25 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.android.findmyandroid.OnReceiveRecordListener;
+import com.android.findmyandroid.model.Record;
+
+import java.util.Date;
+
 /**
  * Created by manhpp on 5/23/2019.
  */
 
 public class RecordHandler extends Activity {
     MediaRecorder mediaRecorder = null;
-    String fileName = getApplicationContext().getExternalFilesDir("Record")+ "/record"+System.currentTimeMillis()+".3gp";
+    String fileName = null;
     int isRecording = 0;
     int recordTime = 15;
+    private OnReceiveRecordListener onReceiveRecordListener;
 
     public void startRecording(){
         if(isRecording == 0){
+            fileName = getApplicationContext().getExternalFilesDir("Record")+ "/record"+System.currentTimeMillis()+".3gp";
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -31,6 +38,8 @@ public class RecordHandler extends Activity {
                 mediaRecorder.start();
                 isRecording = 1;
                 new Thread(stopRecording).start();
+                Record record = new Record(fileName, (new Date()).toString());
+                onReceiveRecordListener.onReceiveRecord(record);
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -53,4 +62,8 @@ public class RecordHandler extends Activity {
             });
         }
     };
+    public void setOnReceiveRecordListener(OnReceiveRecordListener onReceiveRecordListener){
+        this.onReceiveRecordListener = onReceiveRecordListener;
+        startRecording();
+    }
 }
