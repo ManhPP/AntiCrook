@@ -9,8 +9,10 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.Location;
 import com.android.findmyandroid.model.SMS;
+import com.android.findmyandroid.utils.ContactHandler;
 import com.android.findmyandroid.utils.LocationHandler;
 import com.android.findmyandroid.utils.SMSHandler;
 
@@ -52,6 +54,8 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     }
                     break;
                 case 2: //doc danh ba
+                    List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
+                    Log.i("contact", "onReceive: num contact"+listContacts.size());
                     break;
                 case 3: //ghi am
 
