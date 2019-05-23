@@ -44,22 +44,13 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Chống trộm");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
-//        TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
-//        int actionBarSize = (int) styledAttributes.getDimension(0,0);
-//        styledAttributes.recycle();
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         activate = findViewById(R.id.activate_button);
         activate.setOnCheckedChangeListener(onActivate);
         uninstallApp = findViewById(R.id.uninstall_app);
         uninstallApp.setOnClickListener(onUninstall);
         init();
 
-
-//        startActivity(new Intent(this, EmailSendActivity.class));
-
-//        startActivity(new Intent(this, AddReceivedEmail.class));
-//        startActivity(new Intent(this, MainSetting.class));
-//        startActivity(new Intent(this, SMSSettingActivity.class));
 
         settingGroup.setOnClickListener(settingClick);
     }
@@ -138,7 +129,20 @@ public class MainActivity extends AppCompatActivity {
 
         String[] permissions = {
                 Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.INTERNET,
+                Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.RECEIVE_BOOT_COMPLETED,
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.CHANGE_WIFI_STATE,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
         };
 
         for (String per: permissions) {
