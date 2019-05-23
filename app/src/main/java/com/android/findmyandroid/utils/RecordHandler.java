@@ -1,6 +1,7 @@
 package com.android.findmyandroid.utils;
 
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.os.Handler;
 
 /**
@@ -9,9 +10,10 @@ import android.os.Handler;
 
 public class RecordHandler {
     MediaRecorder mediaRecorder = null;
-    String fileName = null;
+    String fileName = Environment.getExternalStorageDirectory() + "/myRecord"+System.currentTimeMillis()+".3gp";
+    int isRecording = 0;
     Handler handler;
-    int recordTime = 0;
+    int recordTime = 15;
 
     public void startRecording(){
         if(isRecording == 0){
@@ -26,6 +28,7 @@ public class RecordHandler {
                 mediaRecorder.prepare();
                 mediaRecorder.start();
                 isRecording = 1;
+                handler.post(stopRecording);
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -33,19 +36,15 @@ public class RecordHandler {
         }
     }
 
-    public void stopRecording(){
-        if(isRecording == 1){
-            mediaRecorder.stop();
-            mediaRecorder.release();
-            mediaRecorder = null;
-        }
-    }
-    Runnable stopRecord = new Runnable() {
+    Runnable stopRecording = new Runnable() {
         @Override
         public void run() {
             if(isRecording == 1){
-                recordTime += 1;
-                handler.postDelayed(this, 1000);
+                handler.postDelayed(this, recordTime * 1000);
+                mediaRecorder.stop();
+                mediaRecorder.release();
+                mediaRecorder = null;
+                isRecording = 0;
             }
         }
     };
