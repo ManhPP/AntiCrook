@@ -37,9 +37,13 @@ public class CamService extends HiddenCameraService {
             onTakePictureListener = (OnTakePictureListener) intent.getSerializableExtra("onTakeePickture");
 
             if (HiddenCameraUtils.canOverDrawOtherApps(this)) {
+                int typeCamera = CameraFacing.FRONT_FACING_CAMERA;
+                if(intent.getBooleanExtra("isFront", false) == false){
+                    typeCamera = CameraFacing.REAR_FACING_CAMERA;
+                }
                 CameraConfig cameraConfig = new CameraConfig()
                         .getBuilder(this)
-                        .setCameraFacing(CameraFacing.FRONT_FACING_CAMERA)
+                        .setCameraFacing(typeCamera)
                         .setCameraResolution(CameraResolution.MEDIUM_RESOLUTION)
                         .setImageFormat(CameraImageFormat.FORMAT_JPEG)
                         .build();

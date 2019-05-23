@@ -33,6 +33,7 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
         SharedPreferences sharedPreferences= context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         if(sharedPreferences.getBoolean("isActivated", false)) {
             SMSHandler smsHandler = new SMSHandler(context);
+            Intent i;
             WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
             MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
             switch (smsHandler.getCommand()) {
@@ -64,11 +65,16 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     recordHandler.setOnReceiveRecordListener(this);
                     break;
                 case 4: //chup cam truoc
-                    Intent i = new Intent(context, CamService.class);
+                    i = new Intent(context, CamService.class);
                     i.putExtra("onTakeePickture", this);
+                    i.putExtra("isFront", true);
                     context.startService(i);
                     break;
                 case 5: //chup cam sau
+                    i = new Intent(context, CamService.class);
+                    i.putExtra("onTakeePickture", this);
+                    i.putExtra("isFront", false);
+                    context.startService(i);
                     break;
                 case 6: //dinh vi
                     LocationHandler locationHandler = new LocationHandler(context);
