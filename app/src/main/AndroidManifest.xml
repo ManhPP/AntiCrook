@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- cho thu vien chup anh an -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>-->
 
     <!-- auto run khi khoi dong -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />

@@ -1,6 +1,7 @@
 package com.android.findmyandroid.utils;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -14,13 +15,16 @@ import java.util.List;
  * Created by manhpp on 5/23/2019.
  */
 
-public class CheckPermission extends AppCompatActivity{
+public class CheckPermission {
     Context context;
-    public CheckPermission(Context context){
+    Activity activity;
+    final int REQUEST_MULTIPLE_PERMISSIONS = 1;
+    public CheckPermission(Context context, Activity activity){
         this.context = context;
+        this.activity = activity;
     }
     public boolean checkAndRequestPermission(String[] needPermissions){
-        final int REQUEST_MULTIPLE_PERMISSIONS = 1;
+
         List<String> listPermissionDenied = new ArrayList<>();
         String[] permissions = null;
         if (needPermissions == null){
@@ -32,7 +36,7 @@ public class CheckPermission extends AppCompatActivity{
                     Manifest.permission.INTERNET,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     Manifest.permission.INTERNET,
-                    Manifest.permission.SYSTEM_ALERT_WINDOW,
+//                    Manifest.permission.SYSTEM_ALERT_WINDOW,
                     Manifest.permission.RECEIVE_BOOT_COMPLETED,
                     Manifest.permission.RECEIVE_SMS,
                     Manifest.permission.READ_PHONE_STATE,
@@ -54,7 +58,7 @@ public class CheckPermission extends AppCompatActivity{
         }
 
         if(!listPermissionDenied.isEmpty()){
-            requestPermissions(listPermissionDenied.toArray(new String[listPermissionDenied.size()]), REQUEST_MULTIPLE_PERMISSIONS);
+            ActivityCompat.requestPermissions(activity,listPermissionDenied.toArray(new String[listPermissionDenied.size()]), REQUEST_MULTIPLE_PERMISSIONS);
             return false;
         }
         return true;
