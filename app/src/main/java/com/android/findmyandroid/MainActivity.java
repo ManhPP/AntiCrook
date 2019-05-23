@@ -24,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.findmyandroid.utils.CheckPermission;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +36,14 @@ public class MainActivity extends AppCompatActivity {
     Switch activate = null;
     private LinearLayout settingGroup;
     private LinearLayout uninstallApp;
-    final int REQUEST_MULTIPLE_PERMISSIONS = 1;
+    public CheckPermission checkPermission = new CheckPermission(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkPermission.checkAndRequestPermission(null);
         policyManager = new PolicyManager(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -140,38 +144,4 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, MainSetting.class));
         }
     };
-
-    public boolean checkAndRequestPermission(){
-        List<String> listPermissionDenied = new ArrayList<>();
-
-        String[] permissions = {
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.INTERNET,
-                Manifest.permission.SYSTEM_ALERT_WINDOW,
-                Manifest.permission.RECEIVE_BOOT_COMPLETED,
-                Manifest.permission.RECEIVE_SMS,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.CHANGE_WIFI_STATE,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-        };
-
-        for (String per: permissions) {
-            if (ContextCompat.checkSelfPermission(this, per) != PackageManager.PERMISSION_GRANTED){
-                listPermissionDenied.add(per);
-            }
-        }
-
-        if(!listPermissionDenied.isEmpty()){
-            ActivityCompat.requestPermissions(this, listPermissionDenied.toArray(new String[listPermissionDenied.size()]), REQUEST_MULTIPLE_PERMISSIONS);
-            return false;
-        }
-        return true;
-    }
 }
