@@ -90,4 +90,12 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="WIFI">WIFI</string>
+    <string name="SMS">SMS</string>
+    <string name="CONTACT">CONTACT</string>
+    <string name="RECORD">RECORD</string>
+    <string name="BACK">BACK</string>
+    <string name="FRONT">FRONT</string>
+    <string name="LOCATE">LOCATE</string>
+    <string name="ALARM">ALARM</string>
 </resources>
