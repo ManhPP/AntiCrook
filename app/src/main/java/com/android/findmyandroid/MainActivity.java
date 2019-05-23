@@ -1,9 +1,12 @@
 package com.android.findmyandroid;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +17,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -35,15 +39,17 @@ public class MainActivity extends AppCompatActivity {
     Switch activate = null;
     private LinearLayout settingGroup;
     private LinearLayout uninstallApp;
-    public CheckPermission checkPermission = new CheckPermission(this);
+    public CheckPermission checkPermission = null;
+    SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkPermission.checkAndRequestPermission(null);
         policyManager = new PolicyManager(this);
+        sharedPreferences = MainActivity.this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        checkPermission = new CheckPermission(MainActivity.this, this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Chống trộm");
@@ -55,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         uninstallApp.setOnClickListener(onUninstall);
         init();
 
+        sharedPreferences.edit().putBoolean("isActivated",false).apply();
 
         settingGroup.setOnClickListener(settingClick);
+        checkPermission.checkAndRequestPermission(null);
     }
 
     public void init(){
@@ -68,22 +76,34 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked){
-                if (!policyManager.isAdminActive()) {
-                    Intent activateDeviceAdmin = new Intent(
-                            DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-                    activateDeviceAdmin.putExtra(
-                            DevicePolicyManager.EXTRA_DEVICE_ADMIN,
-                            policyManager.getAdminComponent());
-                    activateDeviceAdmin
-                            .putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                                    "Sau khi kích hoạt quyền admin cho ứng dụng, bạn sẽ có thể chặn việc gỡ ứng dụng.");
-                    startActivityForResult(activateDeviceAdmin,
-                            PolicyManager.DPM_ACTIVATION_REQUEST_CODE);
+                if(checkPermission.checkAndRequestPermission(null)){
+                    if (!policyManager.isAdminActive()) {
+                        Intent activateDeviceAdmin = new Intent(
+                                DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                        activateDeviceAdmin.putExtra(
+                                DevicePolicyManager.EXTRA_DEVICE_ADMIN,
+                                policyManager.getAdminComponent());
+                        activateDeviceAdmin
+                                .putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                                        "Sau khi kích hoạt quyền admin cho ứng dụng, bạn sẽ có thể chặn việc gỡ ứng dụng.");
+                        startActivityForResult(activateDeviceAdmin,
+                                PolicyManager.DPM_ACTIVATION_REQUEST_CODE);
+
+                        sharedPreferences.edit().putBoolean("isActivated",true).apply();
+                        Log.i("activated", "da activate");
+                    }
                 }
+                else{
+                    buttonView.setChecked(false);
+                }
+
             }
             else{
-                if (policyManager.isAdminActive())
+                if (policyManager.isAdminActive()) {
                     policyManager.disableAdmin();
+                    sharedPreferences.edit().putBoolean("isActivated",false).apply();
+                    Log.i("activated", "bo activate");
+                }
             }
         }
     };
