@@ -9,9 +9,11 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.Location;
 import com.android.findmyandroid.model.Record;
 import com.android.findmyandroid.model.SMS;
+import com.android.findmyandroid.utils.ContactHandler;
 import com.android.findmyandroid.utils.LocationHandler;
 import com.android.findmyandroid.utils.RecordHandler;
 import com.android.findmyandroid.utils.SMSHandler;
@@ -31,6 +33,7 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
         SharedPreferences sharedPreferences= context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         if(sharedPreferences.getBoolean("isActivated", false)) {
             SMSHandler smsHandler = new SMSHandler(context);
+            Intent i;
             WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
             MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
             switch (smsHandler.getCommand()) {
@@ -54,17 +57,24 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     }
                     break;
                 case 2: //doc danh ba
+                    List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
+                    Log.i("contact", "onReceive: num contact"+listContacts.size());
                     break;
                 case 3: //ghi am
                     RecordHandler recordHandler = new RecordHandler();
                     recordHandler.setOnReceiveRecordListener(this);
                     break;
                 case 4: //chup cam truoc
-                    Intent i = new Intent(context, CamService.class);
+                    i = new Intent(context, CamService.class);
                     i.putExtra("onTakeePickture", this);
+                    i.putExtra("isFront", true);
                     context.startService(i);
                     break;
                 case 5: //chup cam sau
+                    i = new Intent(context, CamService.class);
+                    i.putExtra("onTakeePickture", this);
+                    i.putExtra("isFront", false);
+                    context.startService(i);
                     break;
                 case 6: //dinh vi
                     LocationHandler locationHandler = new LocationHandler(context);
