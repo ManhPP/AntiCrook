@@ -7,5 +7,5 @@ import com.android.findmyandroid.model.Record;
  */
 
 public interface OnReceiveRecordListener {
-    public void onReceive(Record record);
+    public void onReceiveRecord(Record record);
 }

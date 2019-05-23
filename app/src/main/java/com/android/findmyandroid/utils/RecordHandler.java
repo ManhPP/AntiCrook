@@ -39,7 +39,7 @@ public class RecordHandler extends Activity {
                 isRecording = 1;
                 new Thread(stopRecording).start();
                 Record record = new Record(fileName, (new Date()).toString());
-
+                onReceiveRecordListener.onReceiveRecord(record);
             }
             catch (Exception e){
                 e.printStackTrace();
