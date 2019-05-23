@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -22,9 +25,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by tranv on 4/14/2019.
- */
 
 public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener, OnReceiveRecordListener, Serializable,OnTakePictureListener{
     @Override
@@ -81,6 +81,23 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     locationHandler.addOnReceiveLocationListener(this);
                     break;
                 case 7: //bao dong
+//                    String path = context.getApplicationContext().getExternalFilesDir(null)+"/warning.mp3";
+//                    Uri warning = Uri.parse(path);
+//                    RingtoneManager.setActualDefaultRingtoneUri(
+//                            context.getApplicationContext(), RingtoneManager.TYPE_NOTIFICATION,
+//                            warning);
+//                    Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), warning);
+//                    r.play();
+//                    Ringtone ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), warning);
+//                    ringtone.play();
+
+                    try {
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+                        Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+                        r.play();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
 
             }

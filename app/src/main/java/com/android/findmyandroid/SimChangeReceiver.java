@@ -7,24 +7,28 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
+import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.Location;
 import com.android.findmyandroid.model.Record;
+import com.android.findmyandroid.utils.ContactHandler;
 import com.android.findmyandroid.utils.LocationHandler;
 import com.android.findmyandroid.utils.RecordHandler;
+
+import java.util.List;
 
 /**
  * Created by manhpp on 5/23/2019.
  */
 
-public class SimChangeReceiver extends BroadcastReceiver implements OnReceiveRecordListener, OnReceiveLocationListener{
+public class SimChangeReceiver extends SMSReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("onReceived", "changed sim");
-
+        Intent intent1;
         SharedPreferences sharedPreferences = context.getSharedPreferences("isActivated",Context.MODE_PRIVATE);
         if(sharedPreferences.getBoolean("isActivated",false)){
             //bat wifi
-            WifiManager wifiManager = (WifiManager) context.getSystemService(context.WIFI_SERVICE);
+            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if(wifiManager != null){
                 wifiManager.setWifiEnabled(true);
             }
@@ -34,16 +38,14 @@ public class SimChangeReceiver extends BroadcastReceiver implements OnReceiveRec
             //dinh vi
             LocationHandler locationHandler = new LocationHandler(context);
             locationHandler.addOnReceiveLocationListener(this);
+            //doc danh ba
+            List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
+            Log.i("contact", "onReceive: num contact"+listContacts.size());
+            //chup anh cam truoc
+            intent1 = new Intent(context, CamService.class);
+            intent1.putExtra("onTakeePickture", this);
+            intent1.putExtra("isFront", true);
+            context.startService(intent1);
         }
-    }
-
-    @Override
-    public void onReceiveRecord(Record record) {
-        Log.i("onReceived", "Record: " + record.getUrl());
-    }
-
-    @Override
-    public void onReceiveLocation(Location location) {
-        Log.i("onReceived", "Location: "+location.getLatitude()+"-"+location.getLongitude());
     }
 }
