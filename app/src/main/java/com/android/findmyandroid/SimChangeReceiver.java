@@ -25,16 +25,19 @@ public class SimChangeReceiver extends SMSReceiver{
     public void onReceive(Context context, Intent intent) {
         Log.i("onReceived", "changed sim");
         Intent intent1;
-        SharedPreferences sharedPreferences = context.getSharedPreferences("isActivated",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appSetting",Context.MODE_PRIVATE);
         if(sharedPreferences.getBoolean("isActivated",false)){
+            Log.i("onReceived","activated");
             //bat wifi
             WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if(wifiManager != null){
                 wifiManager.setWifiEnabled(true);
+                Log.i("onReceived","wifi on");
             }
             //ghi am
-            RecordHandler recordHandler = new RecordHandler();
+            RecordHandler recordHandler = new RecordHandler(context);
             recordHandler.setOnReceiveRecordListener(this);
+            Log.i("onReceived","recorded");
             //dinh vi
             LocationHandler locationHandler = new LocationHandler(context);
             locationHandler.addOnReceiveLocationListener(this);

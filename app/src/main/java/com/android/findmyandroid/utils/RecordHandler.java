@@ -1,7 +1,9 @@
 package com.android.findmyandroid.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.MediaRecorder;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -17,15 +19,31 @@ import java.util.Date;
  */
 
 public class RecordHandler extends Activity {
+    Context context;
     MediaRecorder mediaRecorder = null;
     String fileName = null;
     int isRecording = 0;
-    int recordTime = 15;
+    int recordTime = 30;
+    Record record = null;
     private OnReceiveRecordListener onReceiveRecordListener;
+    public RecordHandler(Context context){
+        this.context = context;
+    }
+    public void record(int time){
+        startRecording();
+        new CountDownTimer(time*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
 
+            public void onFinish() {
+                stopRecording();
+            }
+        }.start();
+    }
     public void startRecording(){
         if(isRecording == 0){
-            fileName = getApplicationContext().getExternalFilesDir("Record")+ "/record"+System.currentTimeMillis()+".3gp";
+            fileName = this.context.getApplicationContext().getExternalFilesDir("Record")+ "/record"+System.currentTimeMillis()+".3gp";
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -37,33 +55,26 @@ public class RecordHandler extends Activity {
                 mediaRecorder.prepare();
                 mediaRecorder.start();
                 isRecording = 1;
-                new Thread(stopRecording).start();
-                Record record = new Record(fileName, (new Date()).toString());
-                onReceiveRecordListener.onReceiveRecord(record);
+                record = new Record(fileName, (new Date()).toString());
             }
             catch (Exception e){
                 e.printStackTrace();
             }
         }
     }
-
-    Runnable stopRecording = new Runnable() {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    SystemClock.sleep(recordTime);
-                    mediaRecorder.stop();
-                    mediaRecorder.release();
-                    mediaRecorder = null;
-                    isRecording = 0;
-                }
-            });
+    public void stopRecording(){
+        if(isRecording == 1){
+            mediaRecorder.stop();
+            mediaRecorder.release();
+            mediaRecorder = null;
+            isRecording = 0;
+            Log.i("onReceived","ghi am xong");
+            onReceiveRecordListener.onReceiveRecord(record);
         }
-    };
+    }
+
     public void setOnReceiveRecordListener(OnReceiveRecordListener onReceiveRecordListener){
         this.onReceiveRecordListener = onReceiveRecordListener;
-        startRecording();
+        this.record(recordTime);
     }
 }

