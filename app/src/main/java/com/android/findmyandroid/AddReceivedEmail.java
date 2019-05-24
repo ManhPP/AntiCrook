@@ -1,6 +1,8 @@
 package com.android.findmyandroid;
 
+import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,11 +30,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.findmyandroid.model.EmailReceive;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddReceivedEmail extends AppCompatActivity {
-    private List<String> lstEmails = null;
+    private Cursor lstEmails = null;
     private ListView lstEmailView = null;
     private FloatingActionButton addEmailFAB = null;
     private CoordinatorLayout addReceivedEmailView = null;
@@ -44,8 +49,8 @@ public class AddReceivedEmail extends AppCompatActivity {
     private Button deleteEmail = null;
     private Button cancelDeletingEmail = null;
     private TextView note = null;
-    String currrent = null;
-
+    MyDatabaseHelper helper = null;
+    EmailReceive emailReceive = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,27 +63,29 @@ public class AddReceivedEmail extends AppCompatActivity {
         int actionBarSize = (int) styledAttributes.getDimension(0,0);
         styledAttributes.recycle();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        lstEmails = new ArrayList<>();
+
+        helper = new MyDatabaseHelper(this);
+        lstEmails = helper.getEmailReceive();
+        startManagingCursor(lstEmails);
         lstEmailView = findViewById(R.id.lstReceivedEmail);
         addEmailFAB = findViewById(R.id.addEmailFAB);
         addReceivedEmailView = findViewById(R.id.addReceivedEmail);
         note = findViewById(R.id.note);
-        if (lstEmails.size() == 0){
+        if (lstEmails.getCount() == 0){
             note.setText("Chưa có email nào trong danh sách!");
         }
-        adapter = new EmailAdapter();
+        adapter = new EmailAdapter(lstEmails);
         lstEmailView.setAdapter(adapter);
 
         lstEmailView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 Toast.makeText(AddReceivedEmail.this, "hehehe", Toast.LENGTH_SHORT).show();
-                currrent = lstEmails.get(position);
                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View deleteEmailView = inflater.inflate(R.layout.delete_email, null);
                 popupWindow = new PopupWindow(deleteEmailView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                String msg = "Xóa email \"" + lstEmails.get(position) + "\" khỏi danh sách?";
+                lstEmails.moveToPosition(position);
+                String msg = "Xóa email \"" + lstEmails.getString(1) + "\"?";
                 confirmDeletingEmail = deleteEmailView.findViewById(R.id.confirmDeletingEmail);
                 deleteEmail = deleteEmailView.findViewById(R.id.deleteEmail);
                 cancelDeletingEmail = deleteEmailView.findViewById(R.id.cancelDeletingEmail);
@@ -88,11 +95,14 @@ public class AddReceivedEmail extends AppCompatActivity {
                 deleteEmail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String msg = "Đã xóa email \"" + lstEmails.get(position) + "\"!";
-                        adapter.remove(adapter.getItem(position));
+                        String msg = "Đã xóa email \"" + lstEmails.getString(1) + "\"!";
+                        int[] id = {lstEmails.getInt(0)};
+                        helper.deleteEmailReceive(id);
+                        adapter.changeCursor(helper.getEmailReceive());
+                        lstEmails = helper.getEmailReceive();
                         popupWindow.dismiss();
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-                        if (lstEmails.size() == 0){
+                        if (lstEmails.getCount() == 0){
                             note.setText("Chưa có email nào trong danh sách!");
                         }
                     }
@@ -137,11 +147,15 @@ public class AddReceivedEmail extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Chưa nhập email!", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            adapter.add(email);
+                            emailReceive = new EmailReceive();
+                            emailReceive.setEmail(email);
+                            helper.addEmailReceive(emailReceive);
+                            adapter.changeCursor(helper.getEmailReceive());
+                            lstEmails = helper.getEmailReceive();
                             popupWindow.dismiss();
                             Toast.makeText(getApplicationContext(), "Đã thêm email!", Toast.LENGTH_SHORT).show();
-                            if (lstEmails.size() > 0){
-                                note.setText("Danh sách email được nhận thông báo: ");
+                            if (lstEmails.getCount() > 0){
+                                note.setText("Danh sách email được nhận thông báo ");
                             }
                         }
 
@@ -186,38 +200,35 @@ public class AddReceivedEmail extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public class EmailAdapter extends ArrayAdapter<String>{
-        EmailAdapter(){
-            super(AddReceivedEmail.this, R.layout.email_row, lstEmails);
+    public class EmailAdapter extends CursorAdapter{
+        EmailAdapter(Cursor c){
+            super(AddReceivedEmail.this, c, true);
         }
-        public View getView(int position, View convertView, ViewGroup parent){
-            View row = convertView;
-            EmailHolder holder = null;
-            if (row == null) {
-                LayoutInflater inflater = getLayoutInflater();
-                row = inflater.inflate(R.layout.email_row, null);
-                holder = new EmailHolder(row);
-                row.setTag(holder);
-            } else {
-                holder = (EmailHolder) row.getTag();
-            }
-
-            holder.populateFrom(lstEmails.get(position), position);
-            return row;
+        @Override
+        public void bindView(View row, Context ctxt,
+                             Cursor c) {
+            EmailHolder holder = (EmailHolder)row.getTag();
+            holder.populateFrom(c, c.getPosition());
+        }
+        @Override
+        public View newView(Context ctxt, Cursor c,
+                            ViewGroup parent) {
+            LayoutInflater inflater=getLayoutInflater();
+            View row=inflater.inflate(R.layout.email_row, parent, false);
+            EmailHolder holder=new EmailHolder(row);
+            row.setTag(holder);
+            return(row);
         }
     }
     static class EmailHolder {
         private TextView email = null;
-        //private ImageView icon = null;
 
         EmailHolder(View row) {
             email = (TextView) row.findViewById(R.id.emailrow);
-            //icon = (ImageView) row.findViewById(R.id.deleteemailrow);
         }
 
-        void populateFrom(String r, int no) {
-            email.setText(no+1 + ". " + r);
-            //icon.setImageResource(R.drawable.uninstall);
+        void populateFrom(Cursor c, int no) {
+            email.setText(no+1 + ". " +c.getString(1));
         }
     }
 }

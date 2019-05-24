@@ -43,7 +43,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         sql=" CREATE TABLE "+TABLE_RECORD +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, time TEXT);";
         db.execSQL(sql);
-        sql=" CREATE TABLE "+TABLE_EMAIL_RECEIVE +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT);";
+        sql=" CREATE TABLE "+TABLE_EMAIL_RECEIVE +"( _id  INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT);";
         db.execSQL(sql);
         sql=" CREATE TABLE "+TABLE_SMS +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, phone TEXT, body TEXT, time TEXT);";
         db.execSQL(sql);
@@ -167,18 +167,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<EmailReceive> getEmailReceive(){
-        List<EmailReceive> list = new ArrayList<>();
+    public Cursor getEmailReceive(){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM "+TABLE_EMAIL_RECEIVE;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while(c.moveToNext()){
-            EmailReceive em = new EmailReceive(c.getString(1));
-            em.setId(c.getInt(0));
-            list.add(em);
-        }
-        return list;
+        return c;
     }
 
     public void deleteEmailReceive(int[] id){
@@ -193,7 +187,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             args[i] = id[i]+"";
         }
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM "+TABLE_EMAIL_RECEIVE+" WHERE id IN  ("+numPlaceHolder+")";
+        String query = "DELETE FROM "+TABLE_EMAIL_RECEIVE+" WHERE _id IN  ("+numPlaceHolder+")";
         db.execSQL(query, args);
         db.close();
     }

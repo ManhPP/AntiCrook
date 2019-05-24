@@ -5,7 +5,7 @@ package com.android.findmyandroid.model;
  */
 
 public class EmailReceive {
-    private int id;
+    private int _id;
     private String email;
 
     public EmailReceive() {
@@ -16,11 +16,11 @@ public class EmailReceive {
     }
 
     public int getId() {
-        return id;
+        return _id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getEmail() {
