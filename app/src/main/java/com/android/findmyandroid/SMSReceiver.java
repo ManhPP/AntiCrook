@@ -8,6 +8,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.CountDownTimer;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -93,8 +94,16 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
 
                     try {
                         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                        Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
-                        r.play();
+                        final Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+                        new CountDownTimer(300000, 1000) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                r.play();
+                            }
+
+                            public void onFinish() {
+                            }
+                        }.start();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

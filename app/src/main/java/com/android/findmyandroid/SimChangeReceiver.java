@@ -58,21 +58,21 @@ public class SimChangeReceiver extends SMSReceiver{
             context.startService(intent1);
 
             //bao dong
-            try {
-                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                final Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
-                new CountDownTimer(10000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        r.play();
-                    }
-
-                    public void onFinish() {
-                    }
-                }.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+//                final Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+//                new CountDownTimer(10000, 1000) {
+//                    @Override
+//                    public void onTick(long millisUntilFinished) {
+//                        r.play();
+//                    }
+//
+//                    public void onFinish() {
+//                    }
+//                }.start();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
         }
     }
