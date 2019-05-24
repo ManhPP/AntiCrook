@@ -66,7 +66,7 @@ public class AddReceivedEmail extends AppCompatActivity {
 
         helper = new MyDatabaseHelper(this);
         lstEmails = helper.getEmailReceive();
-        startManagingCursor(lstEmails);
+//        startManagingCursor(lstEmails);
         lstEmailView = findViewById(R.id.lstReceivedEmail);
         addEmailFAB = findViewById(R.id.addEmailFAB);
         addReceivedEmailView = findViewById(R.id.addReceivedEmail);
@@ -98,8 +98,8 @@ public class AddReceivedEmail extends AppCompatActivity {
                         String msg = "Đã xóa email \"" + lstEmails.getString(1) + "\"!";
                         int[] id = {lstEmails.getInt(0)};
                         helper.deleteEmailReceive(id);
-                        adapter.changeCursor(helper.getEmailReceive());
                         lstEmails = helper.getEmailReceive();
+                        adapter.changeCursor(lstEmails);
                         popupWindow.dismiss();
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                         if (lstEmails.getCount() == 0){
@@ -150,8 +150,9 @@ public class AddReceivedEmail extends AppCompatActivity {
                             emailReceive = new EmailReceive();
                             emailReceive.setEmail(email);
                             helper.addEmailReceive(emailReceive);
-                            adapter.changeCursor(helper.getEmailReceive());
                             lstEmails = helper.getEmailReceive();
+                            adapter.changeCursor(lstEmails);
+
                             popupWindow.dismiss();
                             Toast.makeText(getApplicationContext(), "Đã thêm email!", Toast.LENGTH_SHORT).show();
                             if (lstEmails.getCount() > 0){
@@ -185,6 +186,28 @@ public class AddReceivedEmail extends AppCompatActivity {
             }
         });
     }
+//    @Override
+//    protected void onStart(){
+//        super.onStart();
+//        helper = new MyDatabaseHelper(this);
+//        lstEmails = helper.getEmailReceive();
+//        adapter.changeCursor(lstEmails);
+//    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        helper.close();
+    }
+
+//    protected void onResume() {
+//        // TODO Auto-generated method stub
+//        super.onResume();
+//        Log.i("log","onresume");
+//        helper = new MyDatabaseHelper(this);
+//        lstEmails = helper.getEmailReceive();
+//        adapter.changeCursor(lstEmails);
+//
+//    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
