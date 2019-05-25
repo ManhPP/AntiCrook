@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         checkPermission = new CheckPermission(MainActivity.this, this);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Chống trộm");
+        actionBar.setTitle("AntiCrook");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
 
         activate = findViewById(R.id.activate_button);
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                 policyManager.getAdminComponent());
                         activateDeviceAdmin
                                 .putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                                        "Sau khi kích hoạt quyền admin cho ứng dụng, bạn sẽ có thể chặn việc gỡ ứng dụng.");
+                                        "After activating, you can prevent the application from being removed!");
                         startActivityForResult(activateDeviceAdmin,
                                 PolicyManager.DPM_ACTIVATION_REQUEST_CODE);
                     }
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     public void initDialogUninstall(){
         final View view = getLayoutInflater().inflate(R.layout.alert_dialog_uninstall, null);
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Cảnh báo");
+        alertDialog.setTitle("Warning!");
         alertDialog.setCancelable(false);
 
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(uninstallIntent);
             }
         });
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Hủy", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 //                alertDialog.dismiss()

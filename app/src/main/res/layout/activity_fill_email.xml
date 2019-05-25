@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nhập email bạn muốn thêm "
+        android:text="Enter the email you want to add"
         android:layout_marginRight="55dp"
         android:layout_marginLeft="55dp"
         android:layout_marginBottom="10dp"
@@ -29,11 +29,11 @@
         <Button android:id="@+id/dissmisPopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy"/>
+            android:text="Cancel"/>
         <Button android:id="@+id/addFilledEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Lưu"/>
+            android:text="Save"/>
     </LinearLayout>
 </LinearLayout>
