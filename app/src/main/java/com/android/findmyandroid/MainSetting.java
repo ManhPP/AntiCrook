@@ -308,7 +308,7 @@ public class MainSetting extends AppCompatActivity {
                             else {
                                 switch (childPosition){
                                     case 0:
-                                        sharedPreferences.edit().putBoolean("fontCam", false).apply();
+                                        sharedPreferences.edit().putBoolean("frontCam", false).apply();
                                         Log.i("switch","tat cam truoc");
                                         break;
                                     case 1:
