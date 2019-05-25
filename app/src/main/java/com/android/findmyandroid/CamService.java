@@ -79,7 +79,8 @@ public class CamService extends HiddenCameraService {
         Log.i("img", "Captured image size is : " + imageFile.length()+imageFile.getAbsolutePath());
         Image img = new Image(imageFile.getAbsolutePath(), (new Date()).toString());
         onTakePictureListener.onTakePicture(img);
-//        stopSelf();
+
+        stopSelf();
     }
 
     @Override
