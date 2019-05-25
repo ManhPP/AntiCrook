@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startActivity(new Intent(this, PinLockActivity.class));
+
         policyManager = new PolicyManager(this);
         sharedPreferences = MainActivity.this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean("isActivated",false).apply();

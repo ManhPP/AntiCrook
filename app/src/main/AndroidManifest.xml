@@ -82,7 +82,8 @@
 
         <service android:name=".CamService" />
 
-        <activity android:name=".AboutUs"></activity>
+        <activity android:name=".AboutUs" />
+        <activity android:name=".PinLockActivity"></activity>
     </application>
 
 </manifest>
