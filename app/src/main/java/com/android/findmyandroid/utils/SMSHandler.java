@@ -68,18 +68,22 @@ public class SMSHandler {
         Uri uri = Uri.parse("content://sms/inbox");
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
         listSMS.clear();
-        while (cursor.moveToNext()){
-            int idPhoneNumber = cursor.getColumnIndex("address");
-            int idTimeStamp = cursor.getColumnIndex("date");
-            int idBody = cursor.getColumnIndex("body");
+        cursor.moveToFirst();
+        if(cursor!=null) {
+            while (!cursor.isAfterLast()) {
+                int idPhoneNumber = cursor.getColumnIndex("address");
+                int idTimeStamp = cursor.getColumnIndex("date");
+                int idBody = cursor.getColumnIndex("body");
 
-            String phoneNumber = cursor.getString(idPhoneNumber);
-            String timeStamp = cursor.getString(idTimeStamp);
-            String body = cursor.getString(idBody);
+                String phoneNumber = cursor.getString(idPhoneNumber);
+                String timeStamp = cursor.getString(idTimeStamp);
+                String body = cursor.getString(idBody);
 
-            SMS sms= new SMS(body, timeStamp, phoneNumber);
-            sms.setTime((new Date()).toString());
-            listSMS.add(sms);
+                SMS sms = new SMS(body, timeStamp, phoneNumber);
+                sms.setTime((new Date()).toString());
+                listSMS.add(sms);
+                cursor.moveToNext();
+            }
         }
         cursor.close();
         return listSMS;

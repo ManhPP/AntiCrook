@@ -34,6 +34,7 @@ import com.android.findmyandroid.utils.SMSHandler;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -149,7 +150,7 @@ import static com.android.findmyandroid.R.id.parent;
         synchronized (lock){
             x++;
         }
-        Log.i("xxxxxxxx", "onReceiveRecord: "+x);
+        Log.i("xxxxxxxx", "onReceiveRecord: "+x+record.getUrl());
         if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
                 SimChangeReceiver.record, SimChangeReceiver.image);
     }
@@ -161,7 +162,7 @@ import static com.android.findmyandroid.R.id.parent;
         synchronized (lock){
             x++;
         }
-        Log.i("xxxxxxxx", "onTakePicture: "+x);
+        Log.i("xxxxxxxx", "onTakePicture: "+x+image.getUrl());
         if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
                 SimChangeReceiver.record, SimChangeReceiver.image);
     }
@@ -176,7 +177,7 @@ import static com.android.findmyandroid.R.id.parent;
             String content="";
             if(listSMS!=null) {
                 for (SMS sms : listSMS) {
-                    content += "Đọc lúc:" + sms.getTime() + "\n\t\tSDT:" + sms.getPhoneNumber() + " nhận lúc " + sms.getTimeReceive() + "\n\t\tNội dung: " + sms.getBody() + "\n";
+                    content += "Đọc lúc:" + sms.getTime() + "\n\t\tSDT:" + sms.getPhoneNumber() + " nhận lúc " + (new Date(Long.parseLong(sms.getTimeReceive()))).toString() + "\n\t\tNội dung: " + sms.getBody() + "\n";
                 }
 
             }

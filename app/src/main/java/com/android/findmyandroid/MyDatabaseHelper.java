@@ -48,7 +48,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         sql=" CREATE TABLE "+TABLE_EMAIL_RECEIVE +"( _id  INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE);";
         db.execSQL(sql);
-        sql=" CREATE TABLE "+TABLE_SMS +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, phone TEXT, body TEXT, time TEXT);";
+        sql=" CREATE TABLE "+TABLE_SMS +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, phone TEXT, body TEXT, time TEXT, timeReceive TEXT);";
         db.execSQL(sql);
         sql=" CREATE TABLE "+TABLE_CONTACT +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, time TEXT);";
         db.execSQL(sql);
@@ -83,10 +83,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM "+TABLE_LOCATE;
         Cursor c = db.rawQuery(query,null);
         c.moveToFirst();
-        while(c.moveToNext()){
-            Location lc = new Location(c.getString(1), c.getString(2), c.getString(3));
-            lc.setId(c.getInt(0));
-            list.add(lc);
+        if(c!=null){
+            while(!c.isAfterLast()) {
+                Location lc = new Location(c.getString(1), c.getString(2), c.getString(3));
+                lc.setId(c.getInt(0));
+                list.add(lc);
+                c.moveToNext();
+            }
         }
         db.close();
         return list;
@@ -115,10 +118,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM "+TABLE_IMAGE;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while(c.moveToNext()){
-            Image img = new Image(c.getString(1), c.getString(2));
-            img.setId(c.getInt(0));
-            list.add(img);
+        if(c!=null) {
+            while (!c.isAfterLast()) {
+                Image img = new Image(c.getString(1), c.getString(2));
+                img.setId(c.getInt(0));
+                list.add(img);
+                c.moveToNext();
+            }
         }
         return list;
     }
@@ -147,10 +153,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM "+TABLE_RECORD;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while(c.moveToNext()){
-            Record rc = new Record(c.getString(1), c.getString(2));
-            rc.setId(c.getInt(0));
-            list.add(rc);
+        if(c!=null) {
+            while (!c.isAfterLast()) {
+                Record rc = new Record(c.getString(1), c.getString(2));
+                rc.setId(c.getInt(0));
+                list.add(rc);
+                c.moveToNext();
+            }
         }
         return list;
     }
@@ -206,21 +215,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("phone", sms.getPhoneNumber());
         contentValues.put("body", sms.getBody());
-        contentValues.put("time", sms.getTimeReceive());
+        contentValues.put("time", sms.getTime());
+        contentValues.put("timeReceive", sms.getTimeReceive());
+
         db.insert(TABLE_SMS, null, contentValues);
         db.close();
     }
-
     public List<SMS> getListSMS(){
         List<SMS> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM "+TABLE_SMS;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while(c.moveToNext()){
-            SMS sms = new SMS(c.getString(1), c.getString(2),c.getString(3));
-            sms.setId(c.getInt(0));
-            list.add(sms);
+        if(c!=null) {
+            while (!c.isAfterLast()) {
+                SMS sms = new SMS(c.getString(2), c.getString(4), c.getString(1));
+                sms.setId(c.getInt(0));
+                sms.setTime(c.getString(3));
+                list.add(sms);
+                c.moveToNext();
+            }
         }
         return list;
     }
@@ -251,11 +265,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM "+TABLE_CONTACT;
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
-        while(c.moveToNext()){
-            Contact contact = new Contact(c.getString(1), c.getString(2));
-            contact.setTime(c.getString(3));
-            contact.setId(c.getInt(0));
-            list.add(contact);
+        if(c!=null) {
+            while (!c.isAfterLast()) {
+                Contact contact = new Contact(c.getString(1), c.getString(2));
+                contact.setTime(c.getString(3));
+                contact.setId(c.getInt(0));
+                list.add(contact);
+                c.moveToNext();
+            }
         }
         return list;
     }
