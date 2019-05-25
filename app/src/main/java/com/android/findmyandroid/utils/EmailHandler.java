@@ -146,8 +146,10 @@ public class EmailHandler {
                     }
                 }
             }else{
-                onSendEmailListener.onSendEmail();
-                Log.i("donesend", "onPostExecute: done send");
+                if (onSendEmailListener!=null) {
+                    onSendEmailListener.onSendEmail();
+                    Log.i("donesend", "onPostExecute: done send");
+                }
             }
         }
     }

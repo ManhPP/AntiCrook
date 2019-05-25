@@ -112,7 +112,7 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     try {
                         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
                         final Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
-                        new CountDownTimer(300000, 1000) {
+                        new CountDownTimer(30000, 1000) {
                             @Override
                             public void onTick(long millisUntilFinished) {
                                 r.play();
@@ -135,7 +135,7 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
     public void onReceiveLocation(Location location) {
         if(wifiManager.isWifiEnabled()) {
             List<String> contentAndPath = new ArrayList<>();
-            contentAndPath.add("(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "");
+            contentAndPath.add("(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: https://www.google.com/maps/place/" + location.getLatitude() + "," + location.getLongitude());
             emailHandler.send(contentAndPath, false, null);
         }else{
             myDatabaseHelper.addLocate(location);

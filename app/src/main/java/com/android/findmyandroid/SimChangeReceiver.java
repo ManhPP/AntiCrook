@@ -201,7 +201,7 @@ import static com.android.findmyandroid.R.id.parent;
                 }
             }
             if(location!=null) {
-                content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "\n";
+                content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: https://www.google.com/maps/place/" + location.getLatitude() + "," + location.getLongitude() + "\n";
                 Log.i("abcde", "sendOrSave: "+location.getLongitude());
             }
             if(record!=null) {
