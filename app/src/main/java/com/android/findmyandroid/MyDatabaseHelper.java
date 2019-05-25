@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.EmailReceive;
@@ -182,6 +183,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void deleteEmailReceive(int[] id){
+        Log.i("aaaaa", "deleteEmailReceive: deleteeeeeeeeeeeeeeeeeeeeeeee");
         String[] args = new String[id.length];
         String numPlaceHolder = "";
         for(int i=0; i<id.length; i++){

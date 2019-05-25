@@ -250,6 +250,7 @@ import static com.android.findmyandroid.R.id.parent;
             if(image2!=null){
                 myDatabaseHelper.addImage(image2);
             }
+            Log.i("aaaa", "sendOrSave: save done");
         }
     }
 
