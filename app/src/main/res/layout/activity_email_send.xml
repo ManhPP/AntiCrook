@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
-                android:text="Trần Văn Vĩnh"
+                android:text="User"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:paddingTop="10dp"

@@ -189,17 +189,17 @@ import static com.android.findmyandroid.R.id.parent;
                 }
             }
             if(location!=null) {
-                content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "";
+                content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "\n";
                 Log.i("abcde", "sendOrSave: "+location.getLongitude());
             }
             if(record!=null) {
-                content += "(Cập nhập: " + record.getTime() + "): Đã thư một bản ghi âm";
+                content += "(Cập nhập: " + record.getTime() + "): Đã ghi một bản ghi âm\n";
             }
             if(image1!=null) {
-                content += "(Cập nhập: " + image1.getTime() + "): Đã chụp ảnh môi trường xung quanh";
+                content += "(Cập nhập: " + image1.getTime() + "): Đã chụp ảnh môi trường xung quanh\n";
             }
             if(image2!=null) {
-                content += "(Cập nhập: " + image2.getTime() + "): Đã chụp ảnh môi trường xung quanh";
+                content += "(Cập nhập: " + image2.getTime() + "): Đã chụp ảnh môi trường xung quanh\n";
             }
             contentAndPath.add(content);
 

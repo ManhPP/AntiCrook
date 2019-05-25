@@ -34,10 +34,11 @@ public class EmailSendActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email",null);
+        String username = sharedPreferences.getString("username", "User");
         if(email!=null){
             tvEmail.setText(email);
         }
-
+        tvName.setText(username);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Email gửi");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
@@ -89,6 +90,7 @@ public class EmailSendActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String s = inputDialog.getText().toString();
                 tv.setText(s);
+                sharedPreferences.edit().putString("username",s).apply();
             }
         });
 
@@ -118,6 +120,7 @@ public class EmailSendActivity extends AppCompatActivity {
     private View.OnClickListener updateEmailSend = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
+            String username = tvName.getText().toString();
             String email = tvEmail.getText().toString();
             String pass = tvPassword.getText().toString();
 
@@ -127,6 +130,7 @@ public class EmailSendActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("email", email);
                 editor.putString("password", pass);
+                editor.putString("username",username);
                 editor.apply();
                 startActivity(new Intent(EmailSendActivity.this, MainSetting.class));
             }
