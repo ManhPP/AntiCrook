@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">AntiCrook</string>
     <string name="title_activity_main_setting">MainSetting</string>
+    <string name="aboutus">
+        "This is the app that helps you detect crooks with bad intentions with your android device. The application has functions such as: executing receiving commands via sms such as taking photos, recording, locating, reading sms, reading contacts; detect and send a notification when the sim is changed &#8230; experience it\nThis is our first complete application so there are many shortcomings.We are looking forward to receiving feedback from everyone. \nWe would like to thank Dr. Nguyen Hong Quang, lecturer of Mobile Application Development, who guided us with Android programming skills."
+    </string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

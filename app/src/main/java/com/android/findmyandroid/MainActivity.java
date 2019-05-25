@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     Switch activate = null;
     private LinearLayout settingGroup;
     private LinearLayout uninstallApp;
+    LinearLayout aboutus;
     public CheckPermission checkPermission = null;
     SharedPreferences sharedPreferences = null;
 
@@ -74,8 +75,11 @@ public class MainActivity extends AppCompatActivity {
         uninstallApp.setOnClickListener(onUninstall);
         init();
 
+
         settingGroup.setOnClickListener(settingClick);
 
+        aboutus = findViewById(R.id.aboutus);
+        aboutus.setOnClickListener(onAboutus);
         checkPermission.checkAndRequestPermission(null);
 
     }
@@ -165,6 +169,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v){
             startActivity(new Intent(MainActivity.this, MainSetting.class));
+        }
+    };
+    private View.OnClickListener onAboutus = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(MainActivity.this, AboutUs.class));
         }
     };
 }

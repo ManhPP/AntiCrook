@@ -2,33 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.findmyandroid">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- cho thu vien chup anh an -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- auto run khi khoi dong -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- nhan tin nhan -->
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <!-- de theo doi sim thay doi -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!-- bat tat wifi -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <!--location-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -45,14 +45,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".SMSSettingActivity" />
-        <activity android:name=".EmailSendActivity"></activity>
+        <activity android:name=".EmailSendActivity" />
         <activity
             android:name=".MainSetting"
             android:label="@string/title_activity_main_setting" />
-        <activity android:name=".AddReceivedEmail"></activity>
+        <activity android:name=".AddReceivedEmail" />
+
         <receiver
             android:name=".SampleDeviceAdminReceiver"
-            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/device_admin" />
@@ -65,20 +66,23 @@
         </receiver>
         <receiver android:name=".SMSReceiver">
             <intent-filter android:priority="998">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <receiver android:name=".SimChangeReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.SIM_STATE_CHANGED"/>
+                <action android:name="android.intent.action.SIM_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".NetworkReceiver" >
+        <receiver android:name=".NetworkReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <service android:name=".CamService"/>
+
+        <service android:name=".CamService" />
+
+        <activity android:name=".AboutUs"></activity>
     </application>
 
 </manifest>
