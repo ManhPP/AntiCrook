@@ -13,6 +13,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.CountDownTimer;
+import android.telecom.TelecomManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,49 +61,57 @@ import static com.android.findmyandroid.R.id.parent;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        emailHandler = new EmailHandler(context);
-        SharedPreferences sharedPreferences= context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
-        if(sharedPreferences.getBoolean("isActivated", false)) {
-            SMSHandler smsHandler = new SMSHandler(context);
-            Intent i;
-            wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
-            myDatabaseHelper = new MyDatabaseHelper(context);
-            if (sharedPreferences.getBoolean("readSMS", false)) {
-                //doc tin nhan
-                List<SMS> listSMS = smsHandler.getAllSMS();
-                SimChangeReceiver.listSMS = listSMS;
-                x++;
-            }
-            if (sharedPreferences.getBoolean("readContact", false)) {
-                //doc danh ba
-                List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
-                SimChangeReceiver.listContacts = listContacts;
-                x++;
-            }
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        int state = telephonyManager.getSimState();
+        String extraState = intent.getStringExtra("ss");
+//        Log.i("onReceive",extraState);
+        if(state == TelephonyManager.SIM_STATE_ABSENT || (state == TelephonyManager.SIM_STATE_READY && extraState.equals("LOADED"))){
+            Log.i("onReceiveSim","thay doi sim");
+            emailHandler = new EmailHandler(context);
+            SharedPreferences sharedPreferences= context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+            if(sharedPreferences.getBoolean("isActivated", false)) {
+                SMSHandler smsHandler = new SMSHandler(context);
+                Intent i;
+                wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
+                myDatabaseHelper = new MyDatabaseHelper(context);
+                if (sharedPreferences.getBoolean("readSMS", false)) {
+                    //doc tin nhan
+                    List<SMS> listSMS = smsHandler.getAllSMS();
+                    SimChangeReceiver.listSMS = listSMS;
+                    x++;
+                }
+                if (sharedPreferences.getBoolean("readContact", false)) {
+                    //doc danh ba
+                    List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
+                    SimChangeReceiver.listContacts = listContacts;
+                    x++;
+                }
 
-            if (sharedPreferences.getBoolean("record", false)) {
-                //ghi am
-                RecordHandler recordHandler = new RecordHandler(context);
-                recordHandler.setOnReceiveRecordListener(this);
-            }
-            if (sharedPreferences.getBoolean("frontCam", false)) {
-                //chup cam truoc
-                i = new Intent(context, CamService.class);
-                i.putExtra("onTakeePickture", this);
-                i.putExtra("isFront", true);
-                context.startService(i);
-            }
-            if (sharedPreferences.getBoolean("behindCam", false)) {
-                //chup cam sau
-                i = new Intent(context, CamService.class);
-                i.putExtra("onTakeePickture", this);
-                i.putExtra("isFront", false);
-                context.startService(i);
-            }
-            if (sharedPreferences.getBoolean("locate", false)) {
-                //dinh vi
-                LocationHandler locationHandler = new LocationHandler(context);
-                locationHandler.addOnReceiveLocationListener(this);
+                if (sharedPreferences.getBoolean("record", false)) {
+                    //ghi am
+                    RecordHandler recordHandler = new RecordHandler(context);
+                    recordHandler.setOnReceiveRecordListener(this);
+                }
+                if (sharedPreferences.getBoolean("frontCam", false)) {
+                    //chup cam truoc
+                    Log.i("onReceive","chup cam truoc");
+                    i = new Intent(context, CamService.class);
+                    i.putExtra("onTakeePickture", this);
+                    i.putExtra("isFront", true);
+                    context.startService(i);
+                }
+                if (sharedPreferences.getBoolean("behindCam", false)) {
+                    //chup cam sau
+                    i = new Intent(context, CamService.class);
+                    i.putExtra("onTakeePickture", this);
+                    i.putExtra("isFront", false);
+                    context.startService(i);
+                }
+                if (sharedPreferences.getBoolean("locate", false)) {
+                    //dinh vi
+                    LocationHandler locationHandler = new LocationHandler(context);
+                    locationHandler.addOnReceiveLocationListener(this);
+                }
             }
         }
     }
