@@ -47,9 +47,9 @@ public class MainSetting extends AppCompatActivity {
         setContentView(R.layout.activity_main_setting);
         sharedPreferences = MainSetting.this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         listHeader = new ArrayList<>();
-        listHeader.add("Thiết Lập SMS");
-        listHeader.add("Thiết Lập Email");
-        listHeader.add("Thiết Lập Hành Động Khi Đổi Sim");
+        listHeader.add("SMS Setting");
+        listHeader.add("Email Setting");
+        listHeader.add("Configure Actions When Sim Changed");
 
         mData = new HashMap<>();
         List<String> smsMenu = new ArrayList<>();
@@ -60,15 +60,15 @@ public class MainSetting extends AppCompatActivity {
         mData.put(listHeader.get(1), emailMenu);
         mData.put(listHeader.get(2), simMenu);
 
-        smsMenu.add("Thiết lập lệnh SMS");
-        emailMenu.add("Thay đổi email gửi thông báo");
-        emailMenu.add("Thêm email nhận thông báo");
-        simMenu.add("Chụp ảnh camera trước");
-        simMenu.add("Chụp ảnh camera sau");
-        simMenu.add("Ghi âm");
-        simMenu.add("Lấy tọa độ");
-        simMenu.add("Đọc danh bạ");
-        simMenu.add("Đọc tin nhắn");
+        smsMenu.add("Configure SMS command");
+        emailMenu.add("Configure email send notification");
+        emailMenu.add("Add email is notified");
+        simMenu.add("Capture with front camera");
+        simMenu.add("Capture with behind camera");
+        simMenu.add("Record");
+        simMenu.add("Locate");
+        simMenu.add("Read contact");
+        simMenu.add("Read SMS");
 
         features = (ExpandableListView) findViewById(R.id.features);
         adapter = new CustomExpandableListAdapter(this, listHeader, mData);
@@ -121,7 +121,7 @@ public class MainSetting extends AppCompatActivity {
         features.expandGroup(2);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Cài đặt chính");
+        actionBar.setTitle("Main Setting");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
         TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
         int actionBarSize = (int) styledAttributes.getDimension(0,0);
@@ -146,7 +146,7 @@ public class MainSetting extends AppCompatActivity {
         switch (item.getItemId())
         {
             case android.R.id.home:
-                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
+//                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
                 onBackPressed();
 
                 return true;

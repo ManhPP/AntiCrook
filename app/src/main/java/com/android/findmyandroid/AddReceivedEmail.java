@@ -57,7 +57,7 @@ public class AddReceivedEmail extends AppCompatActivity {
         setContentView(R.layout.activity_add_received_email);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Thêm Email nhận thông báo");
+        actionBar.setTitle("Add email is notified");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
         TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
         int actionBarSize = (int) styledAttributes.getDimension(0,0);
@@ -72,7 +72,7 @@ public class AddReceivedEmail extends AppCompatActivity {
         addReceivedEmailView = findViewById(R.id.addReceivedEmail);
         note = findViewById(R.id.note);
         if (lstEmails.getCount() == 0){
-            note.setText("Chưa có email nào trong danh sách!");
+            note.setText("No email in the list yet!");
         }
         adapter = new EmailAdapter(lstEmails);
         lstEmailView.setAdapter(adapter);
@@ -80,12 +80,12 @@ public class AddReceivedEmail extends AppCompatActivity {
         lstEmailView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Toast.makeText(AddReceivedEmail.this, "hehehe", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AddReceivedEmail.this, "hehehe", Toast.LENGTH_SHORT).show();
                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View deleteEmailView = inflater.inflate(R.layout.delete_email, null);
                 popupWindow = new PopupWindow(deleteEmailView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lstEmails.moveToPosition(position);
-                String msg = "Xóa email \"" + lstEmails.getString(1) + "\"?";
+                String msg = "Delete \"" + lstEmails.getString(1) + "\"?";
                 confirmDeletingEmail = deleteEmailView.findViewById(R.id.confirmDeletingEmail);
                 deleteEmail = deleteEmailView.findViewById(R.id.deleteEmail);
                 cancelDeletingEmail = deleteEmailView.findViewById(R.id.cancelDeletingEmail);
@@ -95,7 +95,7 @@ public class AddReceivedEmail extends AppCompatActivity {
                 deleteEmail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String msg = "Đã xóa email \"" + lstEmails.getString(1) + "\"!";
+                        String msg = "Deleted email \"" + lstEmails.getString(1) + "\"!";
                         int[] id = {lstEmails.getInt(0)};
                         helper.deleteEmailReceive(id);
                         lstEmails = helper.getEmailReceive();
@@ -103,7 +103,7 @@ public class AddReceivedEmail extends AppCompatActivity {
                         popupWindow.dismiss();
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                         if (lstEmails.getCount() == 0){
-                            note.setText("Chưa có email nào trong danh sách!");
+                            note.setText("No email in the list yet!");
                         }
                     }
                 });
@@ -144,7 +144,7 @@ public class AddReceivedEmail extends AppCompatActivity {
                         String email = filledEmail.getText().toString().trim();
                         if (email.length() == 0){
                             //TODO:
-                            Toast.makeText(getApplicationContext(), "Chưa nhập email!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Please enter email!", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             emailReceive = new EmailReceive();
@@ -155,12 +155,12 @@ public class AddReceivedEmail extends AppCompatActivity {
                                 adapter.changeCursor(lstEmails);
 
                                 popupWindow.dismiss();
-                                Toast.makeText(getApplicationContext(), "Đã thêm email!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Added email!", Toast.LENGTH_SHORT).show();
                                 if (lstEmails.getCount() > 0) {
-                                    note.setText("Danh sách email được nhận thông báo ");
+                                    note.setText("Email list is notified");
                                 }
                             }else{
-                                Toast.makeText(getApplicationContext(), "Không được nhập trùng email!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Email already exists!", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -217,7 +217,7 @@ public class AddReceivedEmail extends AppCompatActivity {
         switch (item.getItemId())
         {
             case android.R.id.home:
-                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
+//                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
                 onBackPressed();
 
                 return true;

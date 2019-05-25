@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/red"
-        android:text="Bạn có chắc chắn muốn gỡ ứng dụng?"
+        android:text="Are you sure to remove the application?"
         android:gravity="center"
         android:textStyle="bold"
         android:layout_margin="10dp"/>
