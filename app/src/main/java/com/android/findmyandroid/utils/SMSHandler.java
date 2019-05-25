@@ -25,7 +25,9 @@ public class SMSHandler {
     }
 
     public int getCommand(){
-        return getListCommndSetting().indexOf(getCommandReceive());
+        int ret = getListCommndSetting().indexOf(getCommandReceive());
+        Log.i("aaaaa", "getCommand: ========="+ret);
+        return ret;
     }
 
     public List<String> getListCommndSetting(){

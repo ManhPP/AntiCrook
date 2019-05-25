@@ -46,7 +46,7 @@ import static com.android.findmyandroid.R.id.parent;
     private static transient EmailHandler emailHandler;
     private static transient MyDatabaseHelper myDatabaseHelper;
     private static transient WifiManager wifiManager;
-    private final Object lock = new Object();
+    private static transient Object lock = new Object();
     private int x=0;
 
     private static  transient List<SMS> listSMS = null;
