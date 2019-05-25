@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
 import com.android.findmyandroid.model.Contact;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class ContactHandler {
             String name = cursor.getString(idName);
             String phoneNumber = cursor.getString(idPhone);
             Contact c = new Contact(name, phoneNumber);
+            c.setTime((new Date()).toString());
             listContact.add(c);
         }
         return listContact;

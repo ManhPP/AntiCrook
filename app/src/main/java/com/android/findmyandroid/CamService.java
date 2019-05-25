@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.findmyandroid.model.Image;
 import com.android.findmyandroid.model.SMS;
 import com.androidhiddencamera.CameraConfig;
 import com.androidhiddencamera.CameraError;
@@ -19,6 +20,7 @@ import com.androidhiddencamera.config.CameraImageFormat;
 import com.androidhiddencamera.config.CameraResolution;
 
 import java.io.File;
+import java.util.Date;
 
 public class CamService extends HiddenCameraService {
     private OnTakePictureListener onTakePictureListener = null;
@@ -75,7 +77,8 @@ public class CamService extends HiddenCameraService {
     @Override
     public void onImageCapture(@NonNull File imageFile) {
         Log.d("img", "Captured image size is : " + imageFile.length()+imageFile.getAbsolutePath());
-        onTakePictureListener.onTakePicture(imageFile.getAbsolutePath());
+        Image img = new Image(imageFile.getAbsolutePath(), (new Date()).toString());
+        onTakePictureListener.onTakePicture(img);
         stopSelf();
     }
 

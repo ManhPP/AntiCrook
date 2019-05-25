@@ -63,7 +63,7 @@ public class LocationHandler implements GoogleApiClient.ConnectionCallbacks,
                     = new com.android.findmyandroid.model.Location(location.getLatitude()+"", location.getLongitude()+"", (new Date()).toString());
             onReceiveLocationListener.onReceiveLocation(myLocation);
 
-            startLocationUpdates();
+//            startLocationUpdates();
         }catch (SecurityException e){
 
         }

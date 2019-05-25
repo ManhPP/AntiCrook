@@ -9,6 +9,7 @@ public class SMS {
     private String body;
     private String timeReceive;
     private String phoneNumber;
+    private String time;
 
     public SMS() {
     }
@@ -49,5 +50,13 @@ public class SMS {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

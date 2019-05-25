@@ -9,6 +9,7 @@ import android.util.Log;
 import com.android.findmyandroid.model.SMS;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,6 +74,7 @@ public class SMSHandler {
             String body = cursor.getString(idBody);
 
             SMS sms= new SMS(body, timeStamp, phoneNumber);
+            sms.setTime((new Date()).toString());
             listSMS.add(sms);
         }
         cursor.close();

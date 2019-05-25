@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.EmailReceive;
 import com.android.findmyandroid.model.Image;
 import com.android.findmyandroid.model.Location;
@@ -30,6 +31,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_RECORD = "Record";
     private static final String TABLE_EMAIL_RECEIVE = "EmailReceive";
     private static final String TABLE_SMS = "SMS";
+    private static final String TABLE_CONTACT = "Contact";
 
     public MyDatabaseHelper(Context context)  {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -43,9 +45,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         sql=" CREATE TABLE "+TABLE_RECORD +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, time TEXT);";
         db.execSQL(sql);
-        sql=" CREATE TABLE "+TABLE_EMAIL_RECEIVE +"( _id  INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT);";
+        sql=" CREATE TABLE "+TABLE_EMAIL_RECEIVE +"( _id  INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE);";
         db.execSQL(sql);
         sql=" CREATE TABLE "+TABLE_SMS +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, phone TEXT, body TEXT, time TEXT);";
+        db.execSQL(sql);
+        sql=" CREATE TABLE "+TABLE_CONTACT +"( id  INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, time TEXT);";
         db.execSQL(sql);
     }
 
@@ -87,7 +91,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public void deleteLocate(int[] id){
+    public void deleteLocate(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_LOCATE;
         db.execSQL(query);
@@ -118,7 +122,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public void deleteImage(int[] id){
+    public void deleteImage(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_IMAGE;
         db.execSQL(query);
@@ -159,12 +163,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
     //email receive
-    public void addEmailReceive(EmailReceive email){
+    public boolean addEmailReceive(EmailReceive email){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email.getEmail());
-        db.insert(TABLE_EMAIL_RECEIVE, null, contentValues);
+        long ret = db.insert(TABLE_EMAIL_RECEIVE, null, contentValues);
         db.close();
+        if(ret==-1) return false;
+        return true;
     }
 
     public Cursor getEmailReceive(){
@@ -220,6 +226,41 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void deleteSMS(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_EMAIL_RECEIVE;
+        db.execSQL(query);
+        db.close();
+    }
+
+    //contact
+    public boolean addContact(Contact contact){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("phone", contact.getPhone());
+        contentValues.put("name", contact.getName());
+        contentValues.put("time", contact.getTime());
+        long ret = db.insert(TABLE_CONTACT, null, contentValues);
+        db.close();
+        if(ret==-1) return false;
+        return  true;
+    }
+
+    public List<Contact> getListContacts(){
+        List<Contact> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM "+TABLE_CONTACT;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(c.moveToNext()){
+            Contact contact = new Contact(c.getString(1), c.getString(2));
+            contact.setTime(c.getString(3));
+            contact.setId(c.getInt(0));
+            list.add(contact);
+        }
+        return list;
+    }
+
+    public void deleteContact(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+TABLE_CONTACT;
         db.execSQL(query);
         db.close();
     }
