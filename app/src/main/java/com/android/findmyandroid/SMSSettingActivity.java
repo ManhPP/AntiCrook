@@ -25,7 +25,7 @@ public class SMSSettingActivity extends AppCompatActivity {
         initView();
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Cài đặt tin nhắn");
+        actionBar.setTitle("SMS Setting");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
         TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
         int actionBarSize = (int) styledAttributes.getDimension(0,0);
@@ -40,7 +40,7 @@ public class SMSSettingActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case android.R.id.home:
-                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
+//                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
                 onBackPressed();
 
                 return true;
@@ -100,7 +100,7 @@ public class SMSSettingActivity extends AppCompatActivity {
                     editor.putString(key, s);
                     editor.apply();
                 }else{
-                    Toast.makeText(getApplicationContext(), "Hãy điền lệnh sms!!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please fill sms command!!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -123,28 +123,28 @@ public class SMSSettingActivity extends AppCompatActivity {
         public void onClick(View v){
             switch (v.getId()){
                 case R.id.tvWifi:
-                    initDialog(tvWifi, "Lệnh SMS bật wifi", "WIFI");
+                    initDialog(tvWifi, "Command to turn on WIFI", "WIFI");
                     break;
                 case R.id.tvReadSMS:
-                    initDialog(tvReadSMS, "Lệnh SMS đọc tin nhắn","SMS");
+                    initDialog(tvReadSMS, "Command to read SMS","SMS");
                     break;
                 case R.id.tvContact:
-                    initDialog(tvContact, "Lệnh SMS đọc danh bạ", "CONTACT");
+                    initDialog(tvContact, "Command to read contact", "CONTACT");
                     break;
                 case R.id.tvRecord:
-                    initDialog(tvRecord, "Lệnh SMS ghi âm", "RECORD");
+                    initDialog(tvRecord, "Command to record", "RECORD");
                     break;
                 case R.id.tvFrontCam:
-                    initDialog(tvFrontCam, "Lệnh SMS chụp cam trước", "FRONT");
+                    initDialog(tvFrontCam, "Command to capture by front cam", "FRONT");
                     break;
                 case R.id.tvBackCam:
-                    initDialog(tvBackCam, "Lệnh SMS chụp cam sau", "BACK");
+                    initDialog(tvBackCam, "Command to capture by behind cam", "BACK");
                     break;
                 case R.id.tvLocate:
-                    initDialog(tvLocate, "Lệnh SMS lấy tọa độ", "LOCATE");
+                    initDialog(tvLocate, "Command to locate", "LOCATE");
                     break;
                 case R.id.tvAlarm:
-                    initDialog(tvAlarm, "Lệnh SMS báo động", "ALARM");
+                    initDialog(tvAlarm, "Command to alarm", "ALARM");
                     break;
             }
         }
