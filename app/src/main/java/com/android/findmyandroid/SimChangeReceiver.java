@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.widget.Switch;
 
 import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.Location;
@@ -28,6 +29,12 @@ import java.util.List;
  */
 
 public class SimChangeReceiver extends SMSReceiver{
+    Switch capFrontCam = null;
+    Switch capBehindCam = null;
+    Switch record = null;
+    Switch locate = null;
+    Switch readContact = null;
+    Switch readSMS = null;
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("onReceived", "changed sim");
