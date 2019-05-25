@@ -220,13 +220,7 @@ public class MainSetting extends AppCompatActivity {
             }
             TextView listTitle = (TextView) convertView.findViewById(R.id.listTitle);
             listTitle.setText(this.mHeaderGroup.get(groupPosition));
-//            if(isExpanded){
-//                listTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.up, 0, 0 , 0);
-//            }
-//            else {
-//                listTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.down, 0, 0 , 0);
-//
-//            }
+
             return convertView;
         }
         public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent){
@@ -239,6 +233,39 @@ public class MainSetting extends AppCompatActivity {
                         break;
                     case 1:
                         convertView = inflater.inflate(R.layout.list_item_switch, parent, false);
+                        switchButton = convertView.findViewById(R.id.switchbutton);
+                        switch(childPosition){
+                            case 0:
+                                if(sharedPreferences.getBoolean("frontCam",false)){
+                                    switchButton.setChecked(true);
+                                }
+                                break;
+                            case 1:
+                                if(sharedPreferences.getBoolean("behindCam",false)){
+                                    switchButton.setChecked(true);
+                                }
+                                break;
+                            case 2:
+                                if(sharedPreferences.getBoolean("record",false)){
+                                    switchButton.setChecked(true);
+                                }
+                                break;
+                            case 3:
+                                if(sharedPreferences.getBoolean("locate",false)){
+                                    switchButton.setChecked(true);
+                                }
+                                break;
+                            case 4:
+                                if(sharedPreferences.getBoolean("readContact",false)){
+                                    switchButton.setChecked(true);
+                                }
+                                break;
+                            case 5:
+                                if(sharedPreferences.getBoolean("readSMS",false)){
+                                    switchButton.setChecked(true);
+                                }
+                                break;
+                        }
                         break;
                 }
 
@@ -258,7 +285,7 @@ public class MainSetting extends AppCompatActivity {
                             if(isChecked == true){
                                 switch (childPosition){
                                     case 0:
-                                        sharedPreferences.edit().putBoolean("fontCam", true).apply();
+                                        sharedPreferences.edit().putBoolean("frontCam", true).apply();
                                         Log.i("switch","bat cam truoc");
                                         break;
                                     case 1:

@@ -84,7 +84,7 @@ import static com.android.findmyandroid.R.id.parent;
                 RecordHandler recordHandler = new RecordHandler(context);
                 recordHandler.setOnReceiveRecordListener(this);
             }
-            if (sharedPreferences.getBoolean("fontCam", false)) {
+            if (sharedPreferences.getBoolean("frontCam", false)) {
                 //chup cam truoc
                 i = new Intent(context, CamService.class);
                 i.putExtra("onTakeePickture", this);
