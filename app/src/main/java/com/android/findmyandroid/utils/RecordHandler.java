@@ -55,7 +55,7 @@ public class RecordHandler extends Activity {
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setOutputFile(fileName);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setMaxDuration(1000);
+            mediaRecorder.setMaxDuration(30000);
 //            recordTime = 0;
             try {
                 mediaRecorder.prepare();
