@@ -3,6 +3,7 @@ package com.android.findmyandroid;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -36,6 +37,7 @@ public class MainSetting extends AppCompatActivity {
     private Switch switchButton = null;
     private List<String> listHeader = null;
     private HashMap<String, List<String>> mData = null;
+    SharedPreferences sharedPreferences = null;
 
     //===
 
@@ -43,7 +45,7 @@ public class MainSetting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_setting);
-
+        sharedPreferences = MainSetting.this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         listHeader = new ArrayList<>();
         listHeader.add("Thiết Lập SMS");
         listHeader.add("Thiết Lập Email");
@@ -253,6 +255,53 @@ public class MainSetting extends AppCompatActivity {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             Log.e(TAG, "onChangeSwitch: " + childPosition + " in group: " + groupPosition);
+                            if(isChecked == true){
+                                switch (childPosition){
+                                    case 0:
+                                        sharedPreferences.edit().putBoolean("fontCam", true).apply();
+                                        Log.i("switch","bat cam truoc");
+                                        break;
+                                    case 1:
+                                        sharedPreferences.edit().putBoolean("behindCam", true).apply();
+                                        break;
+                                    case 2:
+                                        sharedPreferences.edit().putBoolean("record", true).apply();
+                                        break;
+                                    case 3:
+                                        sharedPreferences.edit().putBoolean("locate", true).apply();
+                                        break;
+                                    case 4:
+                                        sharedPreferences.edit().putBoolean("readContact", true).apply();
+                                        break;
+                                    case 5:
+                                        sharedPreferences.edit().putBoolean("readSMS", true).apply();
+                                        break;
+                                }
+                            }
+                            else {
+                                switch (childPosition){
+                                    case 0:
+                                        sharedPreferences.edit().putBoolean("fontCam", false).apply();
+                                        Log.i("switch","tat cam truoc");
+                                        break;
+                                    case 1:
+                                        sharedPreferences.edit().putBoolean("behindCam", false).apply();
+                                        break;
+                                    case 2:
+                                        sharedPreferences.edit().putBoolean("record", false).apply();
+                                        break;
+                                    case 3:
+                                        sharedPreferences.edit().putBoolean("locate", false).apply();
+                                        break;
+                                    case 4:
+                                        sharedPreferences.edit().putBoolean("readContact", false).apply();
+                                        break;
+                                    case 5:
+                                        sharedPreferences.edit().putBoolean("readSMS", false).apply();
+                                        break;
+                                }
+                            }
+
                         }
                     });
                     break;

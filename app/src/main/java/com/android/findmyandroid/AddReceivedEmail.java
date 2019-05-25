@@ -160,7 +160,7 @@ public class AddReceivedEmail extends AppCompatActivity {
                                     note.setText("Danh sách email được nhận thông báo ");
                                 }
                             }else{
-                                Toast.makeText(getApplicationContext(), "Không được nhập trùng emaill!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Không được nhập trùng email!", Toast.LENGTH_SHORT).show();
                             }
                         }
 
