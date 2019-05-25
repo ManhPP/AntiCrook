@@ -189,7 +189,7 @@
                 android:background="@drawable/border_button"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
-                android:text="Cập nhập"
+                android:text="Update"
                 android:textColor="#12581f"
                 />
 

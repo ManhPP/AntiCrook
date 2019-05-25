@@ -40,7 +40,7 @@ public class EmailSendActivity extends AppCompatActivity {
         }
         tvName.setText(username);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Email gửi");
+        actionBar.setTitle("Email Sent");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
         TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
         int actionBarSize = (int) styledAttributes.getDimension(0,0);
@@ -52,7 +52,7 @@ public class EmailSendActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case android.R.id.home:
-                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
+//                Toast.makeText(this, "bam quay lai", Toast.LENGTH_SHORT ).show();
                 onBackPressed();
 
                 return true;
@@ -111,7 +111,7 @@ public class EmailSendActivity extends AppCompatActivity {
         public void onClick(View v){
             switch (v.getId()){
                 case R.id.icoEdit:
-                    initDialog(tvName, "Thay đổi tên");
+                    initDialog(tvName, "Change username");
                     break;
             }
         }
@@ -125,7 +125,7 @@ public class EmailSendActivity extends AppCompatActivity {
             String pass = tvPassword.getText().toString();
 
             if(email.trim().equals("") || pass.trim().equals("")){
-                Toast.makeText(EmailSendActivity.this, "Hãy điền đầy đủ thông tin!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EmailSendActivity.this, "please fill full the information!!", Toast.LENGTH_SHORT).show();
             }else {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("email", email);
