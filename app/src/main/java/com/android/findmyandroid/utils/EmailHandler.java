@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.findmyandroid.MyDatabaseHelper;
+import com.android.findmyandroid.OnSendEmailListener;
 import com.android.findmyandroid.model.EmailReceive;
 
 import java.util.Date;
@@ -39,6 +40,7 @@ public class EmailHandler {
     private boolean isDeleteDB = false;
     private String tableDelete;
     private MyDatabaseHelper myDatabaseHelper;
+    private OnSendEmailListener onSendEmailListener;
 
     public EmailHandler(Context context) {
         myDatabaseHelper = new MyDatabaseHelper(context);
@@ -90,8 +92,6 @@ public class EmailHandler {
                         InternetAddress.parse(EmailHandler.this.getAllEmailReceive()));
                 message.setSubject("Ứng dụng chống trộm điện thoại: "+(new Date()).toString());
 
-//                message.setText(paths[0]);
-                Log.i("emailsend", "content:  "+paths[0]);
 
                 Multipart multipart = new MimeMultipart();
                 for(int i=1;i<paths.length; i++) {
@@ -113,7 +113,7 @@ public class EmailHandler {
 
                 message.setContent(multipart);
                 Transport.send(message);
-                Log.i("emailsend", "send:  "+paths.length+" file");
+                Log.i("sendemail", "doInBackground: send done");
                 return true;
             }
             catch (Exception e){
@@ -145,6 +145,9 @@ public class EmailHandler {
                             break;
                     }
                 }
+            }else{
+                onSendEmailListener.onSendEmail();
+                Log.i("donesend", "onPostExecute: done send");
             }
         }
     }
@@ -176,5 +179,10 @@ public class EmailHandler {
 //        }
 
         return mails;
+    }
+
+    //set doi tuong se duoc goi call back khi gui email xong
+    public void setOnSendEmailListener(OnSendEmailListener onSendEmailListener){
+        this.onSendEmailListener = onSendEmailListener;
     }
 }
