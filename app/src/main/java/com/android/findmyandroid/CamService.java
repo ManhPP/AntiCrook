@@ -32,7 +32,7 @@ public class CamService extends HiddenCameraService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("a", "onStartCommand: ");
+        Log.i("bbbbb", "onStartCommand: iiiiiiiiiiiiiii");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -57,7 +57,7 @@ public class CamService extends HiddenCameraService {
                     public void run() {
                         Toast.makeText(CamService.this,
                                 "Capturing image.", Toast.LENGTH_SHORT).show();
-
+                        Log.i("bbbbb", "onStartCommand: i222222222222222222222");
                         takePicture();
                     }
                 }, 2000L);
@@ -76,10 +76,10 @@ public class CamService extends HiddenCameraService {
 
     @Override
     public void onImageCapture(@NonNull File imageFile) {
-        Log.d("img", "Captured image size is : " + imageFile.length()+imageFile.getAbsolutePath());
+        Log.i("img", "Captured image size is : " + imageFile.length()+imageFile.getAbsolutePath());
         Image img = new Image(imageFile.getAbsolutePath(), (new Date()).toString());
         onTakePictureListener.onTakePicture(img);
-        stopSelf();
+//        stopSelf();
     }
 
     @Override

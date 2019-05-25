@@ -89,24 +89,31 @@ public class EmailHandler {
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(EmailHandler.this.getAllEmailReceive()));
                 message.setSubject("Ứng dụng chống trộm điện thoại: "+(new Date()).toString());
-                message.setText(paths[0]);
 
+//                message.setText(paths[0]);
+                Log.i("emailsend", "content:  "+paths[0]);
+
+                Multipart multipart = new MimeMultipart();
                 for(int i=1;i<paths.length; i++) {
                     MimeBodyPart messageBodyPart = new MimeBodyPart();
-                    Multipart multipart = new MimeMultipart();
 
                     String file = paths[i];
                     String fileName = "attachmentName" + i;
                     DataSource source = new FileDataSource(file);
                     messageBodyPart.setDataHandler(new DataHandler(source));
                     messageBodyPart.setFileName(fileName);
+                    messageBodyPart.setContentID("<ARTHOS>");
+                    messageBodyPart.setDisposition(MimeBodyPart.INLINE);
                     multipart.addBodyPart(messageBodyPart);
 
-                    message.setContent(multipart);
-
                 }
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setText(paths[0]);
+                multipart.addBodyPart(messageBodyPart);
+
+                message.setContent(multipart);
                 Transport.send(message);
-                Log.i("emailsend", "send: 22222 ");
+                Log.i("emailsend", "send:  "+paths.length+" file");
                 return true;
             }
             catch (Exception e){

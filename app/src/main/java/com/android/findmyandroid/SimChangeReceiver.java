@@ -49,7 +49,7 @@ import static com.android.findmyandroid.R.id.parent;
     private static transient MyDatabaseHelper myDatabaseHelper;
     private static transient WifiManager wifiManager;
     private static transient Object lock = new Object();
-    private int x=0;
+    private static int x=0;
 
     private static  transient List<SMS> listSMS = null;
     private static  transient List<Contact> listContacts = null;
@@ -76,41 +76,55 @@ import static com.android.findmyandroid.R.id.parent;
                 myDatabaseHelper = new MyDatabaseHelper(context);
                 if (sharedPreferences.getBoolean("readSMS", false)) {
                     //doc tin nhan
+                    Log.i("aaaa", "onReceive: Readsms");
                     List<SMS> listSMS = smsHandler.getAllSMS();
                     SimChangeReceiver.listSMS = listSMS;
-                    x++;
                 }
+                x++;
+
                 if (sharedPreferences.getBoolean("readContact", false)) {
                     //doc danh ba
+                    Log.i("aaaa", "onReceive: Readsms");
                     List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
                     SimChangeReceiver.listContacts = listContacts;
-                    x++;
                 }
+                x++;
 
                 if (sharedPreferences.getBoolean("record", false)) {
                     //ghi am
+                    Log.i("aaaa","ghi am");
                     RecordHandler recordHandler = new RecordHandler(context);
                     recordHandler.setOnReceiveRecordListener(this);
+                }else{
+                    x++;
                 }
                 if (sharedPreferences.getBoolean("frontCam", false)) {
                     //chup cam truoc
-                    Log.i("onReceive","chup cam truoc");
+                    Log.i("aaaa","chup cam truoc");
                     i = new Intent(context, CamService.class);
                     i.putExtra("onTakeePickture", this);
                     i.putExtra("isFront", true);
                     context.startService(i);
+                }else{
+                    x++;
                 }
                 if (sharedPreferences.getBoolean("behindCam", false)) {
                     //chup cam sau
+                    Log.i("aaaa","chup cam sau");
                     i = new Intent(context, CamService.class);
                     i.putExtra("onTakeePickture", this);
                     i.putExtra("isFront", false);
                     context.startService(i);
+                }else{
+                    x++;
                 }
                 if (sharedPreferences.getBoolean("locate", false)) {
                     //dinh vi
+                    Log.i("aaaa","lay locate");
                     LocationHandler locationHandler = new LocationHandler(context);
                     locationHandler.addOnReceiveLocationListener(this);
+                }else{
+                    x++;
                 }
             }
         }
@@ -123,6 +137,7 @@ import static com.android.findmyandroid.R.id.parent;
         synchronized (lock){
             x++;
         }
+        Log.i("xxxxxxxx", "onReceiveLocation: "+x);
         if(x==6) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
                 SimChangeReceiver.record, SimChangeReceiver.image1, SimChangeReceiver.image2);
     }
@@ -133,6 +148,7 @@ import static com.android.findmyandroid.R.id.parent;
         synchronized (lock){
             x++;
         }
+        Log.i("xxxxxxxx", "onReceiveRecord: "+x);
         if(x==6) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
                 SimChangeReceiver.record, SimChangeReceiver.image1, SimChangeReceiver.image2);
     }
@@ -140,7 +156,7 @@ import static com.android.findmyandroid.R.id.parent;
     //cho ca cam truoc va sau
     @Override
     public void onTakePicture(Image image) {
-        if(SimChangeReceiver.image1 != null){
+        if(SimChangeReceiver.image1 == null){
             SimChangeReceiver.image1 = image;
         }else{
             SimChangeReceiver.image2 = image;
@@ -148,29 +164,55 @@ import static com.android.findmyandroid.R.id.parent;
         synchronized (lock){
             x++;
         }
+        Log.i("xxxxxxxx", "onTakePicture: "+x);
         if(x==6) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
                 SimChangeReceiver.record, SimChangeReceiver.image1, SimChangeReceiver.image2);
     }
 
     public void sendOrSave(List<SMS> listSMS, List<Contact> listContacts,
                            Location location, Record record, Image image1, Image image2){
+
+        Log.i("ooooooo", "sendOrSave: ----------------------------------------");
+        x=0;
         if(wifiManager.isWifiEnabled()){
             List<String> contentAndPath = new ArrayList<>();
             String content="";
-            for(SMS sms : listSMS){
-                content += "Đọc lúc:"+sms.getTime()+"\n\t\tSDT:"+sms.getPhoneNumber()+" nhận lúc "+sms.getTimeReceive()+"\n\t\tNội dung: "+sms.getBody()+"\n";
+            if(listSMS!=null) {
+                for (SMS sms : listSMS) {
+                    content += "Đọc lúc:" + sms.getTime() + "\n\t\tSDT:" + sms.getPhoneNumber() + " nhận lúc " + sms.getTimeReceive() + "\n\t\tNội dung: " + sms.getBody() + "\n";
+                }
+
             }
-            for (Contact contact : listContacts) {
-                content += "Đọc lúc: " + contact.getTime() + "-Tên: " + contact.getName() + ": SĐT: " + contact.getPhone() + "\n";
+            if(listContacts!=null) {
+                for (Contact contact : listContacts) {
+                    content += "Đọc lúc: " + contact.getTime() + "-Tên: " + contact.getName() + ": SĐT: " + contact.getPhone() + "\n";
+                }
             }
-            content+="(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "";
-            content+="(Cập nhập: " + record.getTime() + "): Đã thư một bản ghi âm";
-            content+="(Cập nhập: " + image1.getTime() + "): Đã chụp ảnh môi trường xung quanh";
-            content+="(Cập nhập: " + image2.getTime() + "): Đã chụp ảnh môi trường xung quanh";
+            if(location!=null) {
+                content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "";
+                Log.i("abcde", "sendOrSave: "+location.getLongitude());
+            }
+            if(record!=null) {
+                content += "(Cập nhập: " + record.getTime() + "): Đã thư một bản ghi âm";
+            }
+            if(image1!=null) {
+                content += "(Cập nhập: " + image1.getTime() + "): Đã chụp ảnh môi trường xung quanh";
+            }
+            if(image2!=null) {
+                content += "(Cập nhập: " + image2.getTime() + "): Đã chụp ảnh môi trường xung quanh";
+            }
             contentAndPath.add(content);
-            contentAndPath.add(record.getUrl());
-            contentAndPath.add(image1.getUrl());
-            contentAndPath.add(image2.getUrl());
+
+            if(record!=null) {
+                contentAndPath.add(record.getUrl());
+            }
+            if(image1!=null) {
+                contentAndPath.add(image1.getUrl());
+            }
+            if(image2!=null) {
+                contentAndPath.add(image2.getUrl());
+            }
+            emailHandler.send(contentAndPath, false, "");
         }else{
             if(listSMS!=null){
                 myDatabaseHelper.deleteSMS();

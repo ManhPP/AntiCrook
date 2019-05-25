@@ -23,7 +23,7 @@ public class RecordHandler extends Activity {
     MediaRecorder mediaRecorder = null;
     String fileName = null;
     int isRecording = 0;
-    int recordTime = 30;
+    int recordTime = 1;
     Record record = null;
     private OnReceiveRecordListener onReceiveRecordListener;
     public RecordHandler(Context context){
