@@ -61,8 +61,7 @@ import static com.android.findmyandroid.R.id.parent;
     private static  transient List<Contact> listContacts = null;
     private static  transient Location location = null;
     private static  transient Record record = null;
-    private static  transient Image image1 = null;
-    private static  transient Image image2 = null;
+    private static  transient Image image = null;
 
 
     @Override
@@ -119,16 +118,6 @@ import static com.android.findmyandroid.R.id.parent;
                     }else{
                         x++;
                     }
-                    if (sharedPreferences.getBoolean("behindCam", false)) {
-                        //chup cam sau
-                        Log.i("aaaa","chup cam sau");
-                        i = new Intent(context, CamService.class);
-                        i.putExtra("onTakeePickture", this);
-                        i.putExtra("isFront", false);
-                        context.startService(i);
-                    }else{
-                        x++;
-                    }
                     if (sharedPreferences.getBoolean("locate", false)) {
                         //dinh vi
                         Log.i("aaaa","lay locate");
@@ -150,8 +139,8 @@ import static com.android.findmyandroid.R.id.parent;
             x++;
         }
         Log.i("xxxxxxxx", "onReceiveLocation: "+x);
-        if(x==6) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
-                SimChangeReceiver.record, SimChangeReceiver.image1, SimChangeReceiver.image2);
+        if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
+                SimChangeReceiver.record, SimChangeReceiver.image);
     }
 
     @Override
@@ -161,28 +150,24 @@ import static com.android.findmyandroid.R.id.parent;
             x++;
         }
         Log.i("xxxxxxxx", "onReceiveRecord: "+x);
-        if(x==6) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
-                SimChangeReceiver.record, SimChangeReceiver.image1, SimChangeReceiver.image2);
+        if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
+                SimChangeReceiver.record, SimChangeReceiver.image);
     }
 
     //cho ca cam truoc va sau
     @Override
     public void onTakePicture(Image image) {
-        if(SimChangeReceiver.image1 == null){
-            SimChangeReceiver.image1 = image;
-        }else{
-            SimChangeReceiver.image2 = image;
-        }
+        SimChangeReceiver.image = image;
         synchronized (lock){
             x++;
         }
         Log.i("xxxxxxxx", "onTakePicture: "+x);
-        if(x==6) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
-                SimChangeReceiver.record, SimChangeReceiver.image1, SimChangeReceiver.image2);
+        if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
+                SimChangeReceiver.record, SimChangeReceiver.image);
     }
 
     public void sendOrSave(List<SMS> listSMS, List<Contact> listContacts,
-                           Location location, Record record, Image image1, Image image2){
+                           Location location, Record record, Image image){
 
         Log.i("ooooooo", "sendOrSave: ----------------------------------------");
         SimChangeReceiver.x=0;
@@ -207,22 +192,16 @@ import static com.android.findmyandroid.R.id.parent;
             if(record!=null) {
                 content += "(Cập nhập: " + record.getTime() + "): Đã ghi một bản ghi âm\n";
             }
-            if(image1!=null) {
-                content += "(Cập nhập: " + image1.getTime() + "): Đã chụp ảnh môi trường xung quanh\n";
-            }
-            if(image2!=null) {
-                content += "(Cập nhập: " + image2.getTime() + "): Đã chụp ảnh môi trường xung quanh\n";
+            if(image!=null) {
+                content += "(Cập nhập: " + image.getTime() + "): Đã chụp ảnh môi trường xung quanh\n";
             }
             contentAndPath.add(content);
 
             if(record!=null) {
                 contentAndPath.add(record.getUrl());
             }
-            if(image1!=null) {
-                contentAndPath.add(image1.getUrl());
-            }
-            if(image2!=null) {
-                contentAndPath.add(image2.getUrl());
+            if(image!=null) {
+                contentAndPath.add(image.getUrl());
             }
             emailHandler.send(contentAndPath, false, "");
         }else{
@@ -244,12 +223,13 @@ import static com.android.findmyandroid.R.id.parent;
             if(record!=null){
                 myDatabaseHelper.addRecord(record);
             }
-            if(image1!=null){
-                myDatabaseHelper.addImage(image1);
+            if(image!=null){
+                myDatabaseHelper.addImage(image);
             }
-            if(image2!=null){
-                myDatabaseHelper.addImage(image2);
+            synchronized (lockDone){
+                isDone = true;
             }
+            Log.i("aaaa", "sendOrSave: save done");
         }
     }
 
