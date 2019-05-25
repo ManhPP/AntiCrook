@@ -1,6 +1,9 @@
 package com.android.findmyandroid;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -9,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,14 +21,23 @@ import android.widget.Toast;
 public class EmailSendActivity extends AppCompatActivity {
 
     private TextView tvName;
-    private EditText username, password;
+    private EditText tvEmail, tvPassword;
     private ImageView ava, icoEdit;
+    private Button btnEmailSend;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_send);
         initView();
+
+        sharedPreferences = getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString("email",null);
+        if(email!=null){
+            tvEmail.setText(email);
+        }
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Email gửi");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
@@ -51,13 +64,14 @@ public class EmailSendActivity extends AppCompatActivity {
 
     public void initView(){
         tvName = findViewById(R.id.tvName);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
+        tvEmail = findViewById(R.id.email);
+        tvPassword = findViewById(R.id.password);
         ava = findViewById(R.id.ava);
         icoEdit = findViewById(R.id.icoEdit);
+        btnEmailSend = findViewById(R.id.btnEmailSend);
 
         icoEdit.setOnClickListener(onClickItem);
-
+        btnEmailSend.setOnClickListener(updateEmailSend);
 
     }
 
@@ -97,6 +111,24 @@ public class EmailSendActivity extends AppCompatActivity {
                 case R.id.icoEdit:
                     initDialog(tvName, "Thay đổi tên");
                     break;
+            }
+        }
+    };
+
+    private View.OnClickListener updateEmailSend = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            String email = tvEmail.getText().toString();
+            String pass = tvPassword.getText().toString();
+
+            if(email.trim().equals("") || pass.trim().equals("")){
+                Toast.makeText(EmailSendActivity.this, "Hãy điền đầy đủ thông tin!!", Toast.LENGTH_SHORT).show();
+            }else {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("email", email);
+                editor.putString("password", pass);
+                editor.apply();
+                startActivity(new Intent(EmailSendActivity.this, MainSetting.class));
             }
         }
     };

@@ -1,8 +1,16 @@
 package com.android.findmyandroid.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.util.Log;
 
-import java.util.ArrayList;
+import com.android.findmyandroid.MyDatabaseHelper;
+import com.android.findmyandroid.model.EmailReceive;
+
+import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -24,50 +32,70 @@ import javax.mail.internet.MimeMultipart;
  */
 
 public class EmailHandler {
-    public Session session;
 
-    public void send(){
-        Properties props = new Properties();
+    private Session session;
+    private String email;
+    private Context context;
+    private boolean isDeleteDB = false;
+    private String tableDelete;
+    private MyDatabaseHelper myDatabaseHelper;
 
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        session = Session.getInstance(props, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("email gui","password");
-            }
-        });
-
-        RetreiveFeedTask retreiveFeedTask = new RetreiveFeedTask();
-        retreiveFeedTask.execute();
+    public EmailHandler(Context context) {
+        myDatabaseHelper = new MyDatabaseHelper(context);
+        this.context = context;
     }
 
-    public class RetreiveFeedTask extends AsyncTask<Void, Void, Void> {
+    public void send(List<String> contentAndPath, boolean isDelteDB, String tableDelete) {
+        this.isDeleteDB = isDelteDB;
+        this.tableDelete = tableDelete;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        final String email = sharedPreferences.getString("email", null);
+        final String password = sharedPreferences.getString("password", null);
+        String[] arrContentAndPath  = new String[contentAndPath.size()];
+        for(int i=0; i<contentAndPath.size(); i++){
+            arrContentAndPath[i] = contentAndPath.get(i);
+        }
+
+        this.email = email;
+
+        Log.i("emailsend", "send: "+email+"-"+password);
+        if (email != null && password != null) {
+            Properties props = new Properties();
+
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            session = Session.getInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(email, password);
+                }
+            });
+
+            RetreiveFeedTask retreiveFeedTask = new RetreiveFeedTask();
+            retreiveFeedTask.execute(arrContentAndPath);
+        }
+    }
+
+    public class RetreiveFeedTask extends AsyncTask<String, Void, Boolean> {
         @Override
-        protected Void doInBackground(Void...voids){
-            ArrayList<String> paths = new ArrayList<>();
-            paths.add("/storage/emulated/0/Android/data/com.example.tranv.myapplication/cache:IMG_1555230529540.jpeg");
-            paths.add("/storage/emulated/0/Android/data/com.example.tranv.myapplication/cache:IMG_1555230536459.jpeg");
-
+        protected Boolean doInBackground(String...paths){
             try{
+
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("email gui"));
+                message.setFrom(new InternetAddress(email));
                 message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse("email nhan"));
-                message.setSubject("12342345234");
-                message.setText("sđfe fwe ews");
+                        InternetAddress.parse(EmailHandler.this.getAllEmailReceive()));
+                message.setSubject("Ứng dụng chống trộm điện thoại: "+(new Date()).toString());
+                message.setText(paths[0]);
 
-                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                for(int i=1;i<paths.length; i++) {
+                    MimeBodyPart messageBodyPart = new MimeBodyPart();
+                    Multipart multipart = new MimeMultipart();
 
-                Multipart multipart = new MimeMultipart();
-
-                messageBodyPart = new MimeBodyPart();
-
-                for(int i=0;i<paths.size(); i++) {
-                    String file = paths.get(i);
+                    String file = paths[i];
                     String fileName = "attachmentName" + i;
                     DataSource source = new FileDataSource(file);
                     messageBodyPart.setDataHandler(new DataHandler(source));
@@ -76,13 +104,70 @@ public class EmailHandler {
 
                     message.setContent(multipart);
 
-                    Transport.send(message);
                 }
+                Transport.send(message);
+                Log.i("emailsend", "send: 22222 ");
+                return true;
             }
             catch (Exception e){
                 e.printStackTrace();
             }
-            return null;
+            return false;
         }
+
+        @Override
+        protected void onPostExecute(Boolean isError) {
+            //xoa db neu day la gui cac du lieu dc luu lai do la truoc k gui dc
+            if(isDeleteDB){
+                if(!isError){
+                    switch (tableDelete){
+                        case "contact":
+                            myDatabaseHelper.deleteContact();
+                            break;
+                        case "location":
+                            myDatabaseHelper.deleteLocate();
+                            break;
+                        case "image":
+                            myDatabaseHelper.deleteImage();
+                            break;
+                        case "record":
+                            myDatabaseHelper.deleteRecord();
+                            break;
+                        case "sms":
+                            myDatabaseHelper.deleteSMS();
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    //doc tat ca cac email nhan thong bao
+    public String getAllEmailReceive(){
+        String mails="";
+        MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
+        Cursor cursor = myDatabaseHelper.getEmailReceive();
+
+        cursor.moveToFirst();
+        if(cursor != null){
+            if(!cursor.isAfterLast()){
+                if(email.equals("")){
+                    mails += cursor.getString(1);
+                }else{
+                    mails+= ", "+cursor.getString(1);
+                }
+                cursor.moveToNext();
+            }
+        }
+
+//        for(EmailReceive email : listMail){
+//            if(email.getEmail().equals("")){
+//                mails += email.getEmail();
+//            }else{
+//                mails+= ", "+email.getEmail();
+//            }
+//        }
+
+        return mails;
     }
 }

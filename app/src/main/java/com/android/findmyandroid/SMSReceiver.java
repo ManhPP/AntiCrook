@@ -14,10 +14,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.findmyandroid.model.Contact;
+import com.android.findmyandroid.model.Image;
 import com.android.findmyandroid.model.Location;
 import com.android.findmyandroid.model.Record;
 import com.android.findmyandroid.model.SMS;
 import com.android.findmyandroid.utils.ContactHandler;
+import com.android.findmyandroid.utils.EmailHandler;
 import com.android.findmyandroid.utils.LocationHandler;
 import com.android.findmyandroid.utils.RecordHandler;
 import com.android.findmyandroid.utils.SMSHandler;
@@ -26,40 +28,65 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by tranv on 4/14/2019.
+ */
 
-public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener, OnReceiveRecordListener, Serializable,OnTakePictureListener{
+public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationListener,
+        OnReceiveRecordListener,OnTakePictureListener, Serializable{
+    private static transient EmailHandler emailHandler;
+    private static transient MyDatabaseHelper myDatabaseHelper;
+    private static transient WifiManager wifiManager;
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("smsreceive", "onReceive: aaaaaaa");
+        emailHandler = new EmailHandler(context);
         SharedPreferences sharedPreferences= context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         if(sharedPreferences.getBoolean("isActivated", false)) {
             SMSHandler smsHandler = new SMSHandler(context);
             Intent i;
-            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
-            MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
+            wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
+            myDatabaseHelper = new MyDatabaseHelper(context);
             switch (smsHandler.getCommand()) {
                 case 0: //bat wifi
-//                    wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     wifiManager.setWifiEnabled(true);
                     break;
                 case 1: //doc tin nhan
-//                    wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-                    List<SMS> list = smsHandler.getAllSMS();
+                    List<SMS> listSMS = smsHandler.getAllSMS();
+                    String content = "";
                     if(wifiManager.isWifiEnabled()){
                         //gui qua email
+                        for(SMS sms : listSMS){
+                            content += "Đọc lúc:"+sms.getTime()+"\n\t\tSDT:"+sms.getPhoneNumber()+" nhận lúc "+sms.getTimeReceive()+"\n\t\tNội dung: "+sms.getBody()+"\n";
+                        }
+                        List<String> listContent = new ArrayList<>();
+                        listContent.add(content);
+                        emailHandler.send(listContent,false, null);
                     }else{
                         //luu vao db doi khi co internet se gui lai
                         myDatabaseHelper.deleteSMS();
-                        Log.i("asd", "onReceive: "+list.size()+"-------");
-                        for(SMS sms : list){
+                        for(SMS sms : listSMS){
                             myDatabaseHelper.addSMS(sms);
-                            Log.i("asd", "onReceive: "+sms.getBody());
                         }
                     }
                     break;
                 case 2: //doc danh ba
                     List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
-                    Log.i("contact", "onReceive: num contact"+listContacts.size());
+                    String contentContact = "";
+                    if(wifiManager.isWifiEnabled()) {
+                        for (Contact contact : listContacts) {
+                            contentContact += "Đọc lúc: " + contact.getTime() + "-Tên: " + contact.getName() + ": SĐT: " + contact.getPhone() + "\n";
+                        }
+                        List<String> listContent = new ArrayList<>();
+                        listContent.add(contentContact);
+                        emailHandler.send(listContent, false, null);
+                    }else{
+                        myDatabaseHelper.deleteContact();
+                        for(Contact contact : listContacts){
+                            myDatabaseHelper.addContact(contact);
+                        }
+                        Log.i("sms", "onReceive read contact: save db");
+                    }
                     break;
                 case 3: //ghi am
                     RecordHandler recordHandler = new RecordHandler(context);
@@ -82,16 +109,6 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
                     locationHandler.addOnReceiveLocationListener(this);
                     break;
                 case 7: //bao dong
-//                    String path = context.getApplicationContext().getExternalFilesDir(null)+"/warning.mp3";
-//                    Uri warning = Uri.parse(path);
-//                    RingtoneManager.setActualDefaultRingtoneUri(
-//                            context.getApplicationContext(), RingtoneManager.TYPE_NOTIFICATION,
-//                            warning);
-//                    Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), warning);
-//                    r.play();
-//                    Ringtone ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), warning);
-//                    ringtone.play();
-
                     try {
                         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
                         final Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
@@ -116,16 +133,39 @@ public class SMSReceiver extends BroadcastReceiver implements OnReceiveLocationL
 
     @Override
     public void onReceiveLocation(Location location) {
-        Log.i("onReceived", "Location: "+location.getLatitude()+"-"+location.getLongitude());
+        if(wifiManager.isWifiEnabled()) {
+            List<String> contentAndPath = new ArrayList<>();
+            contentAndPath.add("(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "");
+            emailHandler.send(contentAndPath, false, null);
+        }else{
+            myDatabaseHelper.addLocate(location);
+        }
     }
 
     @Override
     public void onReceiveRecord(Record record) {
-        Log.i("onReceived", "Record: " + record.getUrl());
+        if(wifiManager.isWifiEnabled()) {
+            Log.i("onReceived", "Record: " + record.getUrl());
+            List<String> contentAndPath = new ArrayList<>();
+            contentAndPath.add("(Cập nhập: " + record.getTime() + "): Đã thư một bản ghi âm");
+            contentAndPath.add(record.getUrl());
+            emailHandler.send(contentAndPath, false, null);
+        }else{
+            myDatabaseHelper.addRecord(record);
+        }
     }
 
+    //cho ca cam truoc va sau
     @Override
-    public void onTakePicture(String path) {
-        Log.i("picture", "onTakePicture: "+ path);
+    public void onTakePicture(Image image) {
+        if(wifiManager.isWifiEnabled()) {
+            List<String> contentAndPath = new ArrayList<>();
+            contentAndPath.add("(Cập nhập: " + image.getTime() + "): Đã chụp ảnh môi trường xung quanh");
+            contentAndPath.add(image.getUrl());
+            emailHandler.send(contentAndPath, false, null);
+        }else{
+            myDatabaseHelper.addImage(image);
+        }
     }
+
 }

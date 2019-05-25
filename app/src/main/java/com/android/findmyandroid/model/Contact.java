@@ -8,6 +8,7 @@ public class Contact {
     private int id;
     private String name;
     private String phone;
+    private String time;
 
     public Contact() {
     }
@@ -39,5 +40,13 @@ public class Contact {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

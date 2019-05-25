@@ -149,14 +149,18 @@ public class AddReceivedEmail extends AppCompatActivity {
                         else{
                             emailReceive = new EmailReceive();
                             emailReceive.setEmail(email);
-                            helper.addEmailReceive(emailReceive);
-                            lstEmails = helper.getEmailReceive();
-                            adapter.changeCursor(lstEmails);
+                            boolean ret = helper.addEmailReceive(emailReceive);
+                            if(ret) {
+                                lstEmails = helper.getEmailReceive();
+                                adapter.changeCursor(lstEmails);
 
-                            popupWindow.dismiss();
-                            Toast.makeText(getApplicationContext(), "Đã thêm email!", Toast.LENGTH_SHORT).show();
-                            if (lstEmails.getCount() > 0){
-                                note.setText("Danh sách email được nhận thông báo ");
+                                popupWindow.dismiss();
+                                Toast.makeText(getApplicationContext(), "Đã thêm email!", Toast.LENGTH_SHORT).show();
+                                if (lstEmails.getCount() > 0) {
+                                    note.setText("Danh sách email được nhận thông báo ");
+                                }
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Không được nhập trùng emaill!", Toast.LENGTH_SHORT).show();
                             }
                         }
 
