@@ -61,21 +61,11 @@ public class RecordHandler extends Activity {
                 mediaRecorder.prepare();
                 mediaRecorder.start();
                 isRecording = 1;
-                record = new Record(fileName, (new Date()).toString());
+
             }
             catch (Exception e){
                 e.printStackTrace();
             }
-        }
-    }
-    public void stopRecording(){
-        if(isRecording == 1){
-            mediaRecorder.stop();
-            mediaRecorder.release();
-            mediaRecorder = null;
-            isRecording = 0;
-            Log.i("onReceived","ghi am xong");
-//            onReceiveRecordListener.onReceiveRecord(record);
         }
     }
 
@@ -93,6 +83,11 @@ public class RecordHandler extends Activity {
                 public void onInfo(MediaRecorder mr, int what, int extra) {
                     if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
                         Log.i("onRecord", "ghi am du tg");
+                        mediaRecorder.stop();
+                        mediaRecorder.release();
+                        mediaRecorder = null;
+                        isRecording = 0;
+                        record = new Record(fileName, (new Date()).toString());
                         onReceiveRecordListener.onReceiveRecord(record);
                     }
                 }
