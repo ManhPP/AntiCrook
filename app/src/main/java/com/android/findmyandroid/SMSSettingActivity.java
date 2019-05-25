@@ -1,6 +1,7 @@
 package com.android.findmyandroid;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -59,6 +60,16 @@ public class SMSSettingActivity extends AppCompatActivity {
         tvLocate = findViewById(R.id.tvLocate);
         tvAlarm = findViewById(R.id.tvAlarm);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("appSetting", MODE_PRIVATE);
+        tvWifi.setText(sharedPreferences.getString("WIFI", "WIFI_ON"));
+        tvReadSMS.setText(sharedPreferences.getString("SMS", "READ_SMS"));
+        tvContact.setText(sharedPreferences.getString("CONTACT", "READ_CONTACT"));
+        tvRecord.setText(sharedPreferences.getString("RECORD", "RECORD"));
+        tvFrontCam.setText(sharedPreferences.getString("FRONT", "FRONT_CAM"));
+        tvBackCam.setText(sharedPreferences.getString("BACK", "BACK_CAM"));
+        tvLocate.setText(sharedPreferences.getString("LOCATE", "LOCATE"));
+        tvAlarm.setText(sharedPreferences.getString("ALARM", "ALARM"));
+
         tvWifi.setOnClickListener(onClickItem);
         tvReadSMS.setOnClickListener(onClickItem);
         tvContact.setOnClickListener(onClickItem);
@@ -69,7 +80,7 @@ public class SMSSettingActivity extends AppCompatActivity {
         tvAlarm.setOnClickListener(onClickItem);
     }
 
-    public void initDialog(final TextView tv, String title){
+    public void initDialog(final TextView tv, String title, final String key){
         final View view = getLayoutInflater().inflate(R.layout.alert_dialog_custom_layout, null);
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(title);
@@ -82,7 +93,15 @@ public class SMSSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String s = inputDialog.getText().toString();
-                tv.setText(s);
+                if(!s.trim().equals("")) {
+                    tv.setText(s);
+                    SharedPreferences sharedPreferences = getSharedPreferences("appSetting", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(key, s);
+                    editor.apply();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Hãy điền lệnh sms!!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -104,28 +123,28 @@ public class SMSSettingActivity extends AppCompatActivity {
         public void onClick(View v){
             switch (v.getId()){
                 case R.id.tvWifi:
-                    initDialog(tvWifi, "Lệnh SMS bật wifi");
+                    initDialog(tvWifi, "Lệnh SMS bật wifi", "WIFI");
                     break;
                 case R.id.tvReadSMS:
-                    initDialog(tvReadSMS, "Lệnh SMS đọc tin nhắn");
+                    initDialog(tvReadSMS, "Lệnh SMS đọc tin nhắn","SMS");
                     break;
                 case R.id.tvContact:
-                    initDialog(tvContact, "Lệnh SMS đọc danh bạ");
+                    initDialog(tvContact, "Lệnh SMS đọc danh bạ", "CONTACT");
                     break;
                 case R.id.tvRecord:
-                    initDialog(tvRecord, "Lệnh SMS ghi âm");
+                    initDialog(tvRecord, "Lệnh SMS ghi âm", "RECORD");
                     break;
                 case R.id.tvFrontCam:
-                    initDialog(tvFrontCam, "Lệnh SMS chụp cam trước");
+                    initDialog(tvFrontCam, "Lệnh SMS chụp cam trước", "FRONT");
                     break;
                 case R.id.tvBackCam:
-                    initDialog(tvBackCam, "Lệnh SMS chụp cam sau");
+                    initDialog(tvBackCam, "Lệnh SMS chụp cam sau", "BACK");
                     break;
                 case R.id.tvLocate:
-                    initDialog(tvLocate, "Lệnh SMS lấy tọa độ");
+                    initDialog(tvLocate, "Lệnh SMS lấy tọa độ", "LOCATE");
                     break;
                 case R.id.tvAlarm:
-                    initDialog(tvAlarm, "Lệnh SMS báo động");
+                    initDialog(tvAlarm, "Lệnh SMS báo động", "ALARM");
                     break;
             }
         }
