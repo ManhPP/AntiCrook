@@ -64,7 +64,6 @@ public class MainSetting extends AppCompatActivity {
         emailMenu.add("Configure email send notification");
         emailMenu.add("Add email is notified");
         simMenu.add("Capture with front camera");
-        simMenu.add("Capture with behind camera");
         simMenu.add("Record");
         simMenu.add("Locate");
         simMenu.add("Read contact");
@@ -241,26 +240,21 @@ public class MainSetting extends AppCompatActivity {
                                 }
                                 break;
                             case 1:
-                                if(sharedPreferences.getBoolean("behindCam",false)){
-                                    switchButton.setChecked(true);
-                                }
-                                break;
-                            case 2:
                                 if(sharedPreferences.getBoolean("record",false)){
                                     switchButton.setChecked(true);
                                 }
                                 break;
-                            case 3:
+                            case 2:
                                 if(sharedPreferences.getBoolean("locate",false)){
                                     switchButton.setChecked(true);
                                 }
                                 break;
-                            case 4:
+                            case 3:
                                 if(sharedPreferences.getBoolean("readContact",false)){
                                     switchButton.setChecked(true);
                                 }
                                 break;
-                            case 5:
+                            case 4:
                                 if(sharedPreferences.getBoolean("readSMS",false)){
                                     switchButton.setChecked(true);
                                 }
@@ -289,18 +283,15 @@ public class MainSetting extends AppCompatActivity {
                                         Log.i("switch","bat cam truoc");
                                         break;
                                     case 1:
-                                        sharedPreferences.edit().putBoolean("behindCam", true).apply();
-                                        break;
-                                    case 2:
                                         sharedPreferences.edit().putBoolean("record", true).apply();
                                         break;
-                                    case 3:
+                                    case 2:
                                         sharedPreferences.edit().putBoolean("locate", true).apply();
                                         break;
-                                    case 4:
+                                    case 3:
                                         sharedPreferences.edit().putBoolean("readContact", true).apply();
                                         break;
-                                    case 5:
+                                    case 4:
                                         sharedPreferences.edit().putBoolean("readSMS", true).apply();
                                         break;
                                 }
@@ -312,18 +303,15 @@ public class MainSetting extends AppCompatActivity {
                                         Log.i("switch","tat cam truoc");
                                         break;
                                     case 1:
-                                        sharedPreferences.edit().putBoolean("behindCam", false).apply();
-                                        break;
-                                    case 2:
                                         sharedPreferences.edit().putBoolean("record", false).apply();
                                         break;
-                                    case 3:
+                                    case 2:
                                         sharedPreferences.edit().putBoolean("locate", false).apply();
                                         break;
-                                    case 4:
+                                    case 3:
                                         sharedPreferences.edit().putBoolean("readContact", false).apply();
                                         break;
-                                    case 5:
+                                    case 4:
                                         sharedPreferences.edit().putBoolean("readSMS", false).apply();
                                         break;
                                 }
