@@ -1,5 +1,7 @@
 package com.android.findmyandroid;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +14,9 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Switch;
 
 import com.android.findmyandroid.model.Contact;
 import com.android.findmyandroid.model.Image;
@@ -30,11 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.android.findmyandroid.R.id.parent;
+
 /**
  * Created by manhpp on 5/23/2019.
  */
 
-public class SimChangeReceiver extends BroadcastReceiver implements OnReceiveLocationListener,
+    public class SimChangeReceiver extends BroadcastReceiver implements OnReceiveLocationListener,
         OnReceiveRecordListener,OnTakePictureListener, Serializable {
     private static transient EmailHandler emailHandler;
     private static transient MyDatabaseHelper myDatabaseHelper;
@@ -59,30 +66,43 @@ public class SimChangeReceiver extends BroadcastReceiver implements OnReceiveLoc
             Intent i;
             wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);;
             myDatabaseHelper = new MyDatabaseHelper(context);
-            //doc tin nhan
-            List<SMS> listSMS = smsHandler.getAllSMS();
-            SimChangeReceiver.listSMS = listSMS;
-            x++;
-            //doc danh ba
-            List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
-            SimChangeReceiver.listContacts = listContacts;
-            x++;
-            //ghi am
-            RecordHandler recordHandler = new RecordHandler(context);
-            recordHandler.setOnReceiveRecordListener(this);
-            //chup cam truoc
-            i = new Intent(context, CamService.class);
-            i.putExtra("onTakeePickture", this);
-            i.putExtra("isFront", true);
-            context.startService(i);
-            //chup cam sau
-            i = new Intent(context, CamService.class);
-            i.putExtra("onTakeePickture", this);
-            i.putExtra("isFront", false);
-            context.startService(i);
-            //dinh vi
-            LocationHandler locationHandler = new LocationHandler(context);
-            locationHandler.addOnReceiveLocationListener(this);
+            if (sharedPreferences.getBoolean("readSMS", false)) {
+                //doc tin nhan
+                List<SMS> listSMS = smsHandler.getAllSMS();
+                SimChangeReceiver.listSMS = listSMS;
+                x++;
+            }
+            if (sharedPreferences.getBoolean("readContact", false)) {
+                //doc danh ba
+                List<Contact> listContacts = (new ContactHandler(context)).getAllContact();
+                SimChangeReceiver.listContacts = listContacts;
+                x++;
+            }
+
+            if (sharedPreferences.getBoolean("record", false)) {
+                //ghi am
+                RecordHandler recordHandler = new RecordHandler(context);
+                recordHandler.setOnReceiveRecordListener(this);
+            }
+            if (sharedPreferences.getBoolean("fontCam", false)) {
+                //chup cam truoc
+                i = new Intent(context, CamService.class);
+                i.putExtra("onTakeePickture", this);
+                i.putExtra("isFront", true);
+                context.startService(i);
+            }
+            if (sharedPreferences.getBoolean("behindCam", false)) {
+                //chup cam sau
+                i = new Intent(context, CamService.class);
+                i.putExtra("onTakeePickture", this);
+                i.putExtra("isFront", false);
+                context.startService(i);
+            }
+            if (sharedPreferences.getBoolean("locate", false)) {
+                //dinh vi
+                LocationHandler locationHandler = new LocationHandler(context);
+                locationHandler.addOnReceiveLocationListener(this);
+            }
         }
     }
 
@@ -124,6 +144,48 @@ public class SimChangeReceiver extends BroadcastReceiver implements OnReceiveLoc
 
     public void sendOrSave(List<SMS> listSMS, List<Contact> listContacts,
                            Location location, Record record, Image image1, Image image2){
-
+        if(wifiManager.isWifiEnabled()){
+            List<String> contentAndPath = new ArrayList<>();
+            String content="";
+            for(SMS sms : listSMS){
+                content += "Đọc lúc:"+sms.getTime()+"\n\t\tSDT:"+sms.getPhoneNumber()+" nhận lúc "+sms.getTimeReceive()+"\n\t\tNội dung: "+sms.getBody()+"\n";
+            }
+            for (Contact contact : listContacts) {
+                content += "Đọc lúc: " + contact.getTime() + "-Tên: " + contact.getName() + ": SĐT: " + contact.getPhone() + "\n";
+            }
+            content+="(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "";
+            content+="(Cập nhập: " + record.getTime() + "): Đã thư một bản ghi âm";
+            content+="(Cập nhập: " + image1.getTime() + "): Đã chụp ảnh môi trường xung quanh";
+            content+="(Cập nhập: " + image2.getTime() + "): Đã chụp ảnh môi trường xung quanh";
+            contentAndPath.add(content);
+            contentAndPath.add(record.getUrl());
+            contentAndPath.add(image1.getUrl());
+            contentAndPath.add(image2.getUrl());
+        }else{
+            if(listSMS!=null){
+                myDatabaseHelper.deleteSMS();
+                for(SMS sms : listSMS){
+                    myDatabaseHelper.addSMS(sms);
+                }
+            }
+            if(listContacts!=null){
+                myDatabaseHelper.deleteContact();
+                for(Contact contact : listContacts){
+                    myDatabaseHelper.addContact(contact);
+                }
+            }
+            if(location!=null){
+                myDatabaseHelper.addLocate(location);
+            }
+            if(record!=null){
+                myDatabaseHelper.addRecord(record);
+            }
+            if(image1!=null){
+                myDatabaseHelper.addImage(image1);
+            }
+            if(image2!=null){
+                myDatabaseHelper.addImage(image2);
+            }
+        }
     }
 }
