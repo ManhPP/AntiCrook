@@ -227,7 +227,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteSMS(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM "+TABLE_EMAIL_RECEIVE;
+        String query = "DELETE FROM "+TABLE_SMS;
         db.execSQL(query);
         db.close();
     }
