@@ -12,7 +12,7 @@
         android:layout_width="84dp"
         android:layout_height="84dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/img_no_avatar" />
 
     <TextView
