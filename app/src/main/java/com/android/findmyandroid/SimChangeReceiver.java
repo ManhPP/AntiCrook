@@ -164,7 +164,7 @@ import static com.android.findmyandroid.R.id.parent;
             SimChangeReceiver.image = image;
             Log.i("xxxxxxxx", "onTakePicture: " + x);
         }
-            synchronized (lock){
+        synchronized (lock){
             x++;
         }
         if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,

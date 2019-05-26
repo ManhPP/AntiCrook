@@ -101,7 +101,7 @@ public class EmailHandler {
                     MimeBodyPart messageBodyPart = new MimeBodyPart();
 
                     String file = paths[i];
-                    String fileName = "attachmentName" + i;
+                    String fileName = paths[i];
                     DataSource source = new FileDataSource(file);
                     messageBodyPart.setDataHandler(new DataHandler(source));
                     messageBodyPart.setFileName(fileName);

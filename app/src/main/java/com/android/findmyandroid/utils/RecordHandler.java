@@ -25,7 +25,7 @@ public class RecordHandler extends Activity {
 
     String fileName = null;
     int isRecording = 0;
-    int recordTime = 1;
+    int recordTime = 30;
     Record record = null;
     private OnReceiveRecordListener onReceiveRecordListener;
     DoRecordingInBackground doRecordingInBackground = null;
@@ -47,7 +47,7 @@ public class RecordHandler extends Activity {
 //            }
 //        }.start();
     }
-    public void startRecording(){
+    public void startRecording(int time){
         Log.i("xxxxxx", "startRecording: recodingg");
         if(isRecording == 0){
             fileName = this.context.getApplicationContext().getExternalFilesDir("Record")+ "/record"+System.currentTimeMillis()+".3gp";
@@ -56,7 +56,7 @@ public class RecordHandler extends Activity {
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setOutputFile(fileName);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.setMaxDuration(3000);
+            mediaRecorder.setMaxDuration(time * 1000);
 //            recordTime = 0;
             try {
                 mediaRecorder.prepare();
@@ -78,22 +78,17 @@ public class RecordHandler extends Activity {
     public class DoRecordingInBackground extends AsyncTask<Integer, Void, Record>{
         @Override
         protected Record doInBackground(Integer... params) {
-            startRecording();
-            mediaRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
-                @Override
-                public void onInfo(MediaRecorder mr, int what, int extra) {
-                    if(what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
-                        Log.i("onRecord", "ghi am du tg");
-                        mediaRecorder.stop();
-                        mediaRecorder.release();
-                        mediaRecorder = null;
-                        isRecording = 0;
-                        record = new Record(fileName, (new Date()).toString());
-                        onReceiveRecordListener.onReceiveRecord(record);
-                        Log.i("xxxxx", "onInfo: done recode, call back called");
-                    }
-                }
-            });
+            startRecording(params[0]);
+            SystemClock.sleep(params[0]*1000 + 1000);
+            Log.i("onRecord", "ghi am du tg");
+            mediaRecorder.stop();
+            mediaRecorder.release();
+            mediaRecorder = null;
+            isRecording = 0;
+            record = new Record(fileName, (new Date()).toString());
+            onReceiveRecordListener.onReceiveRecord(record);
+            Log.i("xxxxx", "onInfo: done recode, call back called");
+
             return record;
         }
     }
