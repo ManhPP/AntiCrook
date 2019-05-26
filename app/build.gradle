@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.android.findmyandroid"
+        applicationId "com.android.anticrook"
         minSdkVersion 22
         targetSdkVersion 23
         versionCode 1
