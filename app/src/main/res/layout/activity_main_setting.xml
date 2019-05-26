@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:weightSum="100"
     android:orientation="vertical"
-    tools:context="com.android.findmyandroid.MainSetting"
+    tools:context="com.android.anticrook.MainSetting"
     android:background="@color/backgroundview">
 
     <!--<TextView-->

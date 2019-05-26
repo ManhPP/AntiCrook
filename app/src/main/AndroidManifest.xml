@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.findmyandroid">
+    package="com.android.anticrook">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -37,23 +37,23 @@
         android:roundIcon="@drawable/shield128"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.android.anticrook.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SMSSettingActivity" />
-        <activity android:name=".EmailSendActivity" />
+        <activity android:name="com.android.anticrook.SMSSettingActivity" />
+        <activity android:name="com.android.anticrook.EmailSendActivity" />
         <activity
-            android:name=".MainSetting"
+            android:name="com.android.anticrook.MainSetting"
             android:label="@string/title_activity_main_setting" />
-        <activity android:name=".AddReceivedEmail" />
+        <activity android:name="com.android.anticrook.AddReceivedEmail" />
 
 
         <receiver
-            android:name=".SampleDeviceAdminReceiver"
+            android:name="com.android.anticrook.SampleDeviceAdminReceiver"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data
                 android:name="android.app.device_admin"
@@ -65,25 +65,25 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".SMSReceiver">
+        <receiver android:name="com.android.anticrook.SMSReceiver">
             <intent-filter android:priority="998">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".SimChangeReceiver">
+        <receiver android:name="com.android.anticrook.SimChangeReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.SIM_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".NetworkReceiver">
+        <receiver android:name="com.android.anticrook.NetworkReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".CamService" />
+        <service android:name="com.android.anticrook.CamService" />
 
-        <activity android:name=".AboutUs" />
+        <activity android:name="com.android.anticrook.AboutUs" />
     </application>
 
 </manifest>
