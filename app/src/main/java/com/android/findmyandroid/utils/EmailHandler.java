@@ -164,13 +164,17 @@ public class EmailHandler {
         Cursor cursor = myDatabaseHelper.getEmailReceive();
 
         cursor.moveToFirst();
-        if(cursor != null){
-            if(!cursor.isAfterLast()){
-                if(email.equals("")){
-                    mails += cursor.getString(1);
-                }else{
-                    mails+= ", "+cursor.getString(1);
-                }
+        Log.i("email",cursor.getCount() +"");
+        if(cursor .getCount() > 0){
+            while(!cursor.isAfterLast()){
+//                if(email.equals("")){
+//                    mails += cursor.getString(1);
+//                }else{
+//                    mails+= ", "+cursor.getString(1);
+//                }
+
+                mails += cursor.getString(1) + ",";
+                Log.i("email",mails);
                 cursor.moveToNext();
             }
         }
