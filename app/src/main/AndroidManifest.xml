@@ -37,7 +37,7 @@
         android:roundIcon="@drawable/shield128"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PinLockActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +50,6 @@
             android:name=".MainSetting"
             android:label="@string/title_activity_main_setting" />
         <activity android:name=".AddReceivedEmail" />
-        <activity android:name=".MainActivity"/>
 
 
         <receiver

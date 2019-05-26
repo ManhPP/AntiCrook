@@ -48,6 +48,7 @@ public class RecordHandler extends Activity {
 //        }.start();
     }
     public void startRecording(){
+        Log.i("xxxxxx", "startRecording: recodingg");
         if(isRecording == 0){
             fileName = this.context.getApplicationContext().getExternalFilesDir("Record")+ "/record"+System.currentTimeMillis()+".3gp";
             mediaRecorder = new MediaRecorder();
@@ -89,6 +90,7 @@ public class RecordHandler extends Activity {
                         isRecording = 0;
                         record = new Record(fileName, (new Date()).toString());
                         onReceiveRecordListener.onReceiveRecord(record);
+                        Log.i("xxxxx", "onInfo: done recode, call back called");
                     }
                 }
             });

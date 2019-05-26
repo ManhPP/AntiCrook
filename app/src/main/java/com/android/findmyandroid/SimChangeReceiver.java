@@ -92,6 +92,7 @@ import static com.android.findmyandroid.R.id.parent;
                         SimChangeReceiver.listSMS = listSMS;
                     }
                     x++;
+                    Log.i("xxxxxxxx", "onReceive: read sms"+x);
 
                     if (sharedPreferences.getBoolean("readContact", false)) {
                         //doc danh ba
@@ -100,6 +101,7 @@ import static com.android.findmyandroid.R.id.parent;
                         SimChangeReceiver.listContacts = listContacts;
                     }
                     x++;
+                    Log.i("xxxxxxxx", "onReceive: read sms"+x);
 
                     if (sharedPreferences.getBoolean("record", false)) {
                         //ghi am
@@ -150,7 +152,7 @@ import static com.android.findmyandroid.R.id.parent;
         synchronized (lock){
             x++;
         }
-        Log.i("xxxxxxxx", "onReceiveRecord: "+x+record.getUrl());
+        Log.i("xxxxxxxx", "onReceiveRecord: "+x);
         if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
                 SimChangeReceiver.record, SimChangeReceiver.image);
     }
@@ -160,7 +162,7 @@ import static com.android.findmyandroid.R.id.parent;
     public void onTakePicture(Image image) {
         if(image!=null) {
             SimChangeReceiver.image = image;
-            Log.i("xxxxxxxx", "onTakePicture: " + x + image.getUrl());
+            Log.i("xxxxxxxx", "onTakePicture: " + x);
         }
             synchronized (lock){
             x++;
