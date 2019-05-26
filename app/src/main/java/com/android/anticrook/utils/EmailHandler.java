@@ -46,21 +46,25 @@ public class EmailHandler {
         this.context = context;
     }
 
+    //hàm thực hiện gửi email
     public void send(List<String> contentAndPath, boolean isDelteDB, String tableDelete) {
+        //biến kiểm tra xem sau khi gủi xong có xóa db không, và xóa ở bảng nào
         this.isDeleteDB = isDelteDB;
         this.tableDelete = tableDelete;
+        //lấy email và mật khẩu email sẽ gửi thông báo đi
         SharedPreferences sharedPreferences = context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
         final String email = sharedPreferences.getString("email", null);
         final String password = sharedPreferences.getString("password", null);
+
         String[] arrContentAndPath  = new String[contentAndPath.size()];
         for(int i=0; i<contentAndPath.size(); i++){
             arrContentAndPath[i] = contentAndPath.get(i);
         }
 
         this.email = email;
-
-        Log.i("emailsend", "send: "+email+"-"+password);
+        //kiểm tra xem người dùng đã cài đặt email và mật khẩu gửi đi chưa
         if (email != null && password != null) {
+            //cấu hình gửi mail qua giao thức smtp
             Properties props = new Properties();
 
             props.put("mail.smtp.auth", "true");
@@ -68,6 +72,7 @@ public class EmailHandler {
             props.put("mail.smtp.host", "smtp.gmail.com");
             props.put("mail.smtp.port", "587");
 
+            //tạo session để SMTP server xác thực tài khoản và gửi email
             session = Session.getInstance(props, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -75,6 +80,7 @@ public class EmailHandler {
                 }
             });
 
+            //khởi tạo một asynctask để bắt đàu gửi mail
             RetreiveFeedTask retreiveFeedTask = new RetreiveFeedTask();
             retreiveFeedTask.execute(arrContentAndPath);
         }
@@ -87,18 +93,25 @@ public class EmailHandler {
 
                 SharedPreferences sharedPreferences = context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
 
+                //khởi tạo một đối tượng message để gửi
                 Message message = new MimeMessage(session);
+                //khởi tạo địa chỉ email sẽ gửi
                 message.setFrom(new InternetAddress(email));
+                //khởi tạo danh sách email sẽ nhận thông báo
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(EmailHandler.this.getAllEmailReceive()));
+                //khởi tạo subject cho thư thông báo
                 message.setSubject("Ứng dụng chống trộm điện thoại: "+(new Date()).toString()
                         +" from user "+sharedPreferences.getString("username", "USER"));
 
-
+                //tạo đối tượng chứa các MimeBodyPart chứa các file cần attach
                 Multipart multipart = new MimeMultipart();
+                //gán các đối tuonjg MimeBodyPart vào đối tượng multipart
                 for(int i=1;i<paths.length; i++) {
+                    //đối tượng MỉeBodyPart chứa một file được đính kèm
                     MimeBodyPart messageBodyPart = new MimeBodyPart();
 
+                    //đính kèm file vào đối tuọng
                     String file = paths[i];
                     String fileName = paths[i];
                     DataSource source = new FileDataSource(file);
@@ -106,14 +119,18 @@ public class EmailHandler {
                     messageBodyPart.setFileName(fileName);
                     messageBodyPart.setContentID("<ARTHOS>");
                     messageBodyPart.setDisposition(MimeBodyPart.INLINE);
+                    //add đối tượng MimeBodyPart vào đối tượng multipart
                     multipart.addBodyPart(messageBodyPart);
 
                 }
+                //Tạo đối tượng MimeBodyPart chứ nội dung email
                 MimeBodyPart messageBodyPart = new MimeBodyPart();
                 messageBodyPart.setText(paths[0]);
+                //gán vào đối tượng MimeMessage
                 multipart.addBodyPart(messageBodyPart);
 
                 message.setContent(multipart);
+                //bắt đầu gửi mail
                 Transport.send(message);
                 Log.i("sendemail", "doInBackground: send done");
                 return true;
@@ -149,6 +166,7 @@ public class EmailHandler {
                 }
             }else{
                 if (onSendEmailListener!=null) {
+                    //gọi hàm call back khi việc gửi mail đã xong
                     onSendEmailListener.onSendEmail();
                     Log.i("donesend", "onPostExecute: done send");
                 }
@@ -156,7 +174,7 @@ public class EmailHandler {
         }
     }
 
-    //doc tat ca cac email nhan thong bao
+    //Đọc tất cả các email nhận thông báo
     public String getAllEmailReceive(){
         String mails="";
         MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
@@ -164,32 +182,19 @@ public class EmailHandler {
 
         cursor.moveToFirst();
         Log.i("email",cursor.getCount() +"");
+        //duyệt cursor để lấy tất cả email nhận thông báo
         if(cursor .getCount() > 0){
             while(!cursor.isAfterLast()){
-//                if(email.equals("")){
-//                    mails += cursor.getString(1);
-//                }else{
-//                    mails+= ", "+cursor.getString(1);
-//                }
-
                 mails += cursor.getString(1) + ",";
                 Log.i("email",mails);
                 cursor.moveToNext();
             }
         }
 
-//        for(EmailReceive email : listMail){
-//            if(email.getEmail().equals("")){
-//                mails += email.getEmail();
-//            }else{
-//                mails+= ", "+email.getEmail();
-//            }
-//        }
-
         return mails;
     }
 
-    //set doi tuong se duoc goi call back khi gui email xong
+    //set đôi tượng sẽ được gọi call back khi gửi thư xong
     public void setOnSendEmailListener(OnSendEmailListener onSendEmailListener){
         this.onSendEmailListener = onSendEmailListener;
     }

@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.android.anticrook.OnReceiveLocationListener;
 import com.google.android.gms.common.ConnectionResult;
@@ -40,6 +41,7 @@ public class LocationHandler implements GoogleApiClient.ConnectionCallbacks,
     public LocationHandler(Context context){
 
         this.context = context;
+        //khởi tạo đối tượng GoogleApiClient để lấy tọa độ
         googleApiClient = new GoogleApiClient.Builder(context).
                 addApi(LocationServices.API).
                 addConnectionCallbacks(this).
@@ -51,14 +53,13 @@ public class LocationHandler implements GoogleApiClient.ConnectionCallbacks,
         try {
             // Permissions ok, we get last location
             location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
             com.android.anticrook.model.Location myLocation
                     = new com.android.anticrook.model.Location(location.getLatitude()+"", location.getLongitude()+"", (new Date()).toString());
+            //gọ hàm call back sau khi lấy được tọa độ
             onReceiveLocationListener.onReceiveLocation(myLocation);
 
-//            startLocationUpdates();
         }catch (SecurityException e){
-
+            Log.i("location", "onConnected: noo");
         }
     }
 
@@ -67,33 +68,15 @@ public class LocationHandler implements GoogleApiClient.ConnectionCallbacks,
 
     }
 
+    //call back khi không kết nối được
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.i("location", "onConnectionFailed: noo");
     }
 
     @Override
     public void onLocationChanged(Location location) {
         //callback khi location thay doi
-
-        if (location != null) {
-            com.android.anticrook.model.Location myLocation
-                    = new com.android.anticrook.model.Location(location.getLatitude()+"", location.getLongitude()+"", (new Date()).toString());
-            onReceiveLocationListener.onReceiveLocation(myLocation);
-        }
-    }
-
-    public void startLocationUpdates() {
-        locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(UPDATE_INTERVAL);
-        locationRequest.setFastestInterval(FASTEST_INTERVAL);
-
-        try {
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-        }catch (SecurityException e){
-
-        }
     }
 
 

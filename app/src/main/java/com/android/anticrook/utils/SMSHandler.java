@@ -17,25 +17,28 @@ import java.util.List;
  */
 
 public class SMSHandler {
-
     private Context context;
-
     public SMSHandler(Context context) {
         this.context = context;
     }
 
+    //hàm trả về lệnh mà người dùng muốn thực hiện
     public int getCommand(){
+        //lấy index của lệnh mà người dùng yêu cầu trong màng lệnh
         int ret = getListCommndSetting().indexOf(getCommandReceive());
-        for(String s: getListCommndSetting())
-            Log.i("aaaaa", s.trim().length()+"---"+getCommandReceive().trim().length());
-        Log.i("aaaaa", "getCommand: ========="+ret);
+        for (String s: getListCommndSetting()){
+            Log.i("aaaa", "getCommand: "+(s.equals(getCommandReceive()))+"-"+s+"-"+getCommandReceive());
+        }
+        Log.d("ret", "getCommand: rettttttttt"+ret);
         return ret;
     }
 
+    //hàm lấy mảng lệnh mà người dùng cái đặt
     public List<String> getListCommndSetting(){
         List<String> list = new ArrayList<>();
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("appSetting", context.MODE_PRIVATE);
+        //đọc các lệnh mà người dùng cài đặt được lưu trong sharepreferences
         if(sharedPreferences!=null) {
             list.add(sharedPreferences.getString("WIFI", "WIFI_ON"));
             list.add(sharedPreferences.getString("SMS", "READ_SMS"));
@@ -53,24 +56,34 @@ public class SMSHandler {
         return list;
     }
 
+    //đọc lệnh từ sms khi có tin nhắn mới gửi đến
     public String getCommandReceive(){
+        //khai báo đường dẫn uri cho đọc tin nhắn
         Uri uri = Uri.parse("content://sms/inbox");
-        Cursor cursor = context.getContentResolver().query(uri, null, "read=0", null, null);
-        cursor.moveToLast();
+        //lấy đối tượng cursor để đọc tất cả tin nhắn chưa được đọc
+        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        //đọc tin nhắn mới nhất
+        cursor.moveToFirst();
         int idBody = cursor.getColumnIndex("body");
+        //lấy ra tin nhắn
         String body = cursor.getString(idBody);
         cursor.close();
         return body;
     }
 
+    //hàm lấy ra tất cả tin nhắn trong điện thoại
     public List<SMS> getAllSMS(){
+        //khởi tạo mảng lưu đối tượng tin nhắn
         List<SMS> listSMS = new ArrayList<>();
+        //khai báo uri để đọc tin nhắn
         Uri uri = Uri.parse("content://sms/inbox");
+        //lấy ra đối tượng cursor để bắt đầu đọc
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
         listSMS.clear();
         cursor.moveToFirst();
         if(cursor!=null) {
             while (!cursor.isAfterLast()) {
+                //đọc só điện thoại, thời gian nhận, nội dung
                 int idPhoneNumber = cursor.getColumnIndex("address");
                 int idTimeStamp = cursor.getColumnIndex("date");
                 int idBody = cursor.getColumnIndex("body");
@@ -79,7 +92,9 @@ public class SMSHandler {
                 String timeStamp = cursor.getString(idTimeStamp);
                 String body = cursor.getString(idBody);
 
+                //khởi tạo đối tuonjg sms
                 SMS sms = new SMS(body, timeStamp, phoneNumber);
+                //khởi tạo thời gina ứng dụng đọc tin nhắn
                 sms.setTime((new Date()).toString());
                 listSMS.add(sms);
                 cursor.moveToNext();
@@ -88,7 +103,4 @@ public class SMSHandler {
         cursor.close();
         return listSMS;
     }
-
-
-
 }
