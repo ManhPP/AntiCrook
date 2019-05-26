@@ -62,9 +62,10 @@ public class CamService extends HiddenCameraService {
                     }
                 }, 2000L);
             } else {
-
+                onTakePictureListener.onTakePicture(null);
+                stopSelf();
                 //Open settings to grant permission for "Draw other apps".
-                HiddenCameraUtils.openDrawOverPermissionSetting(this);
+//                HiddenCameraUtils.openDrawOverPermissionSetting(this);
             }
         } else {
 
@@ -103,7 +104,7 @@ public class CamService extends HiddenCameraService {
             case CameraError.ERROR_DOES_NOT_HAVE_OVERDRAW_PERMISSION:
                 //Display information dialog to the user with steps to grant "Draw over other app"
                 //permission for the app.
-                HiddenCameraUtils.openDrawOverPermissionSetting(this);
+//                HiddenCameraUtils.openDrawOverPermissionSetting(this);
                 break;
             case CameraError.ERROR_DOES_NOT_HAVE_FRONT_CAMERA:
                 Toast.makeText(this, "cannot open cam", Toast.LENGTH_LONG).show();

@@ -26,6 +26,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidhiddencamera.HiddenCameraUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -279,8 +281,14 @@ public class MainSetting extends AppCompatActivity {
                             if(isChecked == true){
                                 switch (childPosition){
                                     case 0:
-                                        sharedPreferences.edit().putBoolean("frontCam", true).apply();
-                                        Log.i("switch","bat cam truoc");
+                                        if(HiddenCameraUtils.canOverDrawOtherApps(MainSetting.this)) {
+                                            sharedPreferences.edit().putBoolean("frontCam", true).apply();
+                                            Log.i("switch", "bat cam truoc");
+                                        }else {
+                                            buttonView.setChecked(false);
+                                            sharedPreferences.edit().putBoolean("frontCam", false).apply();
+                                            HiddenCameraUtils.openDrawOverPermissionSetting(MainSetting.this);
+                                        }
                                         break;
                                     case 1:
                                         sharedPreferences.edit().putBoolean("record", true).apply();

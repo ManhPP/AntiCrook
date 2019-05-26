@@ -158,11 +158,13 @@ import static com.android.findmyandroid.R.id.parent;
     //cho ca cam truoc va sau
     @Override
     public void onTakePicture(Image image) {
-        SimChangeReceiver.image = image;
-        synchronized (lock){
+        if(image!=null) {
+            SimChangeReceiver.image = image;
+            Log.i("xxxxxxxx", "onTakePicture: " + x + image.getUrl());
+        }
+            synchronized (lock){
             x++;
         }
-        Log.i("xxxxxxxx", "onTakePicture: "+x+image.getUrl());
         if(x==5) sendOrSave(SimChangeReceiver.listSMS, SimChangeReceiver.listContacts, SimChangeReceiver.location,
                 SimChangeReceiver.record, SimChangeReceiver.image);
     }
