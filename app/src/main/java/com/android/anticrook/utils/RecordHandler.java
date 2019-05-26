@@ -33,16 +33,6 @@ public class RecordHandler extends Activity {
     public void record(int time){
         doRecordingInBackground = new DoRecordingInBackground();
         doRecordingInBackground.execute(time);
-//        startRecording();
-//        new CountDownTimer(time*1000, 1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//            }
-//
-//            public void onFinish() {
-//                stopRecording();
-//            }
-//        }.start();
     }
     public void startRecording(int time){
         Log.i("xxxxxx", "startRecording: recodingg");
@@ -54,7 +44,6 @@ public class RecordHandler extends Activity {
             mediaRecorder.setOutputFile(fileName);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mediaRecorder.setMaxDuration(time * 1000);
-//            recordTime = 0;
             try {
                 mediaRecorder.prepare();
                 mediaRecorder.start();

@@ -117,6 +117,7 @@ public class MainSetting extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Main Setting");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
+
         TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[] {android.R.attr.actionBarSize});
         int actionBarSize = (int) styledAttributes.getDimension(0,0);
         styledAttributes.recycle();
