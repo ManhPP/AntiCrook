@@ -43,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
         checkPermission = new CheckPermission(MainActivity.this, this);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("AntiCrook");
+        actionBar.setTitle("\tAntiCrook");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBarColor)));
-
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setLogo(R.drawable.shield);    //Icon muốn hiện thị
+        actionBar.setDisplayUseLogoEnabled(true);
         activate = findViewById(R.id.activate_button);
         if (policyManager.isAdminActive()){
             activate.setChecked(true);
