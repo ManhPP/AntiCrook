@@ -86,11 +86,14 @@ public class EmailHandler {
         protected Boolean doInBackground(String...paths){
             try{
 
+                SharedPreferences sharedPreferences = context.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(email));
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(EmailHandler.this.getAllEmailReceive()));
-                message.setSubject("Ứng dụng chống trộm điện thoại: "+(new Date()).toString());
+                message.setSubject("Ứng dụng chống trộm điện thoại: "+(new Date()).toString()
+                        +" from user "+sharedPreferences.getString("username", "USER"));
 
 
                 Multipart multipart = new MimeMultipart();

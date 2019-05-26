@@ -50,6 +50,8 @@
             android:name=".MainSetting"
             android:label="@string/title_activity_main_setting" />
         <activity android:name=".AddReceivedEmail" />
+        <activity android:name=".MainActivity"/>
+
 
         <receiver
             android:name=".SampleDeviceAdminReceiver"
@@ -83,7 +85,6 @@
         <service android:name=".CamService" />
 
         <activity android:name=".AboutUs" />
-        <activity android:name=".PinLockActivity"></activity>
     </application>
 
 </manifest>

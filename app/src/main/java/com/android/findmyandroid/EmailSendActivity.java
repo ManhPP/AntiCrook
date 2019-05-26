@@ -107,6 +107,7 @@ public class EmailSendActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    //cho thay doi username se dc gan voi email
     private View.OnClickListener onClickItem = new View.OnClickListener(){
         public void onClick(View v){
             switch (v.getId()){
@@ -117,6 +118,7 @@ public class EmailSendActivity extends AppCompatActivity {
         }
     };
 
+    //cho update email
     private View.OnClickListener updateEmailSend = new View.OnClickListener(){
         @Override
         public void onClick(View v) {

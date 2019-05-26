@@ -27,7 +27,7 @@ public class PinLockActivity extends AppCompatActivity {
             if(appPin.equals(pin)){
                 startActivity(new Intent(PinLockActivity.this, MainActivity.class));
             }else{
-                Toast.makeText(PinLockActivity.this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
+                mPinLockView.resetPinLockView();
             }
         }
 
@@ -38,6 +38,8 @@ public class PinLockActivity extends AppCompatActivity {
         @Override
         public void onPinChange(int pinLength, String intermediatePin) {
         }
+
+
     };
 
     @Override
@@ -50,6 +52,8 @@ public class PinLockActivity extends AppCompatActivity {
 
         mPinLockView = (PinLockView) findViewById(R.id.pin_lock_view);
         mIndicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
+
+
 
         mPinLockView.attachIndicatorDots(mIndicatorDots);
         mPinLockView.setPinLockListener(mPinLockListener);
