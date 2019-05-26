@@ -100,7 +100,7 @@ public class NetworkReceiver extends BroadcastReceiver {
         if (listLocation != null && listLocation.size()>0){
             content += "Location:\n";
             for(Location location: listLocation){
-                content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: " + location.getLatitude() + ", " + location.getLongitude() + "\n";
+                content += "(Cập nhập: " + location.getTime() + "):Vị trí của điện thoại của bạn là: https://www.google.com/maps/place/" + location.getLatitude() + "," + location.getLongitude();
             }
         }
         contentAndPath.add(content);
